@@ -12,7 +12,7 @@
 
     <!-- Nested node template -->
     <script type="text/ng-template" id="nodes_renderer.html">
-        <div ui-tree-handle class="tree-node tree-node-content">
+        <div ui-tree-handle class="tree-node tree-node-content" ng-class="{active : activeMenu === node.Name}" ng-click="setActive(node)">
             <a class="btn btn-success btn-xs" ng-if="node.Children && node.Children.length > 0" data-nodrag ng-click="toggle(this)">
                 <span class="glyphicon"
                       ng-class="{
@@ -20,7 +20,7 @@
           'glyphicon-chevron-down': !collapsed
         }"></span>
             </a>
-            {{node.Name}}
+            <span>{{node.Name}}</span> 
             <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="remove(this)">
                 <span class="glyphicon glyphicon-remove"></span>
             </a>
@@ -33,26 +33,25 @@
             </li>
         </ol>
     </script>
+    
+    <style>
+        .container-fluid {
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 1600px; /* or 950px */
+}
+    </style>
 
 </head>
 <body ng-controller="InfluenceController">
 
 <div ng-include="'shared/header.html'"></div>
+    
 
-<div class="container-fluid">
+    <div class="container-fluid">
 
-    <div class="col-sm-8" ng-controller="MyCtrl">
-        <ol class="breadcrumb">
-            <li><font size="4" color="180E30">{{selectedtreepath}}</font></li>
-        </ol>
-
-        <button class="btn btn-link" ng-click="exportToExcel('#FunctionalTable', 'Functional Details')">
-            <span class="glyphicon glyphicon-share"></span>
-
-        </button>
-        
         <div class="row">
-            <div class="col-sm-4">
+            <div class="col-md-4">
                 <div id="custom-search-input">
                     <div class="input-group col-md-12">
                         <input type="text" class="search-input form-control input-lg" placeholder="Quick search..." id="txtsearch" />
@@ -64,104 +63,192 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-12">
-                <h3>Basic Example</h3>
-
-                <button ng-click="expandAll()">Expand all</button>
-                <button ng-click="collapseAll()">Collapse all</button>
+            <div class="col-md-4">               
+                <!--<ol class="breadcrumb">
+                    <li class="breadcrumb-item">{{selectedtreepath}}</li>
+                </ol>-->
             </div>
+            <div class="col-md-4"><button class="btn btn-default pull-right">Download XML</button></div>
         </div>
 
-        <div class="row">
-            <div class="col-sm-6">
-                <div ui-tree id="tree-root">
-                    <ol ui-tree-nodes ng-model="data">
-                        <li ng-repeat="node in data" ui-tree-node ng-include="'nodes_renderer.html'"></li>
-                    </ol>
+           
+
+            <div class="row">
+                <div class="col-sm-4">
+
+                </div>
+                <div class="col-sm-12">
+                    <h3>Basic Example</h3>
+
+                    <button ng-click="expandAll()">Expand all</button>
+                    <button ng-click="collapseAll()">Collapse all</button>
                 </div>
             </div>
 
-            <div class="col-sm-6">
-                <div class="info">
-                    {{Name}}
+            <div class="row">
+                <div class="col-sm-4">
+                    <div ui-tree style="height: 45em; overflow:scroll;" class="wrapper" data-drag-enabled="false" id="tree-root">
+                        <ol ui-tree-nodes ng-model="data" style="height: 600px;">
+                            <li ng-repeat="node in data" ui-tree-node ng-include="'nodes_renderer.html'" data-scroll-container=".wrapper"></li>
+                        </ol>
+                    </div>
                 </div>
-                <pre class="code">{{ data | json }}</pre>
+
+                <div class="col-sm-8">
+                    <div class="info">
+                        {{Name}}
+                    </div>
+                    <!--<pre class="code">{{ data | json }}</pre>-->
+                    
+                    <button class="btn btn-default" aria-label="Left Align" ng-click="exportToExcel('#FunctionalTable', 'Functional Details')"  ng-show="myDataTable.Functional.length>0" ng-controller="MyCtrl">
+                        <span class="glyphicon glyphicon-share" aria-hidden="true"> Export</span>
+                    </button>
+                    <hr />
+
+                    <div class="card text-left">
+                        <div class="card-header">
+                            <ul class="nav nav-tabs card-header-tabs">
+                                <li class="active"><a href="#FunctionalTable" data-toggle="tab" style="background-color: rgb(91,192,222);">Functional</a></li>
+                                <li><a href="#DatabaseTable" data-toggle="tab" style="background-color: rgb(91,192,222);">Database</a></li>
+                                <li><a href="#OthersTable" data-toggle="tab" style="background-color: rgb(91,192,222);">Other Details</a></li>
+                            </ul>
+                        </div>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="FunctionalTable">
+                                <table class="table table-striped ">
+                                    <thead>
+                                        <tr>
+                                            <th>IMPACT AREA</th>
+                                            <th>PRODUCT</th>
+                                            <th>MODULE</th>
+                                            <th>COMPLEXITY</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="Funcdetails in myDataTable.Functional">
+                                            <td>{{ Funcdetails.Impact }}</td>
+                                            <td>{{ Funcdetails.Product }}</td>
+                                            <td>{{ Funcdetails.Module }}</td>
+                                            <td><p><font color="red">{{ Funcdetails.Complexity }}</font></p></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="tab-pane" id="DatabaseTable">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Impact Details</th>
+                                            <th>Product</th>
+                                            <th>Module</th>
+                                            <th>Compexity</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="DBDetails in myDataTable.DatabaseDetails">
+                                            <td>{{ DBDetails.Description }}</td>
+                                            <td>{{ DBDetails.DbObject }}</td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="tab-pane " id="OthersTable">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Impact Details</th>
+                                            <th>Product</th>
+                                            <th>Module</th>
+                                            <th>Compexity</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="AddDetails in myDataTable.AdditionalDetails">
+                                            <td>{{ AddDetails.DbType }}</td>
+                                            <td>{{ AddDetails.DbObject }}</td>
+                                            <td>{{ AddDetails.Description }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+            <!--<div class="card text-left">
+                <div class="card-header">
+                    <ul class="nav nav-tabs card-header-tabs">
+                        <li class="active"><a href="#FunctionalTable" data-toggle="tab" style="background-color: rgb(91,192,222);">Functional</a></li>
+                        <li><a href="#DatabaseTable" data-toggle="tab" style="background-color: rgb(91,192,222);">Database</a></li>
+                        <li><a href="#OthersTable" data-toggle="tab" style="background-color: rgb(91,192,222);">Other Details</a></li>
+                    </ul>
+                </div>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="FunctionalTable">
+                        <table class="table table-striped ">
+                            <thead>
+                            <tr>
+                                <th>IMPACT AREA</th>
+                                <th>PRODUCT</th>
+                                <th>MODULE</th>
+                                <th>COMPLEXITY</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="Funcdetails in myDataTable.Functional">
+                                <td>{{ Funcdetails.Impact }}</td>
+                                <td>{{ Funcdetails.Product }}</td>
+                                <td>{{ Funcdetails.Module }}</td>
+                                <td><p><font color="red">{{ Funcdetails.Complexity }}</font></p></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane" id="DatabaseTable">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Impact Details</th>
+                                <th>Product</th>
+                                <th>Module</th>
+                                <th>Compexity</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="DBDetails in myDataTable.DatabaseDetails">
+                                <td>{{ DBDetails.Description }}</td>
+                                <td>{{ DBDetails.DbObject }}</td>
+                                <td></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane " id="OthersTable">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Impact Details</th>
+                                <th>Product</th>
+                                <th>Module</th>
+                                <th>Compexity</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="AddDetails in myDataTable.AdditionalDetails">
+                                <td>{{ AddDetails.DbType }}</td>
+                                <td>{{ AddDetails.DbObject }}</td>
+                                <td>{{ AddDetails.Description }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>-->
+
+
         </div>
-
-        <!--<div class="card text-left">
-            <div class="card-header">
-                <ul class="nav nav-tabs card-header-tabs">
-                    <li class="active"><a href="#FunctionalTable" data-toggle="tab" style="background-color: rgb(91,192,222);">Functional</a></li>
-                    <li><a href="#DatabaseTable" data-toggle="tab" style="background-color: rgb(91,192,222);">Database</a></li>
-                    <li><a href="#OthersTable" data-toggle="tab" style="background-color: rgb(91,192,222);">Other Details</a></li>
-                </ul>
-            </div>
-            <div class="tab-content">
-                <div class="tab-pane active" id="FunctionalTable">
-                    <table class="table table-striped ">
-                        <thead>
-                        <tr>
-                            <th>IMPACT AREA</th>
-                            <th>PRODUCT</th>
-                            <th>MODULE</th>
-                            <th>COMPLEXITY</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr ng-repeat="Funcdetails in myDataTable.Functional">
-                            <td>{{ Funcdetails.Impact }}</td>
-                            <td>{{ Funcdetails.Product }}</td>
-                            <td>{{ Funcdetails.Module }}</td>
-                            <td><p><font color="red">{{ Funcdetails.Complexity }}</font></p></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="tab-pane" id="DatabaseTable">
-                    <table class="table table-striped">
-                        <thead>
-                        <tr>
-                            <th>Impact Details</th>
-                            <th>Product</th>
-                            <th>Module</th>
-                            <th>Compexity</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr ng-repeat="DBDetails in myDataTable.DatabaseDetails">
-                            <td>{{ DBDetails.Description }}</td>
-                            <td>{{ DBDetails.DbObject }}</td>
-                            <td></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="tab-pane " id="OthersTable">
-                    <table class="table table-striped">
-                        <thead>
-                        <tr>
-                            <th>Impact Details</th>
-                            <th>Product</th>
-                            <th>Module</th>
-                            <th>Compexity</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr ng-repeat="AddDetails in myDataTable.AdditionalDetails">
-                            <td>{{ AddDetails.DbType }}</td>
-                            <td>{{ AddDetails.DbObject }}</td>
-                            <td>{{ AddDetails.Description }}</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>-->
-
-
-    </div>
-</div>
     
 <div ng-include="'shared/footer.html'"></div>
     
@@ -170,10 +257,13 @@
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/es5-shim/3.4.0/es5-shim.min.js"></script>
     <![endif]-->
-
+    <script src="bower_components/jquery-3.2.1.min/index.js"></script>
     <script src="bower_components/angular/angular.min.js"></script>
     <script src="bower_components/angular-route/angular-route.min.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+
+    
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>		
     
      <script src="main.js"></script>
     <script src="controllers/handleCtrl.js"></script>
