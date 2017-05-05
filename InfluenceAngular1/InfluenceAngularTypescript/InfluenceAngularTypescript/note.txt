@@ -1,0 +1,18 @@
+﻿Dependencies
+
+Gulp (task automation)
+Bower (package management)
+
+
+Installation
+
+Run the commands below in the project root directory.
+
+#####1. Install Gulp and Bower
+
+$ sudo npm install -g gulp bower
+#####2. Install project dependencies
+
+$ npm install
+$ ./node_modules/protractor/bin/webdriver-manager update
+$ bower install --------IMPORTANT-----------
