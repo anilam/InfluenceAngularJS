@@ -4,6 +4,7 @@
 /// <reference path="../controllers/nodeCtrl.spec.js" />
 /// <reference path="../controllers/nodesCtrl.js" />
 /// <reference path="../controllers/treeCtrl.js" />
+/// <reference path="../directives/editinplace.js" />
 /// <reference path="../directives/uiTree.js" />
 /// <reference path="../directives/uiTree.spec.js" />
 /// <reference path="../directives/uiTreeHandle.js" />

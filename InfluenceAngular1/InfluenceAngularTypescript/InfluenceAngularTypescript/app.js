@@ -6,6 +6,7 @@ var App;
 (function (App) {
     function influenceController($scope, $http, $log, $timeout) {
         $scope.data = [];
+        $scope.editing = false;
         $http({
             method: "GET",
             url: App.Config.Constants.default.url
@@ -27,17 +28,86 @@ var App;
             var a = $scope.data.pop();
             $scope.data.splice(0, 0, a);
         };
-        $scope.newSubItem = function (scope) {
-            var nodeData = scope.$modelValue;
-            if (nodeData.Children == null) {
-                nodeData.Children = [];
+        var checkDuplicateName = function (subMenuItems, name) {
+            var found = false;
+            if (subMenuItems) {
+                for (var i = 0; i < subMenuItems.length; i++) {
+                    if (subMenuItems[i].Name == name) {
+                        return subMenuItems[i];
+                    }
+                    found = checkDuplicateName(subMenuItems[i].Children, name);
+                    if (found)
+                        return found;
+                }
             }
-            nodeData.Children.unshift({
-                //  id: nodeData.id * 10 + nodeData.nodes.length,
-                Name: "EnterDetails",
-                Children: null
-            });
-            $scope.activeMenu = "EnterDetails";
+        };
+        $scope.newSubItem = function (scope) {
+            $scope.$broadcast('angular-ui-tree:expand-all');
+            if ($scope.editing != true) {
+                var nodeData = scope.$modelValue;
+                if (nodeData.Children == null) {
+                    nodeData.Children = [];
+                }
+                nodeData.Children.unshift({
+                    //  id: nodeData.id * 10 + nodeData.nodes.length,
+                    Name: "EnterDetails",
+                    Path: "",
+                    Children: null
+                });
+                $scope.editing = true;
+                $scope.editItem = "EnterDetails";
+                //backup
+                $scope.editValue = "EnterDetails";
+                $scope.activeMenu = "EnterDetails";
+                // And we must focus the element. 
+                // `angular.element()` provides a chainable array, like jQuery so to access a native DOM function, 
+                // we have to reference the first element in the array.
+                $scope.$broadcast('EnterDetails');
+            }
+            else {
+                alert("Please complete the editing");
+            }
+        };
+        $scope.edit = function (scope) {
+            if (!$scope.editing) {
+                $scope.editing = true;
+                var nodeData = scope.$modelValue;
+                $scope.editItem = nodeData.Name;
+                //backup
+                $scope.editValue = nodeData.Name;
+                // And we must focus the element. 
+                // `angular.element()` provides a chainable array, like jQuery so to access a native DOM function, 
+                // we have to reference the first element in the array.
+                angular.element(nodeData.Name).focus();
+            }
+            else {
+                $scope.activeMenu = "EnterDetails";
+                alert("Please Complete the editiing");
+            }
+        };
+        $scope.editok = function (scope) {
+            var nodeData = scope.$modelValue;
+            if (!checkDuplicateName($scope.data, scope.editValue)) {
+                $scope.editing = false;
+                nodeData.Name = scope.editValue;
+                $scope.editValue = "";
+                $scope.activeMenu = nodeData.Name;
+            }
+            else {
+                if (nodeData.Name == "EnterDetails") {
+                    alert("Please Rename the Node");
+                }
+                else {
+                    alert("Duplicate Name Not allowed");
+                }
+            }
+        };
+        $scope.editcancel = function (scope) {
+            $scope.editing = false;
+            var nodeData = scope.$modelValue;
+            if (nodeData.Name == "EnterDetails") {
+                scope.remove();
+            }
         };
         $scope.setActive = function (menuItem) {
             $scope.activeMenu = menuItem.Name;
@@ -76,6 +146,13 @@ var App;
         $scope.exportToExcel = function (tableId, sheetname) {
             var exportHref = Excel.tableToExcel(tableId, sheetname);
             $timeout(function () { location.href = exportHref; }, 100); // trigger download
+        };
+    });
+    App.app.directive('focusOn', function () {
+        return function (scope, elem, attr) {
+            scope.$on(attr.focusOn, function (e) {
+                elem[0].focus();
+            });
         };
     });
     App.app.controller("InfluenceController", influenceController);

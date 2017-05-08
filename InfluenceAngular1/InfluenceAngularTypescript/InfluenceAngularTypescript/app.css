@@ -23,6 +23,13 @@
     border-color: #dce2e8;
 }
 
+
+.angular-ui-tree-handle.activeedit {
+    color: #438eb9;
+    background: #428bca;
+    border-color: #dce2e8;
+}
+
 .angular-ui-tree-placeholder {
     background: #f0f9ff;
     border: 2px dashed #bed2db;
