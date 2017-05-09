@@ -16,7 +16,7 @@ module App {
         collapseAll: () => void;
         expandAll: () => void;
         loadDetails: (path: string) => void;
-        myDataTable: any;
+        myDataTable: NodeDetail;
         setActive: (menuItem: any) => void;
         activeMenu: string;
         exportToExcel: (tableId: any, sheetname: any) => void;
@@ -25,17 +25,35 @@ module App {
         editItem: string;
         textChanged(event: Event): any;
         editValue: any;
+        editFuncDetailsValue: any;
         editok: (scope: any) => void;
         editcancel: (scope: any) => void;
-        checkDuplicateName: (name: string, subMenuItems: any) => any;
+     //   checkDuplicateName:any;
+        checkDuplicateName: (subMenuItems: any, name: string) => any;
+        setFuncdetailsActive(index: any): any;
+        activeFuncdetailsId: number;
+        editFuncdetails: (Funcdetails: FunctionalDetail, index: number) => void;
+        Funcdetailsediting: boolean;
+        editItemFuncdetailsId: number;
+        editFuncdetailsOk: (Funcdetails: FunctionalDetail, index: number) => void;
+        removeFuncdetailsCancel: (Funcdetails: FunctionalDetail, index: number) => void;
+        removeFuncdetails: (index: number) => void;
+        addFuncdetails: (scope: any) => void;
+        visible: (item: any) => boolean;
+        findNodes: () => void;
+        query: any;
+        search: (name: string) => void;
+        searchDuplicateName: (subMenuItems: any, name: string) => any;
     }
 
     export function influenceController($scope: IDiagnosticsScope,
         $http: angular.IHttpService,
         $log: angular.ILogService,
+        $filter:any,
         $timeout: angular.ITimeoutService) {
         $scope.data = [];
         $scope.editing = false;
+        $scope.Funcdetailsediting = false;
 
         $http({
             method: "GET",
@@ -45,36 +63,135 @@ module App {
             stringified = stringified.replace(new RegExp('Name', 'g'), "text");
             stringified = stringified.replace(new RegExp('Children', 'g'), "children");
             stringified = stringified.replace(new RegExp('Path', 'g'), "id");
-         //   $scope.data = JSON.parse(stringified);
-            });
-
-
+            //   $scope.data = JSON.parse(stringified);
+        });
         //Copy Tree Code
-        $scope.remove = function (scope) {
+        $scope.remove = function(scope) {
             scope.remove();
         };
 
-        $scope.toggle = function (scope) {
+        $scope.toggle = function(scope) {
             scope.toggle();
         };
 
-        $scope.moveLastToTheBeginning = function () {
+        $scope.moveLastToTheBeginning = function() {
             var a = $scope.data.pop();
             $scope.data.splice(0, 0, a);
         };
 
-        var checkDuplicateName = function (subMenuItems: any, name: string) {
+        $scope.checkDuplicateName = (subMenuItems: any, name: string) => {
             var found = false;
             if (subMenuItems) {
                 for (var i = 0; i < subMenuItems.length; i++) {
                     if (subMenuItems[i].Name == name) {
                         return subMenuItems[i];
                     }
-                    found = checkDuplicateName(subMenuItems[i].Children, name);
+                    found = $scope.checkDuplicateName(subMenuItems[i].Children, name);
                     if (found) return found;
                 }
             }
         };
+
+
+        $scope.searchDuplicateName = (subMenuItems: any, name: string) => {
+            var found = false;
+            if (subMenuItems) {
+                for (var i = 0; i < subMenuItems.length; i++) {
+                    if (subMenuItems[i].Name.toLowerCase().indexOf(name.toLowerCase()) === 0)
+                    {
+                        return subMenuItems[i];
+                    }
+                    found = $scope.checkDuplicateName(subMenuItems[i].Children, name);
+                    if (found) return found;
+                }
+            }
+        };
+
+
+        $scope.setFuncdetailsActive = (index: number) => {
+            $scope.activeFuncdetailsId = index;
+        }
+
+
+        $scope.editFuncdetails = function (Funcdetails: FunctionalDetail, index: number) {
+            if (!$scope.Funcdetailsediting) {
+                $scope.Funcdetailsediting = true;
+                $scope.editItemFuncdetailsId = index;
+
+                //backup
+                //$scope.editFuncDetailsValue = new FunctionalDetail();
+                $scope.editFuncDetailsValue = new Array();
+                $scope.editFuncDetailsValue.ComplexityEdit = $scope.myDataTable.Functional[index].Complexity;
+                $scope.editFuncDetailsValue.ImpactEdit = $scope.myDataTable.Functional[index].Impact;
+                $scope.editFuncDetailsValue.ProductEdit = $scope.myDataTable.Functional[index].Product;
+                $scope.editFuncDetailsValue.ModuleEdit = $scope.myDataTable.Functional[index].Module;
+
+            } else {
+                alert("Please Complete the editiing");
+            }
+        }
+
+        $scope.editFuncdetailsOk = function (Funcdetails: FunctionalDetail, index: number) {
+            $scope.Funcdetailsediting = false;
+            //Mapping
+            $scope.myDataTable.Functional[index].Complexity = $scope.editFuncDetailsValue.ComplexityEdit;
+            $scope.myDataTable.Functional[index].Impact = $scope.editFuncDetailsValue.ImpactEdit;
+            $scope.myDataTable.Functional[index].Product = $scope.editFuncDetailsValue.ProductEdit;
+            $scope.myDataTable.Functional[index].Module = $scope.editFuncDetailsValue.ModuleEdit;
+        }
+
+        $scope.removeFuncdetailsCancel = function (Funcdetails: FunctionalDetail, index: number) {
+            $scope.Funcdetailsediting = false;
+            if (Funcdetails.Module == "" && Funcdetails.Complexity =="" && Funcdetails.Impact == "" && Funcdetails.Product == "") {
+                $scope.myDataTable.Functional.splice(index, 1);
+            }       
+        }
+
+        $scope.removeFuncdetails = function (index: number) {
+            $scope.myDataTable.Functional.splice(index,1);
+        }
+
+        $scope.visible = function (node) {
+            return !($scope.query && $scope.query.length > 0
+                && node.Name.indexOf($scope.query) == -1);
+        };
+
+        $scope.findNodes = function () {
+
+        };
+
+        $scope.search = function (name: string) {
+            var filterArray = new Array();
+            var found = $scope.searchDuplicateName($scope.data, name);
+
+            if (found) {
+                filterArray.unshift(found);
+                $scope.data = filterArray;
+            }
+        }
+
+        $scope.addFuncdetails = function (scope: any) {
+
+            if ($scope.Funcdetailsediting != true) {
+                $scope.myDataTable.Functional.unshift({
+                    Module: "",
+                    Product: "",
+                    Impact: "",
+                    Complexity:""
+                });
+                $scope.editFuncDetailsValue = new Array();
+                $scope.editFuncDetailsValue.ComplexityEdit = $scope.myDataTable.Functional[0].Complexity;
+                $scope.editFuncDetailsValue.ImpactEdit = $scope.myDataTable.Functional[0].Impact;
+                $scope.editFuncDetailsValue.ProductEdit = $scope.myDataTable.Functional[0].Product;
+                $scope.editFuncDetailsValue.ModuleEdit = $scope.myDataTable.Functional[0].Module;
+                $scope.Funcdetailsediting = true;
+
+                $scope.editItemFuncdetailsId = 0;
+
+            } else {
+                alert("Please complete the editing");
+            }
+        }
 
         $scope.newSubItem = function (scope) {
             $scope.$broadcast('angular-ui-tree:expand-all');
@@ -98,16 +215,11 @@ module App {
 
                 $scope.activeMenu = "EnterDetails";
 
-                // And we must focus the element. 
-                // `angular.element()` provides a chainable array, like jQuery so to access a native DOM function, 
-                // we have to reference the first element in the array.
-                $scope.$broadcast('EnterDetails');
             } else {
                 alert("Please complete the editing");
             }
 
         };
-
 
         $scope.edit = function (scope) {
 
@@ -116,7 +228,7 @@ module App {
                 $scope.editing = true;
                 var nodeData = scope.$modelValue;
                 $scope.editItem = nodeData.Name;
-
+               
                 //backup
                 $scope.editValue = nodeData.Name;
 
@@ -133,7 +245,7 @@ module App {
 
         $scope.editok = function(scope) {        
             var nodeData = scope.$modelValue;
-            if (!checkDuplicateName($scope.data, scope.editValue)) {
+            if (!$scope.checkDuplicateName($scope.data, scope.editValue)) {
                 $scope.editing = false;
                 nodeData.Name = scope.editValue;
                 $scope.editValue = "";
@@ -148,8 +260,8 @@ module App {
             }
         };
 
-
         $scope.editcancel = function (scope) {
+            scope.editValue = $scope.editValue;
             $scope.editing = false;
             var nodeData = scope.$modelValue;
             if (nodeData.Name == "EnterDetails") {
@@ -165,9 +277,14 @@ module App {
             $http({
                 method: "GET",
                 url: Config.Constants.default.url + '/' + menuItem.Path
-            }).then(response => {
-                $scope.myDataTable = response.data;
+            }).success((data: NodeDetail) => {
+                $scope.myDataTable = data;
             });
+
+
+            //    then(response => {
+            //    $scope.myDataTable = response.data;
+            //});
         }
 
         $scope.collapseAll = function () {
@@ -185,7 +302,24 @@ module App {
     }
 
 
-    export var app= angular.module('myApp', ['ui.tree', 'ngRoute', 'ui.bootstrap']);
+    export var app = angular.module('myApp', ['ui.tree', 'ngRoute', 'ui.bootstrap']);
+
+    app.directive('focusMe', <any>function ($timeout: any) {
+        return {
+            scope: { trigger: '=?focusMe' },
+            link: function (scope:any, element:any) {
+                scope.$watch('trigger', function (value:any) {
+                    if (value === true) {
+                        //console.log('trigger',value);
+                        //$timeout(function() {
+                        element[0].focus();
+                        scope.trigger = false;
+                        //});
+                    }
+                });
+            }
+        };
+    });
 
     app.factory('Excel',
         function ($window: any) {
@@ -210,17 +344,6 @@ module App {
                 $timeout(function () { location.href = exportHref; }, 100); // trigger download
             }
         });
-
-    app.directive('focusOn', function () {
-        return function (scope, elem, attr) {
-            scope.$on(attr.focusOn, function (e) {
-                elem[0].focus();
-            });
-        };
-    });
-
-
-
     app.controller("InfluenceController", influenceController);
 }
 
