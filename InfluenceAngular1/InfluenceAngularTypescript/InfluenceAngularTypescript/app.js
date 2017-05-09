@@ -43,15 +43,16 @@ var App;
             }
         };
         $scope.searchDuplicateName = function (subMenuItems, name) {
+            var filterArray = new Array();
             var found = false;
             if (subMenuItems) {
                 for (var i = 0; i < subMenuItems.length; i++) {
-                    if (subMenuItems[i].Name.toLowerCase().indexOf(name.toLowerCase()) === 0) {
+                    if (subMenuItems[i].Name.toLowerCase().indexOf(name.toLowerCase()) !== -1) {
                         return subMenuItems[i];
                     }
-                    found = $scope.checkDuplicateName(subMenuItems[i].Children, name);
+                    found = $scope.searchDuplicateName(subMenuItems[i].Children, name);
                     if (found)
-                        return found;
+                        $scope.filterSearchArray.unshift(found);
                 }
             }
         };
@@ -99,10 +100,10 @@ var App;
         };
         $scope.search = function (name) {
             var filterArray = new Array();
-            var found = $scope.searchDuplicateName($scope.data, name);
-            if (found) {
-                filterArray.unshift(found);
-                $scope.data = filterArray;
+            $scope.filterSearchArray = new Array();
+            $scope.searchDuplicateName($scope.data, name);
+            if ($scope.filterSearchArray) {
+                $scope.data = $scope.filterSearchArray;
             }
         };
         $scope.addFuncdetails = function (scope) {
