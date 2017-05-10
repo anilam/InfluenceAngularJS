@@ -8,6 +8,7 @@ var App;
         $scope.data = [];
         $scope.editing = false;
         $scope.Funcdetailsediting = false;
+        $scope.DBdetailsediting = false;
         $scope.settings = new Settings();
         $scope.settings.expandTree = false;
         $scope.settings.add = false;
@@ -119,6 +120,7 @@ var App;
                 console.log("success");
             });
         };
+        //func details
         $scope.setFuncdetailsActive = function (index) {
             $scope.activeFuncdetailsId = index;
         };
@@ -154,6 +156,41 @@ var App;
         };
         $scope.removeFuncdetails = function (index) {
             $scope.myDataTable.Functional.splice(index, 1);
+        };
+        //DB Details
+        $scope.setDBdetailsActive = function (index) {
+            $scope.activeDBdetailsId = index;
+        };
+        $scope.editDBdetails = function (DBdetails, index) {
+            if (!$scope.DBdetailsediting) {
+                $scope.DBdetailsediting = true;
+                $scope.editItemDBdetailsId = index;
+                //backup
+                //$scope.editDBDetailsValue = new DBtionalDetail();
+                $scope.editDBDetailsValue = new Array();
+                $scope.editDBDetailsValue.DbObject = $scope.myDataTable.DatabaseDetails[index].DbObject;
+                $scope.editDBDetailsValue.DbType = $scope.myDataTable.DatabaseDetails[index].DbType;
+                $scope.editDBDetailsValue.Description = $scope.myDataTable.DatabaseDetails[index].Description;
+            }
+            else {
+                alert("Please Complete the editiing");
+            }
+        };
+        $scope.editDBdetailsOk = function (DBdetails, index) {
+            $scope.DBdetailsediting = false;
+            //Mapping
+            $scope.myDataTable.DatabaseDetails[index].DbObject = $scope.editDBDetailsValue.DbObject;
+            $scope.myDataTable.DatabaseDetails[index].DbType = $scope.editDBDetailsValue.DbType;
+            $scope.myDataTable.DatabaseDetails[index].Description = $scope.editDBDetailsValue.Description;
+        };
+        $scope.removeDBdetailsCancel = function (DBdetails, index) {
+            $scope.DBdetailsediting = false;
+            if (DBdetails.DbObject == "" && DBdetails.DbType == "" && DBdetails.Description == "") {
+                $scope.myDataTable.DatabaseDetails.splice(index, 1);
+            }
+        };
+        $scope.removeDBdetails = function (index) {
+            $scope.myDataTable.DatabaseDetails.splice(index, 1);
         };
         $scope.visible = function (node) {
             return !($scope.query && $scope.query.length > 0

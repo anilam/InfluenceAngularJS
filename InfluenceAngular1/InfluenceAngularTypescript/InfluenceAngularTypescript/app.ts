@@ -52,6 +52,15 @@ module App {
         settings: Settings;
         tabselected: number;
         searchCancel: () => void;
+        setDBdetailsActive: (index: number) => void;
+        activeDBdetailsId: number;
+        editDBdetails: any;
+        DBdetailsediting: any;
+        editItemDBdetailsId: number;
+        editDBDetailsValue: any;
+        editDBdetailsOk: any;
+        removeDBdetailsCancel: any;
+        removeDBdetails: any;
     }
 
     export function influenceController($scope: IDiagnosticsScope,
@@ -63,6 +72,7 @@ module App {
         $scope.data = [];
         $scope.editing = false;
         $scope.Funcdetailsediting = false;
+        $scope.DBdetailsediting = false;
         $scope.settings = new Settings();
         $scope.settings.expandTree = false;
         $scope.settings.add = false;
@@ -161,7 +171,6 @@ module App {
             }
         };
 
-
         $scope.searchDuplicateName = (subMenuItems: any, name: string) => {
             var filterArray = new Array();
             var found = false;
@@ -188,10 +197,12 @@ module App {
             });
         }
 
+
+
+        //func details
         $scope.setFuncdetailsActive = (index: number) => {
             $scope.activeFuncdetailsId = index;
         }
-
 
         $scope.editFuncdetails = function (Funcdetails: FunctionalDetail, index: number) {
             if (!$scope.Funcdetailsediting) {
@@ -230,6 +241,48 @@ module App {
         $scope.removeFuncdetails = function (index: number) {
             $scope.myDataTable.Functional.splice(index,1);
         }
+
+        //DB Details
+        $scope.setDBdetailsActive = (index: number) => {
+            $scope.activeDBdetailsId = index;
+        }
+
+        $scope.editDBdetails = function(DBdetails: DatabaseDetail, index: number) {
+            if (!$scope.DBdetailsediting) {
+                $scope.DBdetailsediting = true;
+                $scope.editItemDBdetailsId = index;
+
+                //backup
+                //$scope.editDBDetailsValue = new DBtionalDetail();
+                $scope.editDBDetailsValue = new Array();
+                $scope.editDBDetailsValue.DbObject = $scope.myDataTable.DatabaseDetails[index].DbObject;
+                $scope.editDBDetailsValue.DbType = $scope.myDataTable.DatabaseDetails[index].DbType;
+                $scope.editDBDetailsValue.Description = $scope.myDataTable.DatabaseDetails[index].Description;
+
+            } else {
+                alert("Please Complete the editiing");
+            }
+        }
+
+        $scope.editDBdetailsOk = function (DBdetails: DatabaseDetail, index: number) {
+            $scope.DBdetailsediting = false;
+            //Mapping
+            $scope.myDataTable.DatabaseDetails[index].DbObject = $scope.editDBDetailsValue.DbObject;
+            $scope.myDataTable.DatabaseDetails[index].DbType=$scope.editDBDetailsValue.DbType;
+            $scope.myDataTable.DatabaseDetails[index].Description = $scope.editDBDetailsValue.Description;
+        }
+
+        $scope.removeDBdetailsCancel = function (DBdetails: DatabaseDetail, index: number) {
+            $scope.DBdetailsediting = false;
+            if (DBdetails.DbObject == "" && DBdetails.DbType == "" && DBdetails.Description == "" ) {
+                $scope.myDataTable.DatabaseDetails.splice(index, 1);
+            }
+        }
+
+        $scope.removeDBdetails = function(index: number) {
+            $scope.myDataTable.DatabaseDetails.splice(index, 1);
+        }
+
 
         $scope.visible = function (node) {
             return !($scope.query && $scope.query.length > 0
