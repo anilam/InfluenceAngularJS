@@ -113,12 +113,24 @@
 
 <div class="row">
     <div class="col-sm-4">
-        <div ui-tree style="height: 45em; overflow: scroll;" class="wrapper" data-drag-enabled="false" id="tree-root">
-            <ol ui-tree-nodes ng-model="data" style="height: 600px;">
-                <li ng-repeat="node in data" ui-tree-node ng-include="'nodes_renderer.html'" data-scroll-container=".wrapper"></li>
-            </ol>
-        </div>
-    </div>
+        <form name="outerForm" class="tab-form-demo">
+        <uib-tabset active="activeForm">
+            <uib-tab index="0" heading="Form Tab">
+                <div ui-tree style="height: 45em; overflow: scroll;" class="wrapper" data-drag-enabled="false" id="tree-root">
+                    <ol ui-tree-nodes ng-model="data" style="height: 600px;">
+                        <li ng-repeat="node in data" ui-tree-node ng-include="'nodes_renderer.html'" data-scroll-container=".wrapper"></li>
+                    </ol>
+                </div>
+            </uib-tab>
+            <uib-tab index="1" heading="Tab One">
+                Some Tab Content
+            </uib-tab>
+            <uib-tab index="2" heading="Tab Two">
+                More Tab Content
+            </uib-tab>
+        </uib-tabset>
+      </form>
+</div>
 
     <div class="col-sm-8">
         <div class="info">
@@ -128,6 +140,10 @@
 
         <button class="btn btn-default" aria-label="Left Align" ng-click="exportToExcel('#FunctionalTable', 'Functional Details')" ng-show="myDataTable.Functional.length>0" ng-controller="MyCtrl">
             <span class="glyphicon glyphicon-share" aria-hidden="true"> Export</span>
+        </button>
+        
+        <button class="btn btn-default" aria-label="Left Align" ng-click="saveFuncDetails()" ng-show="myDataTable.Functional.length>0" ng-controller="MyCtrl">
+            <span class="glyphicon glyphicon-share" aria-hidden="true"> Save</span>
         </button>
         <hr/>
 
@@ -293,13 +309,15 @@
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/es5-shim/3.4.0/es5-shim.min.js"></script>
     <![endif]-->
-    <script src="bower_components/jquery-3.2.1.min/index.js"></script>
+ 
     <script src="bower_components/angular/angular.min.js"></script>
     <script src="bower_components/angular-route/angular-route.min.js"></script>
-    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-
-    
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>		
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-animate.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-sanitize.js"></script>
+    <script src="bower_components/jquery-3.2.1.min/index.js"></script>
+    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
+    <!--<script src="https://rawgit.com/dbtek/angular-aside/master/dist/js/angular-aside.js"></script>-->
+ 	
     
      <script src="main.js"></script>
     <script src="controllers/handleCtrl.js"></script>

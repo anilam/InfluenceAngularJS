@@ -56,6 +56,15 @@ var App;
                 }
             }
         };
+        $scope.saveFuncDetails = function () {
+            $http({
+                method: "Post",
+                data: $scope.myDataTable,
+                url: App.Config.Constants.default.url + '/' + $scope.activedata.Path + '/' + "detail"
+            }).success(function (status) {
+                console.log("success");
+            });
+        };
         $scope.setFuncdetailsActive = function (index) {
             $scope.activeFuncdetailsId = index;
         };
@@ -193,6 +202,7 @@ var App;
         };
         $scope.setActive = function (menuItem) {
             $scope.activeMenu = menuItem.Name;
+            $scope.activedata = menuItem;
             if (menuItem.Children == null)
                 $log.info("Children data load");
             $http({
@@ -217,7 +227,7 @@ var App;
         ];
     }
     App.influenceController = influenceController;
-    App.app = angular.module('myApp', ['ui.tree', 'ngRoute', 'ui.bootstrap']);
+    App.app = angular.module('myApp', ['ui.tree', 'ngRoute', 'ui.bootstrap', 'ngSanitize']);
     App.app.directive('focusMe', function ($timeout) {
         return {
             scope: { trigger: '=?focusMe' },

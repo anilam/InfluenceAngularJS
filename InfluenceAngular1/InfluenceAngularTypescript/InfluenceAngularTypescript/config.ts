@@ -3,8 +3,9 @@
 
         static get default(): any {
             return{
-                url:'http://10.145.11.105/Influence/Structure/pm/Nodes'
-            }
+                url: 'http://124.124.79.181/Influence/Structure/pm/Nodes'
+
+        }
         }
     }
 }

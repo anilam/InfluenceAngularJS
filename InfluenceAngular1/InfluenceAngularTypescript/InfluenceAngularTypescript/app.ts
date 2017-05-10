@@ -45,6 +45,8 @@ module App {
         search: (name: string) => void;
         searchDuplicateName: (subMenuItems: any, name: string) => any;
         filterSearchArray: any;
+        saveFuncDetails: () => void;
+        activedata: any;
     }
 
     export function influenceController($scope: IDiagnosticsScope,
@@ -110,6 +112,15 @@ module App {
             }
         };
 
+        $scope.saveFuncDetails = function() {
+            $http({
+                method: "Post",
+                data:$scope.myDataTable,
+                url: Config.Constants.default.url + '/' + $scope.activedata.Path + '/' + "detail"
+            }).success((status) => {
+               console.log("success");
+            });
+        }
 
         $scope.setFuncdetailsActive = (index: number) => {
             $scope.activeFuncdetailsId = index;
@@ -274,6 +285,7 @@ module App {
         $scope.setActive = function (menuItem:any) {
             $scope.activeMenu = menuItem.Name;
 
+            $scope.activedata = menuItem;
             if (menuItem.Children == null)
             $log.info("Children data load");
             $http({
@@ -304,7 +316,7 @@ module App {
     }
 
 
-    export var app = angular.module('myApp', ['ui.tree', 'ngRoute', 'ui.bootstrap']);
+    export var app = angular.module('myApp', ['ui.tree', 'ngRoute', 'ui.bootstrap','ngSanitize']);
 
     app.directive('focusMe', <any>function ($timeout: any) {
         return {
