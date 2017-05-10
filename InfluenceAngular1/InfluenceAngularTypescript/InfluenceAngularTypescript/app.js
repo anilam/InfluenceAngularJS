@@ -16,7 +16,8 @@ var App;
         $scope.tabselected = 0;
         //aside
         $scope.asideState = {
-            open: false
+            open: false,
+            position: 'left'
         };
         $scope.openAside = function (position, backdrop) {
             $scope.asideState = {

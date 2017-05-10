@@ -47,7 +47,7 @@ module App {
         filterSearchArray: any;
         saveFuncDetails: () => void;
         activedata: any;
-        asideState: { open: boolean };
+        asideState: { open: boolean, position:any};
         openAside: (position: any, backdrop: any) => void;
         settings: Settings;
         tabselected: number;
@@ -72,13 +72,14 @@ module App {
 
         //aside
         $scope.asideState = {
-            open: false
+            open: false,
+            position:'left'
         };
 
         $scope.openAside = function (position, backdrop) {
             $scope.asideState = {
                 open: true,
-                position: 'left'
+                position:'left'
             };
 
             function postClose() {
