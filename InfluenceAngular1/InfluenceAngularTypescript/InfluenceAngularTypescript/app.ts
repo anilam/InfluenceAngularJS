@@ -47,16 +47,81 @@ module App {
         filterSearchArray: any;
         saveFuncDetails: () => void;
         activedata: any;
+        asideState: { open: boolean };
+        openAside: (position: any, backdrop: any) => void;
+        settings: Settings;
+        tabselected: number;
+        searchCancel: () => void;
     }
 
     export function influenceController($scope: IDiagnosticsScope,
         $http: angular.IHttpService,
         $log: angular.ILogService,
         $filter:any,
-        $timeout: angular.ITimeoutService) {
+        $timeout: angular.ITimeoutService,
+        $aside:any) {
         $scope.data = [];
         $scope.editing = false;
         $scope.Funcdetailsediting = false;
+        $scope.settings = new Settings();
+        $scope.settings.expandTree = false;
+        $scope.settings.add = false;
+        $scope.settings.delete = false;
+        $scope.settings.edit = false;
+        $scope.tabselected = 0;
+
+        //aside
+        $scope.asideState = {
+            open: false
+        };
+
+        $scope.openAside = function (position, backdrop) {
+            $scope.asideState = {
+                open: true,
+                position: 'left'
+            };
+
+            function postClose() {
+                $scope.asideState.open = false;
+            }
+
+            var modalInstance = $aside.open({
+                templateUrl: 'shared/aside.html',
+                placement: position,
+                size: 'sm',
+                backdrop: backdrop,
+                resolve: {
+                    selectedSettings: function () {
+                        return $scope.settings;
+                    }
+                },
+                controller: function ($scope, $uibModalInstance, selectedSettings) {
+                    $scope.settings = selectedSettings;
+
+                    $scope.ok = function(e) {
+                        $uibModalInstance.close($scope.settings);
+                        e.stopPropagation();
+                    };
+                    $scope.cancel = function(e) {
+                        $uibModalInstance.dismiss();
+                        e.stopPropagation();
+                    };
+                }
+            });
+            modalInstance.result.then(function (selectedSettings) {
+                $scope.settings = selectedSettings;
+                if ($scope.settings.expandTree) {
+                    $scope.expandAll();
+                } else {
+                    $scope.collapseAll();
+                }
+
+            }, function () {
+                $log.info('modal-component dismissed at: ' + new Date());
+            });
+        }
+
+        //aside
 
         $http({
             method: "GET",
@@ -176,11 +241,15 @@ module App {
 
         $scope.search = function (name: string) {
             var filterArray = new Array();
+            $scope.tabselected = 1;
             $scope.filterSearchArray = new Array();
             $scope.searchDuplicateName($scope.data, name);
-            if ($scope.filterSearchArray) {
-                $scope.data = $scope.filterSearchArray;
-            }
+        }
+
+        $scope.searchCancel = function() {
+            $scope.tabselected = 0;
+            $scope.filterSearchArray = new Array();
+            $scope.query = "";
         }
 
         $scope.addFuncdetails = function (scope: any) {
@@ -316,7 +385,7 @@ module App {
     }
 
 
-    export var app = angular.module('myApp', ['ui.tree', 'ngRoute', 'ui.bootstrap','ngSanitize']);
+    export var app = angular.module('myApp', ['ui.tree', 'ngRoute', 'ui.bootstrap', 'ngSanitize','ngAside']);
 
     app.directive('focusMe', <any>function ($timeout: any) {
         return {

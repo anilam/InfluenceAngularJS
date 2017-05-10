@@ -50,6 +50,7 @@
     <None Include="Scripts\_references.js" />
     <Content Include="services\helper.js" />
     <Content Include="services\helper.spec.js" />
+    <Content Include="shared\aside.html" />
     <Content Include="shared\footer.html" />
     <Content Include="shared\header.html" />
     <Content Include="web.config" />
@@ -58,6 +59,7 @@
     <TypeScriptCompile Include="app.ts" />
     <TypeScriptCompile Include="config.ts" />
     <TypeScriptCompile Include="entity\FuncDetails.ts" />
+    <TypeScriptCompile Include="entity\settings.ts" />
     <TypeScriptCompile Include="main.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-animate.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-component-router.d.ts" />

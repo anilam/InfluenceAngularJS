@@ -7,6 +7,7 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" href="bower_components/bootstrap-css/css/bootstrap.min.css">
     <link href="css/angular-ui-tree.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://rawgit.com/dbtek/angular-aside/master/dist/css/angular-aside.css" />
     <link href="app.css" rel="stylesheet" />
     
 
@@ -31,20 +32,48 @@
             </a>
             
 
-
-            <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="edit(this)" ng-hide="editItem === node.Name && editing">
-                <span class="glyphicon glyphicon-edit"></span>
-            </a>
-            <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="remove(this)" ng-hide="editItem === node.Name && editing">
-                <span class="glyphicon glyphicon-remove"></span>
-            </a>
-            <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="newSubItem(this)" style="margin-right: 8px;" ng-hide="editItem === node.Name && editing">
-                <span class="glyphicon glyphicon-plus"></span>
-            </a>
-         
-        </div>
+            <span ng-show="settings.edit">
+                <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="edit(this)" ng-hide="editItem === node.Name && editing">
+                    <span class="glyphicon glyphicon-edit"></span>
+                </a>
+            </span>
+            
+            <span ng-show="settings.delete">
+                <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="remove(this)" ng-hide="editItem === node.Name && editing">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </a>
+                </span>
+            
+            <span ng-show="settings.add">
+                <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="newSubItem(this)" style="margin-right: 8px;" ng-hide="editItem === node.Name && editing">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </a>
+            </span>
+       </div>
         <ol ui-tree-nodes="" ng-model="node.Children" ng-class="{hidden: collapsed}">
             <li ng-repeat="node in node.Children" ui-tree-node ng-include="'nodes_renderer.html'">
+            </li>
+        </ol>
+    </script>
+    
+    
+    
+    <!-- filter node template -->
+    <script type="text/ng-template" id="nodes_renderer_searach.html">
+        <div ui-tree-handle class="tree-node tree-node-content" ng-class="{active : activeMenu === node.Name}" ng-click="setActive(node)">
+            <a class="btn btn-success btn-xs" ng-if="node.Children && node.Children.length > 0" data-nodrag ng-click="toggle(this)">
+                <span class="glyphicon"
+                      ng-class="{
+          'glyphicon-chevron-right': collapsed,
+          'glyphicon-chevron-down': !collapsed || editItem === node.Name && editing
+        }"></span>
+            </a>
+            <!--<span>{{node.Name}}</span>-->
+            <span ng-bind="node.Name"></span>
+
+        </div>
+        <ol ui-tree-nodes="" ng-model="node.Children" ng-class="{hidden: collapsed}">
+            <li ng-repeat="node in node.Children" ui-tree-node ng-include="'nodes_renderer_searach.html'">
             </li>
         </ol>
     </script>
@@ -65,8 +94,6 @@
                 background: #428bca;
                 border-color: #dce2e8;
         }
-
-
     </style>
 
 </head>
@@ -78,30 +105,30 @@
 <div class="container-fluid">
 
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-4">      
         <div id="custom-search-input">
             <div class="input-group col-md-12">
                 <input type="text" ng-model="query" class="search-input form-control input-lg" placeholder="Quick search..."/>
                 <span class="input-group-btn">
                     <button class="btn btn-info btn-lg" type="button" ng-click="search(query)">
+                        <i class="glyphicon glyphicon-search"></i>
+                    </button>
+                    <button class="btn btn-info btn-lg" type="button" ng-click="searchCancel(query)">
                         <i class="glyphicon glyphicon-remove"></i>
                     </button>
                 </span>
             </div>
         </div>
+        <hr />
     </div>
-    <div class="col-md-4">
-        <!--<ol class="breadcrumb">
-            <li class="breadcrumb-item">{{selectedtreepath}}</li>
-        </ol>-->
-    </div>
-    <div class="col-md-4"><button class="btn btn-default pull-right">Download XML</button>
+    <div class="col-md-8">
+        <button class="btn btn-default pull-right">Download XML</button>
     </div>
 </div>
 
 
 
-<div class="row">
+<!--<div class="row">
     <div class="col-sm-4">
 
     </div>
@@ -109,28 +136,35 @@
         <button type="button" class="btn btn-info" ng-click="expandAll()"><span class="glyphicon glyphicon-collapse-down" aria-hidden="true"> Expand</span></button>
         <button type="button" class="btn btn-info" ng-click="collapseAll()"><span class="glyphicon glyphicon-expand" aria-hidden="true"> Collapse</span></button>
     </div>
-</div>
+</div>-->
 
 <div class="row">
-    <div class="col-sm-4">
+    <div class="col-sm-4">     
         <form name="outerForm" class="tab-form-demo">
-        <uib-tabset active="activeForm">
-            <uib-tab index="0" heading="Form Tab">
-                <div ui-tree style="height: 45em; overflow: scroll;" class="wrapper" data-drag-enabled="false" id="tree-root">
-                    <ol ui-tree-nodes ng-model="data" style="height: 600px;">
-                        <li ng-repeat="node in data" ui-tree-node ng-include="'nodes_renderer.html'" data-scroll-container=".wrapper"></li>
-                    </ol>
-                </div>
-            </uib-tab>
-            <uib-tab index="1" heading="Tab One">
-                Some Tab Content
-            </uib-tab>
-            <uib-tab index="2" heading="Tab Two">
-                More Tab Content
-            </uib-tab>
-        </uib-tabset>
-      </form>
-</div>
+            <uib-tabset active="tabselected">
+                <button type="button" class="btn btn-default btn-lg pull-left" ng-click="openAside('left', true)">
+                    <span class="glyphicon glyphicon-align-justify"></span>
+                </button>
+                <uib-tab index="0" heading="List">
+                    <div ui-tree style="height: 45em; overflow: scroll;" class="wrapper" data-drag-enabled="false" id="tree-root">
+                        <ol ui-tree-nodes ng-model="data" style="height: 600px;">
+                            <li ng-repeat="node in data" ui-tree-node ng-include="'nodes_renderer.html'" data-scroll-container=".wrapper"></li>
+                        </ol>
+                    </div>
+                </uib-tab>
+                <uib-tab index="1" heading="Result">
+                    <div ui-tree style="height: 45em; overflow: scroll;" class="wrapper" data-drag-enabled="false" id="tree-root">
+                        <ol ui-tree-nodes ng-model="filterSearchArray" style="height: 600px;">
+                            <li ng-repeat="node in filterSearchArray" ui-tree-node ng-include="'nodes_renderer_searach.html'" data-scroll-container=".wrapper"></li>
+                        </ol>
+                    </div>
+                </uib-tab>
+                <uib-tab index="2" heading="Export">
+                    More Tab Content
+                </uib-tab>
+            </uib-tabset>
+        </form>
+    </div>
 
     <div class="col-sm-8">
         <div class="info">
@@ -316,7 +350,7 @@
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-sanitize.js"></script>
     <script src="bower_components/jquery-3.2.1.min/index.js"></script>
     <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
-    <!--<script src="https://rawgit.com/dbtek/angular-aside/master/dist/js/angular-aside.js"></script>-->
+    <script src="https://rawgit.com/dbtek/angular-aside/master/dist/js/angular-aside.js"></script>
  	
     
      <script src="main.js"></script>
@@ -330,7 +364,7 @@
      <script src="directives/uiTreeNodes.js"></script>
      <script src="services/helper.js"></script>   
      <script src="entity/FuncDetails.js"></script>
-
+    <script src="entity/settings.js"></script>
 <script src="config.js"></script>
     <script src="app.js"></script>
 
