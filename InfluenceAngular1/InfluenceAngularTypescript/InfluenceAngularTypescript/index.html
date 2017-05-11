@@ -13,7 +13,7 @@
 
     <!-- Nested node template -->
     <script type="text/ng-template" id="nodes_renderer.html">
-        <div ui-tree-handle class="tree-node tree-node-content" ng-class="{active : activeMenu === node.Name, activeedit : editItem === node.Name && editing }" ng-click="setActive(node)">
+        <div ui-tree-handle class="tree-node tree-node-content" ng-class="{active : activeMenu === node.Name, activeedit : editItem === node.Name && editing,deleted : node.Status==3 }" ng-click="setActive(node)">
             <a class="btn btn-success btn-xs" ng-if="node.Children && node.Children.length > 0" data-nodrag ng-click="toggle(this)">
                 <span class="glyphicon"
                       ng-class="{
@@ -32,23 +32,32 @@
             </a>
             
 
-            <span ng-show="settings.edit">
+            <span ng-show="settings.edit && node.Status!=3">
                 <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="edit(this)" ng-hide="editItem === node.Name && editing">
                     <span class="glyphicon glyphicon-edit"></span>
                 </a>
             </span>
             
-            <span ng-show="settings.delete">
-                <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="remove(this)" ng-hide="editItem === node.Name && editing">
+            
+
+            <span ng-show="settings.delete && node.Status!=3">
+                <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="removeItem(this)" ng-hide="editItem === node.Name && editing">
                     <span class="glyphicon glyphicon-remove"></span>
                 </a>
-                </span>
+             </span>
             
-            <span ng-show="settings.add">
+            <span ng-show="settings.add && node.Status!=3">
                 <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="newSubItem(this)" style="margin-right: 8px;" ng-hide="editItem === node.Name && editing">
                     <span class="glyphicon glyphicon-plus"></span>
                 </a>
             </span>
+            
+            <span ng-show="node.Status!=3"  class="pull-right">
+                <span class="glyphicon glyphicon-export"></span> <input type="checkbox" ng-model="node.Name" ng-change="updateExcelExport(node.Name,this)"/>
+               {{$index}}
+            </span>
+            
+           
        </div>
         <ol ui-tree-nodes="" ng-model="node.Children" ng-class="{hidden: collapsed}">
             <li ng-repeat="node in node.Children track by $index" ui-tree-node ng-include="'nodes_renderer.html'">
@@ -94,7 +103,16 @@
                 color: #438eb9;
                 background: #428bca;
                 border-color: #dce2e8;
-        }
+        }.regular-checkbox {
+	-webkit-appearance: none;
+	background-color: #fafafa;
+	border: 1px solid #cacece;
+	box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
+	padding: 9px;
+	border-radius: 3px;
+	display: inline-block;
+	position: relative;
+}
 
 .glyphicon.normal-right-spinner {
     -webkit-animation: glyphicon-spin-r 2s infinite linear;
@@ -201,8 +219,8 @@
                 </button>
                 <uib-tab index="0" heading="List">
                     <div ui-tree style="height: 45em; overflow: scroll;" class="wrapper" data-drag-enabled="false" id="tree-root">
-                        <ol ui-tree-nodes ng-model="data" style="height: 600px;">
-                            <li ng-repeat="node in data track by $index" ui-tree-node ng-include="'nodes_renderer.html'" data-scroll-container=".wrapper"></li>
+                        <ol ui-tree-nodes ng-model="nodeData" style="height: 600px;">
+                            <li ng-repeat="node in nodeData track by $index" ui-tree-node ng-include="'nodes_renderer.html'" data-scroll-container=".wrapper"></li>
                         </ol>
                     </div>
                 </uib-tab>
@@ -216,6 +234,13 @@
                 <uib-tab index="2" heading="Export">
                     More Tab Content
                 </uib-tab>
+                <span ng-show="loadingNode" class="glyphicon glyphicon-repeat normal-right-spinner" style="font-size: 2em"></span>
+                <button type="button" class="btn btn-primary pull-right" ng-click="init()">
+                    <span class="glyphicon glyphicon-refresh"> Refresh</span>
+                </button>
+                <button type="button" class="btn btn-primary pull-right" ng-click="saveNode()">
+                    <span class="glyphicon glyphicon-save"> Save</span>
+                </button>           
             </uib-tabset>
         </form>
     </div>
@@ -224,7 +249,7 @@
         <div class="info">
             {{Name}}
         </div>
-        <!--<pre class="code">{{ data | json }}</pre>-->
+        <pre class="code">{{ data | json }}</pre>
 
         <button class="btn btn-default" aria-label="Left Align" ng-click="exportToExcel('#FunctionalTable', 'Functional Details')" ng-show="myDataTable.Functional.length>0" ng-controller="MyCtrl">
             <span class="glyphicon glyphicon-share" aria-hidden="true"> Export</span>

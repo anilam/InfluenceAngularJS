@@ -5,29 +5,52 @@ var App;
 /// <reference path="scripts/typings/jstree/jstree.d.ts" />
 (function (App) {
     function influenceController($scope, $http, $log, $filter, $timeout, functionalDetailsBl, $aside) {
-        $scope.data = [];
+        $scope.nodeData = [];
         $scope.editing = false;
         $scope.Funcdetailsediting = false;
         $scope.DBdetailsediting = false;
         $scope.settings = new Settings();
         $scope.settings.expandTree = false;
+        $scope.settings.collapseTree = false;
         $scope.settings.add = false;
         $scope.settings.delete = false;
         $scope.settings.edit = false;
         $scope.tabselected = 0;
         $scope.loading = false;
-        init();
-        function init() {
+        $scope.loadingNode = false;
+        $scope.exportList = new Array();
+        $scope.updateExcelExport = function (index, scope) {
+            var exportData = $scope.nodeData;
+            if (index) {
+                $scope.exportList.push({
+                    id: index,
+                    Name: exportData.Name,
+                    Path: exportData.Path
+                });
+            }
+            else {
+                var index = exportList.indexOf(index);
+                if (index > -1) {
+                    exportList.splice(index, 1);
+                }
+            }
+        };
+        $scope.init = function () {
+            $scope.loadingNode = true;
             ////aside
             $http({
                 method: "GET",
                 url: App.Config.Constants.default.url
-            }).then(function (response) {
+            }).success(function (data) {
                 var arraypush = new Array();
-                arraypush.unshift(response.data);
-                $scope.data = arraypush;
+                arraypush.unshift(data);
+                $scope.nodeData = arraypush;
+                $scope.loadingNode = false;
+            }).error(function () {
+                $scope.loadingNode = false;
             });
-        }
+        };
+        $scope.init();
         //aside
         $scope.asideState = {
             open: false,
@@ -68,22 +91,19 @@ var App;
                 if ($scope.settings.expandTree) {
                     $scope.expandAll();
                 }
-                else {
+                if ($scope.settings.collapseTree) {
                     $scope.collapseAll();
                 }
             }, function () {
                 $log.info('modal-component dismissed at: ' + new Date());
             });
         };
-        $scope.remove = function (scope) {
-            scope.remove();
-        };
         $scope.toggle = function (scope) {
             scope.toggle();
         };
         $scope.moveLastToTheBeginning = function () {
-            var a = $scope.data.pop();
-            $scope.data.splice(0, 0, a);
+            var a = $scope.nodeData.pop();
+            $scope.nodeData.splice(0, 0, a);
         };
         $scope.checkDuplicateName = function (subMenuItems, name) {
             var found = false;
@@ -211,24 +231,26 @@ var App;
             var filterArray = new Array();
             $scope.tabselected = 1;
             $scope.filterSearchArray = new Array();
-            $scope.searchDuplicateName($scope.data, name);
+            $scope.searchDuplicateName($scope.nodeData, name);
         };
         $scope.searchCancel = function () {
             $scope.tabselected = 0;
             $scope.filterSearchArray = new Array();
             $scope.query = "";
         };
+        //Node 
         $scope.newSubItem = function (scope) {
-            $scope.$broadcast('angular-ui-tree:expand-all');
             if ($scope.editing != true) {
                 var nodeData = scope.$modelValue;
                 if (nodeData.Children == null) {
                     nodeData.Children = [];
                 }
-                nodeData.Children.unshift({
+                nodeData.Children.push({
                     //  id: nodeData.id * 10 + nodeData.nodes.length,
                     Name: "EnterDetails",
                     Path: "",
+                    ParentPath: nodeData.Path,
+                    Status: 1,
                     Children: null
                 });
                 $scope.editing = true;
@@ -241,6 +263,11 @@ var App;
                 alert("Please complete the editing");
             }
         };
+        $scope.removeItem = function (scope) {
+            var nodeData = scope.$modelValue;
+            nodeData.Status = 3;
+        };
+        //Node ----- End
         $scope.edit = function (scope) {
             if (!$scope.editing) {
                 $scope.editing = true;
@@ -248,10 +275,6 @@ var App;
                 $scope.editItem = nodeData.Name;
                 //backup
                 $scope.editValue = nodeData.Name;
-                // And we must focus the element. 
-                // `angular.element()` provides a chainable array, like jQuery so to access a native DOM function, 
-                // we have to reference the first element in the array.
-                angular.element(nodeData.Name).focus();
             }
             else {
                 $scope.activeMenu = "EnterDetails";
@@ -260,8 +283,14 @@ var App;
         };
         $scope.editok = function (scope) {
             var nodeData = scope.$modelValue;
-            if (!$scope.checkDuplicateName($scope.data, scope.editValue)) {
+            if (!$scope.checkDuplicateName($scope.nodeData, scope.editValue)) {
                 $scope.editing = false;
+                if (nodeData.Name == "EnterDetails") {
+                    nodeData.Status = 1;
+                }
+                else {
+                    nodeData.Status = 2;
+                }
                 nodeData.Name = scope.editValue;
                 $scope.editValue = "";
                 $scope.activeMenu = nodeData.Name;
@@ -279,9 +308,23 @@ var App;
             scope.editValue = $scope.editValue;
             $scope.editing = false;
             var nodeData = scope.$modelValue;
-            if (nodeData.Name == "EnterDetails") {
+            if (nodeData.Name == "EnterDetails" || $scope.editValue == "EnterDetails") {
                 scope.remove();
             }
+        };
+        $scope.saveNode = function () {
+            $scope.loadingNode = true;
+            var storedata = $scope.nodeData;
+            $http({
+                method: "Post",
+                data: storedata.shift(),
+                url: App.Config.Constants.default.url
+            }).success(function (status) {
+                console.log("success");
+                $scope.init();
+            }).error(function (status) {
+                $scope.loadingNode = false;
+            });
         };
         $scope.setActive = function (menuItem) {
             $scope.loading = true;

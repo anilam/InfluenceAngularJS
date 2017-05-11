@@ -5,11 +5,20 @@
 <div class="modal-body">    
     <table class="table">
         <tbody>
+        <tr>
+            <td>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="settings.expandTree"> Expand Tree Node
+                    </label>
+                </div>
+            </td>
+        </tr>
             <tr>
                 <td>
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" ng-model="settings.expandTree"> Expand Tree Node
+                            <input type="checkbox" ng-model="settings.collapseTree"> Collapse Tree Node
                         </label>
                     </div>
                 </td>

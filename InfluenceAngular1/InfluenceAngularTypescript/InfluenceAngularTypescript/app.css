@@ -24,6 +24,11 @@
     border-color: #dce2e8;
 }
 
+.angular-ui-tree-handle.deleted {
+    color: #dce2e8;
+    background: red;
+    border-color: #dce2e8;
+}
 
 .angular-ui-tree-handle.activeedit {
     color: #438eb9;

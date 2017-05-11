@@ -11,7 +11,7 @@ module App {
         remove: (scope: any) => void;
         toggle: (scope: any) => void;
         moveLastToTheBeginning: () => void;
-        data:any;
+        nodeData:any;
         newSubItem: (scope: any) => void;
         collapseAll: () => void;
         expandAll: () => void;
@@ -51,7 +51,7 @@ module App {
         openAside: (position: any, backdrop: any) => void;
         settings: Settings;
         tabselected: number;
-        searchCancel: () => void;
+        searchCancel: () => any;
         setDBdetailsActive: (index: number) => void;
         activeDBdetailsId: number;
         editDBdetails: any;
@@ -64,6 +64,12 @@ module App {
         addDBdetails: (scope: any) => void;
         loading: boolean;
         loadServerData: any;
+        removeItem: (scope: any) => void;
+        saveNode: () => void;
+        loadingNode: boolean;
+        init: () => any;
+        updateExcelExport: (index: number, scope: any) => void;
+        exportList: any;
     }
 
     export function influenceController($scope: IDiagnosticsScope,
@@ -73,31 +79,54 @@ module App {
         $timeout: angular.ITimeoutService,
         functionalDetailsBl:FunctionalDetailsBl,
         $aside:any) {
-        $scope.data = [];
+        $scope.nodeData = [];
         $scope.editing = false;
         $scope.Funcdetailsediting = false;
         $scope.DBdetailsediting = false;
         $scope.settings = new Settings();
         $scope.settings.expandTree = false;
+        $scope.settings.collapseTree = false;
         $scope.settings.add = false;
         $scope.settings.delete = false;
         $scope.settings.edit = false;
         $scope.tabselected = 0;
         $scope.loading = false;
+        $scope.loadingNode = false;
+        $scope.exportList=new Array();
 
-        init();
-        function  init() {
+        $scope.updateExcelExport = function (index: any, scope: any) {
+            var exportData = $scope.nodeData;
+
+            if (index) { //If it is checked
+                $scope.exportList.push({
+                    id: index,
+                    Name: exportData.Name,
+                    Path: exportData.Path
+                });
+            } else {
+                var index = exportList.indexOf(index);
+                if (index > -1) {
+                    exportList.splice(index, 1);
+                }
+            }
+        }
+
+        $scope.init = function() {
+            $scope.loadingNode = true;
             ////aside
             $http({
                 method: "GET",
                 url: Config.Constants.default.url
-            }).then(response => {
+            }).success((data) => {
                 var arraypush = new Array();
-                arraypush.unshift(response.data);
-                $scope.data = arraypush;
+                arraypush.unshift(data);
+                $scope.nodeData = arraypush;
+                $scope.loadingNode = false;
+            }).error(() => {
+                $scope.loadingNode = false;
             });
         }
-
+        $scope.init();
         //aside
         $scope.asideState = {
             open: false,
@@ -141,7 +170,8 @@ module App {
                 $scope.settings = selectedSettings;
                 if ($scope.settings.expandTree) {
                     $scope.expandAll();
-                } else {
+                }
+                if ($scope.settings.collapseTree) {
                     $scope.collapseAll();
                 }
 
@@ -150,17 +180,13 @@ module App {
             });
         }
    
-        $scope.remove = function(scope) {
-            scope.remove();
-        };
-
         $scope.toggle = function(scope) {
             scope.toggle();
         };
 
         $scope.moveLastToTheBeginning = function() {
-            var a = $scope.data.pop();
-            $scope.data.splice(0, 0, a);
+            var a = $scope.nodeData.pop();
+            $scope.nodeData.splice(0, 0, a);
         };
 
         $scope.checkDuplicateName = (subMenuItems: any, name: string) => {
@@ -311,7 +337,7 @@ module App {
             var filterArray = new Array();
             $scope.tabselected = 1;
             $scope.filterSearchArray = new Array();
-            $scope.searchDuplicateName($scope.data, name);
+            $scope.searchDuplicateName($scope.nodeData, name);
         }
 
         $scope.searchCancel = function() {
@@ -320,18 +346,21 @@ module App {
             $scope.query = "";
         }
 
+
+        //Node 
         $scope.newSubItem = function (scope) {
-            $scope.$broadcast('angular-ui-tree:expand-all');
             if ($scope.editing != true) {
 
                 var nodeData = scope.$modelValue;
                 if (nodeData.Children == null) {
                     nodeData.Children = [];
                 }
-                nodeData.Children.unshift({
+                nodeData.Children.push({
                     //  id: nodeData.id * 10 + nodeData.nodes.length,
                     Name: "EnterDetails",
                     Path: "",
+                    ParentPath: nodeData.Path,
+                    Status:1,
                     Children: null
                 });
                 $scope.editing = true;
@@ -348,6 +377,12 @@ module App {
 
         };
 
+        $scope.removeItem = function (scope) {
+            var nodeData = scope.$modelValue;
+            nodeData.Status=3;
+        };
+        //Node ----- End
+
         $scope.edit = function (scope) {
 
             if (!$scope.editing) {
@@ -359,10 +394,6 @@ module App {
                 //backup
                 $scope.editValue = nodeData.Name;
 
-                // And we must focus the element. 
-                // `angular.element()` provides a chainable array, like jQuery so to access a native DOM function, 
-                // we have to reference the first element in the array.
-                angular.element(nodeData.Name).focus();
             } else {
                 $scope.activeMenu = "EnterDetails";
                 alert("Please Complete the editiing");
@@ -372,8 +403,13 @@ module App {
 
         $scope.editok = function(scope) {        
             var nodeData = scope.$modelValue;
-            if (!$scope.checkDuplicateName($scope.data, scope.editValue)) {
-                $scope.editing = false;
+            if (!$scope.checkDuplicateName($scope.nodeData, scope.editValue)) {
+                $scope.editing = false;            
+                if (nodeData.Name == "EnterDetails") {
+                    nodeData.Status = 1;
+                } else {
+                    nodeData.Status = 2;
+                }
                 nodeData.Name = scope.editValue;
                 $scope.editValue = "";
                 $scope.activeMenu = nodeData.Name;
@@ -391,10 +427,25 @@ module App {
             scope.editValue = $scope.editValue;
             $scope.editing = false;
             var nodeData = scope.$modelValue;
-            if (nodeData.Name == "EnterDetails") {
+            if (nodeData.Name == "EnterDetails" || $scope.editValue == "EnterDetails") {
                 scope.remove();
             }
         };
+
+        $scope.saveNode = function () {
+            $scope.loadingNode = true;
+            var storedata = $scope.nodeData;
+            $http({
+                method: "Post",
+                data: storedata.shift(),
+                url: Config.Constants.default.url
+            }).success((status) => {
+                console.log("success");
+                $scope.init();
+            }).error((status: Number) => {
+                $scope.loadingNode = false;
+            });
+        }
 
         $scope.setActive = function (menuItem: any) {
             $scope.loading = true;
