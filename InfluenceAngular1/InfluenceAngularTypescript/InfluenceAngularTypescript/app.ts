@@ -61,6 +61,7 @@ module App {
         editDBdetailsOk: any;
         removeDBdetailsCancel: any;
         removeDBdetails: any;
+        addDBdetails: (scope: any) => void;
     }
 
     export function influenceController($scope: IDiagnosticsScope,
@@ -106,20 +107,20 @@ module App {
                         return $scope.settings;
                     }
                 },
-                controller: function ($scope, $uibModalInstance, selectedSettings) {
+                controller: function ($scope:any, $uibModalInstance:any, selectedSettings:Settings) {
                     $scope.settings = selectedSettings;
 
-                    $scope.ok = function(e) {
+                    $scope.ok = function(e:any) {
                         $uibModalInstance.close($scope.settings);
                         e.stopPropagation();
                     };
-                    $scope.cancel = function(e) {
+                    $scope.cancel = function(e:any) {
                         $uibModalInstance.dismiss();
                         e.stopPropagation();
                     };
                 }
             });
-            modalInstance.result.then(function (selectedSettings) {
+            modalInstance.result.then(function (selectedSettings:any) {
                 $scope.settings = selectedSettings;
                 if ($scope.settings.expandTree) {
                     $scope.expandAll();
@@ -242,6 +243,29 @@ module App {
             $scope.myDataTable.Functional.splice(index,1);
         }
 
+        $scope.addFuncdetails = function (scope: any) {
+
+            if ($scope.Funcdetailsediting != true) {
+                $scope.myDataTable.Functional.unshift({
+                    Module: "",
+                    Product: "",
+                    Impact: "",
+                    Complexity: ""
+                });
+                $scope.editFuncDetailsValue = new Array();
+                $scope.editFuncDetailsValue.ComplexityEdit = $scope.myDataTable.Functional[0].Complexity;
+                $scope.editFuncDetailsValue.ImpactEdit = $scope.myDataTable.Functional[0].Impact;
+                $scope.editFuncDetailsValue.ProductEdit = $scope.myDataTable.Functional[0].Product;
+                $scope.editFuncDetailsValue.ModuleEdit = $scope.myDataTable.Functional[0].Module;
+                $scope.Funcdetailsediting = true;
+
+                $scope.editItemFuncdetailsId = 0;
+
+            } else {
+                alert("Please complete the editing");
+            }
+        }
+
         //DB Details
         $scope.setDBdetailsActive = (index: number) => {
             $scope.activeDBdetailsId = index;
@@ -283,6 +307,31 @@ module App {
             $scope.myDataTable.DatabaseDetails.splice(index, 1);
         }
 
+        $scope.addDBdetails = function (scope: any) {
+
+            if ($scope.DBdetailsediting != true) {
+                $scope.myDataTable.DatabaseDetails.unshift({
+                    DbObject: "",
+                    Description: "",
+                    DbType: "",
+                    MachineName: "",
+                    ModifyDtTm: "",
+                    Modifyby:""
+                });
+                $scope.editDBDetailsValue = new Array();
+                $scope.editDBDetailsValue.DbObject = $scope.myDataTable.DatabaseDetails[0].DbObject;
+                $scope.editDBDetailsValue.Description = $scope.myDataTable.DatabaseDetails[0].Description;
+                $scope.editDBDetailsValue.DbType = $scope.myDataTable.DatabaseDetails[0].DbType;
+              
+                $scope.DBdetailsediting = true;
+
+                $scope.editItemDBdetailsId = 0;
+
+            } else {
+                alert("Please complete the editing");
+            }
+        }
+
 
         $scope.visible = function (node) {
             return !($scope.query && $scope.query.length > 0
@@ -304,29 +353,6 @@ module App {
             $scope.tabselected = 0;
             $scope.filterSearchArray = new Array();
             $scope.query = "";
-        }
-
-        $scope.addFuncdetails = function (scope: any) {
-
-            if ($scope.Funcdetailsediting != true) {
-                $scope.myDataTable.Functional.unshift({
-                    Module: "",
-                    Product: "",
-                    Impact: "",
-                    Complexity:""
-                });
-                $scope.editFuncDetailsValue = new Array();
-                $scope.editFuncDetailsValue.ComplexityEdit = $scope.myDataTable.Functional[0].Complexity;
-                $scope.editFuncDetailsValue.ImpactEdit = $scope.myDataTable.Functional[0].Impact;
-                $scope.editFuncDetailsValue.ProductEdit = $scope.myDataTable.Functional[0].Product;
-                $scope.editFuncDetailsValue.ModuleEdit = $scope.myDataTable.Functional[0].Module;
-                $scope.Funcdetailsediting = true;
-
-                $scope.editItemFuncdetailsId = 0;
-
-            } else {
-                alert("Please complete the editing");
-            }
         }
 
         $scope.newSubItem = function (scope) {
