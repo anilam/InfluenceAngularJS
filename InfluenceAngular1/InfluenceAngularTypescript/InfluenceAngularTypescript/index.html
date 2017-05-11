@@ -51,7 +51,7 @@
             </span>
        </div>
         <ol ui-tree-nodes="" ng-model="node.Children" ng-class="{hidden: collapsed}">
-            <li ng-repeat="node in node.Children" ui-tree-node ng-include="'nodes_renderer.html'">
+            <li ng-repeat="node in node.Children track by $index" ui-tree-node ng-include="'nodes_renderer.html'">
             </li>
         </ol>
     </script>
@@ -80,9 +80,10 @@
     
     <style>
         .container-fluid {
-  margin-right: auto;
-  margin-left: auto;
-  max-width: 1600px; /* or 950px */
+            margin-right: auto;
+            margin-left: auto;
+            max-width: 1600px; /* or 950px */
+        }
 }
         .funcdetails.active {
                 color: #438eb9;
@@ -94,6 +95,59 @@
                 background: #428bca;
                 border-color: #dce2e8;
         }
+
+.glyphicon.normal-right-spinner {
+    -webkit-animation: glyphicon-spin-r 2s infinite linear;
+    animation: glyphicon-spin-r 2s infinite linear;
+}
+
+@-webkit-keyframes glyphicon-spin-r {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(359deg);
+        transform: rotate(359deg);
+    }
+}
+
+@keyframes glyphicon-spin-r {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(359deg);
+        transform: rotate(359deg);
+    }
+}
+
+@-webkit-keyframes glyphicon-spin-l {
+    0% {
+        -webkit-transform: rotate(359deg);
+        transform: rotate(359deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+}
+
+@keyframes glyphicon-spin-l {
+    0% {
+        -webkit-transform: rotate(359deg);
+        transform: rotate(359deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+}
     </style>
 
 </head>
@@ -148,7 +202,7 @@
                 <uib-tab index="0" heading="List">
                     <div ui-tree style="height: 45em; overflow: scroll;" class="wrapper" data-drag-enabled="false" id="tree-root">
                         <ol ui-tree-nodes ng-model="data" style="height: 600px;">
-                            <li ng-repeat="node in data" ui-tree-node ng-include="'nodes_renderer.html'" data-scroll-container=".wrapper"></li>
+                            <li ng-repeat="node in data track by $index" ui-tree-node ng-include="'nodes_renderer.html'" data-scroll-container=".wrapper"></li>
                         </ol>
                     </div>
                 </uib-tab>
@@ -181,10 +235,9 @@
         </button>
         <hr/>
         
-        <uib-tabset active="3">
-    
+        <uib-tabset active="3">         
             <uib-tab index="3" heading="Functional">
-                <div class="table-responsive" id="FunctionalTable">
+                <div class="table-responsive" id="FunctionalTable" ng-hide="loading">
                     <table class="table">
                         <thead>
                             <tr>
@@ -214,7 +267,7 @@
                 </div>
             </uib-tab>
             <uib-tab index="4" heading="Database">
-                <div class="tab-pane" id="DatabaseTable">
+                <div class="tab-pane" id="DatabaseTable" ng-hide="loading">
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -242,7 +295,7 @@
                 </div>
             </uib-tab>
             <uib-tab index="5" heading="Other Details">
-                <div class="tab-pane " id="OthersTable">
+                <div class="tab-pane " id="OthersTable" ng-hide="loading">
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -266,6 +319,7 @@
         
 
 
+        <span ng-show="loading" class="glyphicon glyphicon-repeat normal-right-spinner" style="font-size: 2em"></span>
         <!--<div class="card text-left">
             <div class="card-header">
                 <span class="pull-right" ng-show="myDataTable.Functional.length>0"><a class="pull-right btn btn-primary btn-xs" ng-click="addFuncdetails(this)"><span class="glyphicon glyphicon-plus"></span></a></span>
@@ -348,76 +402,6 @@
     </div>
 </div>
 
-<!--<div class="card text-left">
-    <div class="card-header">
-        <ul class="nav nav-tabs card-header-tabs">
-            <li class="active"><a href="#FunctionalTable" data-toggle="tab" style="background-color: rgb(91,192,222);">Functional</a></li>
-            <li><a href="#DatabaseTable" data-toggle="tab" style="background-color: rgb(91,192,222);">Database</a></li>
-            <li><a href="#OthersTable" data-toggle="tab" style="background-color: rgb(91,192,222);">Other Details</a></li>
-        </ul>
-    </div>
-    <div class="tab-content">
-        <div class="tab-pane active" id="FunctionalTable">
-            <table class="table table-striped ">
-                <thead>
-                <tr>
-                    <th>IMPACT AREA</th>
-                    <th>PRODUCT</th>
-                    <th>MODULE</th>
-                    <th>COMPLEXITY</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="Funcdetails in myDataTable.Functional">
-                    <td>{{ Funcdetails.Impact }}</td>
-                    <td>{{ Funcdetails.Product }}</td>
-                    <td>{{ Funcdetails.Module }}</td>
-                    <td><p><font color="red">{{ Funcdetails.Complexity }}</font></p></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="tab-pane" id="DatabaseTable">
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>Impact Details</th>
-                    <th>Product</th>
-                    <th>Module</th>
-                    <th>Compexity</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="DBDetails in myDataTable.DatabaseDetails">
-                    <td>{{ DBDetails.Description }}</td>
-                    <td>{{ DBDetails.DbObject }}</td>
-                    <td></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="tab-pane " id="OthersTable">
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>Impact Details</th>
-                    <th>Product</th>
-                    <th>Module</th>
-                    <th>Compexity</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="AddDetails in myDataTable.AdditionalDetails">
-                    <td>{{ AddDetails.DbType }}</td>
-                    <td>{{ AddDetails.DbObject }}</td>
-                    <td>{{ AddDetails.Description }}</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>-->
-
 
 </div>
 <hr />    
@@ -449,6 +433,7 @@
      <script src="directives/uiTreeNodes.js"></script>
      <script src="services/helper.js"></script>   
      <script src="entity/FuncDetails.js"></script>
+    <script src="BusinessLogic/FunctionalDetails.js"></script>
     <script src="entity/settings.js"></script>
 <script src="config.js"></script>
     <script src="app.js"></script>

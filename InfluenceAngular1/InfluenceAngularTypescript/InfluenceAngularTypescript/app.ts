@@ -62,6 +62,8 @@ module App {
         removeDBdetailsCancel: any;
         removeDBdetails: any;
         addDBdetails: (scope: any) => void;
+        loading: boolean;
+        loadServerData: any;
     }
 
     export function influenceController($scope: IDiagnosticsScope,
@@ -69,6 +71,7 @@ module App {
         $log: angular.ILogService,
         $filter:any,
         $timeout: angular.ITimeoutService,
+        functionalDetailsBl:FunctionalDetailsBl,
         $aside:any) {
         $scope.data = [];
         $scope.editing = false;
@@ -80,6 +83,20 @@ module App {
         $scope.settings.delete = false;
         $scope.settings.edit = false;
         $scope.tabselected = 0;
+        $scope.loading = false;
+
+        init();
+        function  init() {
+            ////aside
+            $http({
+                method: "GET",
+                url: Config.Constants.default.url
+            }).then(response => {
+                var arraypush = new Array();
+                arraypush.unshift(response.data);
+                $scope.data = arraypush;
+            });
+        }
 
         //aside
         $scope.asideState = {
@@ -132,20 +149,7 @@ module App {
                 $log.info('modal-component dismissed at: ' + new Date());
             });
         }
-
-        //aside
-
-        $http({
-            method: "GET",
-            url: Config.Constants.default.url
-        }).then(response => {
-            var stringified = JSON.stringify(response.data);
-            stringified = stringified.replace(new RegExp('Name', 'g'), "text");
-            stringified = stringified.replace(new RegExp('Children', 'g'), "children");
-            stringified = stringified.replace(new RegExp('Path', 'g'), "id");
-            //   $scope.data = JSON.parse(stringified);
-        });
-        //Copy Tree Code
+   
         $scope.remove = function(scope) {
             scope.remove();
         };
@@ -188,82 +192,44 @@ module App {
             }
         };
 
-        $scope.saveFuncDetails = function() {
+        // Save all
+        $scope.saveFuncDetails = function () {
+            $scope.loading = true;
             $http({
                 method: "Post",
                 data:$scope.myDataTable,
                 url: Config.Constants.default.url + '/' + $scope.activedata.Path + '/' + "detail"
             }).success((status) => {
-               console.log("success");
+                console.log("success");
+                $scope.loading = false;
+            }).error((status: Number) => {
+                $scope.loading = false;
             });
         }
 
-
-
         //func details
         $scope.setFuncdetailsActive = (index: number) => {
-            $scope.activeFuncdetailsId = index;
+            functionalDetailsBl.setFuncdetailsActive(index,$scope);
         }
 
         $scope.editFuncdetails = function (Funcdetails: FunctionalDetail, index: number) {
-            if (!$scope.Funcdetailsediting) {
-                $scope.Funcdetailsediting = true;
-                $scope.editItemFuncdetailsId = index;
-
-                //backup
-                //$scope.editFuncDetailsValue = new FunctionalDetail();
-                $scope.editFuncDetailsValue = new Array();
-                $scope.editFuncDetailsValue.ComplexityEdit = $scope.myDataTable.Functional[index].Complexity;
-                $scope.editFuncDetailsValue.ImpactEdit = $scope.myDataTable.Functional[index].Impact;
-                $scope.editFuncDetailsValue.ProductEdit = $scope.myDataTable.Functional[index].Product;
-                $scope.editFuncDetailsValue.ModuleEdit = $scope.myDataTable.Functional[index].Module;
-
-            } else {
-                alert("Please Complete the editiing");
-            }
+            functionalDetailsBl.editFuncdetails(Funcdetails,index,$scope);
         }
 
         $scope.editFuncdetailsOk = function (Funcdetails: FunctionalDetail, index: number) {
-            $scope.Funcdetailsediting = false;
-            //Mapping
-            $scope.myDataTable.Functional[index].Complexity = $scope.editFuncDetailsValue.ComplexityEdit;
-            $scope.myDataTable.Functional[index].Impact = $scope.editFuncDetailsValue.ImpactEdit;
-            $scope.myDataTable.Functional[index].Product = $scope.editFuncDetailsValue.ProductEdit;
-            $scope.myDataTable.Functional[index].Module = $scope.editFuncDetailsValue.ModuleEdit;
+            functionalDetailsBl.editFuncdetailsOk(Funcdetails, index,$scope);
         }
 
         $scope.removeFuncdetailsCancel = function (Funcdetails: FunctionalDetail, index: number) {
-            $scope.Funcdetailsediting = false;
-            if (Funcdetails.Module == "" && Funcdetails.Complexity =="" && Funcdetails.Impact == "" && Funcdetails.Product == "") {
-                $scope.myDataTable.Functional.splice(index, 1);
-            }       
+            functionalDetailsBl.removeFuncdetailsCancel(Funcdetails, index, $scope);
         }
 
         $scope.removeFuncdetails = function (index: number) {
-            $scope.myDataTable.Functional.splice(index,1);
+            functionalDetailsBl.removeFuncdetails(index,$scope);
         }
 
         $scope.addFuncdetails = function (scope: any) {
-
-            if ($scope.Funcdetailsediting != true) {
-                $scope.myDataTable.Functional.unshift({
-                    Module: "",
-                    Product: "",
-                    Impact: "",
-                    Complexity: ""
-                });
-                $scope.editFuncDetailsValue = new Array();
-                $scope.editFuncDetailsValue.ComplexityEdit = $scope.myDataTable.Functional[0].Complexity;
-                $scope.editFuncDetailsValue.ImpactEdit = $scope.myDataTable.Functional[0].Impact;
-                $scope.editFuncDetailsValue.ProductEdit = $scope.myDataTable.Functional[0].Product;
-                $scope.editFuncDetailsValue.ModuleEdit = $scope.myDataTable.Functional[0].Module;
-                $scope.Funcdetailsediting = true;
-
-                $scope.editItemFuncdetailsId = 0;
-
-            } else {
-                alert("Please complete the editing");
-            }
+            functionalDetailsBl.addFuncdetails(scope,$scope);          
         }
 
         //DB Details
@@ -331,7 +297,6 @@ module App {
                 alert("Please complete the editing");
             }
         }
-
 
         $scope.visible = function (node) {
             return !($scope.query && $scope.query.length > 0
@@ -431,7 +396,8 @@ module App {
             }
         };
 
-        $scope.setActive = function (menuItem:any) {
+        $scope.setActive = function (menuItem: any) {
+            $scope.loading = true;
             $scope.activeMenu = menuItem.Name;
 
             $scope.activedata = menuItem;
@@ -442,6 +408,10 @@ module App {
                 url: Config.Constants.default.url + '/' + menuItem.Path
             }).success((data: NodeDetail) => {
                 $scope.myDataTable = data;
+                $scope.loading = false;
+            }).error((status:any) =>
+            {
+                $scope.loading = false;
             });
 
 
@@ -456,12 +426,7 @@ module App {
 
         $scope.expandAll = function () {
             $scope.$broadcast('angular-ui-tree:expand-all');
-        };
-
-        $scope.data = [{
-            "Name": "Nextgen", "Path": <any>null, "Children": [{ "Name": "PM", "Path": "Nextgen^Node|0-", "Children": [{ "Name": "Appointment", "Path": "Nextgen^Node|0-^Node|0-", "Children": [{ "Name": "Create Appointment", "Path": "Nextgen^Node|0-^Node|0-^Node|0-", "Children": null }, { "Name": "Copy Paste Appointment", "Path": "Nextgen^Node|0-^Node|0-^Node|1-", "Children": <any>null }, { "Name": "Cut Paste Appointment", "Path": "Nextgen^Node|0-^Node|0-^Node|2-", "Children": <any>null }, { "Name": "Checkin", "Path": "Nextgen^Node|0-^Node|0-^Node|3-", "Children": <any>null }, { "Name": "Delete Appointment", "Path": "Nextgen^Node|0-^Node|0-^Node|4-", "Children": <any>null }, { "Name": "Modify Appoitment", "Path": "Nextgen^Node|0-^Node|0-^Node|5-", "Children": <any>null }] }, { "Name": "Person", "Path": "Nextgen^Node|0-^Node|1-", "Children": <any>null }, { "Name": "Patient", "Path": "Nextgen^Node|0-^Node|2-", "Children": [{ "Name": "Create Patient", "Path": "Nextgen^Node|0-^Node|2-^Node|0-", "Children": <any>null }, { "Name": "Add / Modify Patient Demographics", "Path": "Nextgen^Node|0-^Node|2-^Node|1-", "Children": <any>null }, { "Name": "Chart Details Tab", "Path": "Nextgen^Node|0-^Node|2-^Node|2-", "Children": <any>null }, { "Name": "Marketing Plan, Marketing Details and Marketing Comment", "Path": "Nextgen^Node|0-^Node|2-^Node|3-", "Children": <any>null }] }, { "Name": "Chart", "Path": "Nextgen^Node|0-^Node|3-", "Children": <any>null }, { "Name": "Charge", "Path": "Nextgen^Node|0-^Node|4-", "Children": [{ "Name": "Create / Modify Charge", "Path": "Nextgen^Node|0-^Node|4-^Node|0-", "Children": <any>null }, { "Name": "Holding Tank", "Path": "Nextgen^Node|0-^Node|4-^Node|1-", "Children": <any>null }, { "Name": "Discount", "Path": "Nextgen^Node|0-^Node|4-^Node|2-", "Children": [{ "Name": "Encouter Level Disount", "Path": "Nextgen^Node|0-^Node|4-^Node|2-^Node|0-", "Children": <any>null }, { "Name": "Charge Level Discount", "Path": "Nextgen^Node|0-^Node|4-^Node|2-^Node|1-", "Children": <any>null }] }, { "Name": "Void Charge", "Path": "Nextgen^Node|0-^Node|4-^Node|3-", "Children": <any>null }, { "Name": "Delete Charge", "Path": "Nextgen^Node|0-^Node|4-^Node|4-", "Children": <any>null }, { "Name": "Invoice", "Path": "Nextgen^Node|0-^Node|4-^Node|5-", "Children": <any>null }, { "Name": "Taxes", "Path": "Nextgen^Node|0-^Node|4-^Node|6-", "Children": <any>null }] }, { "Name": "Transaction", "Path": "Nextgen^Node|0-^Node|5-", "Children": [{ "Name": "Payments Self pay", "Path": "Nextgen^Node|0-^Node|5-^Node|0-", "Children": <any>null }, { "Name": "Adjustments", "Path": "Nextgen^Node|0-^Node|5-^Node|1-", "Children": <any>null }, { "Name": "Refund", "Path": "Nextgen^Node|0-^Node|5-^Node|2-", "Children": <any>null }, { "Name": "Payments Insurance", "Path": "Nextgen^Node|0-^Node|5-^Node|3-", "Children": <any>null }] }, { "Name": "Accounts", "Path": "Nextgen^Node|0-^Node|6-", "Children": <any>null }, { "Name": "Encounters", "Path": "Nextgen^Node|0-^Node|7-", "Children": [{ "Name": "Create Encounter", "Path": "Nextgen^Node|0-^Node|7-^Node|0-", "Children": <any>null }, { "Name": "Sliding Fee", "Path": "Nextgen^Node|0-^Node|7-^Node|1-", "Children": <any>null }, { "Name": "Rendering provider Change", "Path": "Nextgen^Node|0-^Node|7-^Node|2-", "Children": <any>null }] }, { "Name": "Letters", "Path": "Nextgen^Node|0-^Node|8-", "Children": <any>null }, { "Name": "Claims", "Path": "Nextgen^Node|0-^Node|9-", "Children": [{ "Name": "CSC(Anesthesia Concurrency)", "Path": "Nextgen^Node|0-^Node|9-^Node|0-", "Children": <any>null }, { "Name": "Paper Claim", "Path": "Nextgen^Node|0-^Node|9-^Node|1-", "Children": <any>null }, { "Name": "EDI claim file ", "Path": "Nextgen^Node|0-^Node|9-^Node|2-", "Children": <any>null }, { "Name": "EDI Segment Code", "Path": "Nextgen^Node|0-^Node|9-^Node|3-", "Children": <any>null }] }, { "Name": "Lookup", "Path": "Nextgen^Node|0-^Node|10-", "Children": [{ "Name": "Patient Lookup", "Path": "Nextgen^Node|0-^Node|10-^Node|0-", "Children": <any>null }, { "Name": "Person Lookup", "Path": "Nextgen^Node|0-^Node|10-^Node|1-", "Children": <any>null }, { "Name": "Encounter Lookup", "Path": "Nextgen^Node|0-^Node|10-^Node|2-", "Children": <any>null }] }, { "Name": "Billing", "Path": "Nextgen^Node|0-^Node|11-", "Children": <any>null }, { "Name": "ERA", "Path": "Nextgen^Node|0-^Node|12-", "Children": <any>null }, { "Name": "Worklog", "Path": "Nextgen^Node|0-^Node|13-", "Children": <any>null }, { "Name": "Reports", "Path": "Nextgen^Node|0-^Node|14-", "Children": [{ "Name": "Daily Encounter Report", "Path": "Nextgen^Node|0-^Node|14-^Node|0-", "Children": <any>null }, { "Name": "Billed Encounter Report", "Path": "Nextgen^Node|0-^Node|14-^Node|1-", "Children": <any>null }, { "Name": "Appointment Listing Report", "Path": "Nextgen^Node|0-^Node|14-^Node|2-", "Children": <any>null }, { "Name": "Un duplicated patient Report", "Path": "Nextgen^Node|0-^Node|14-^Node|3-", "Children": <any>null }, { "Name": "UnBilled Encounter Report", "Path": "Nextgen^Node|0-^Node|14-^Node|4-", "Children": <any>null }, { "Name": "Authorized Report", "Path": "Nextgen^Node|0-^Node|14-^Node|5-", "Children": <any>null }, { "Name": "Referral Report", "Path": "Nextgen^Node|0-^Node|14-^Node|6-", "Children": <any>null }, { "Name": "Account Receivable Report (AR Report)", "Path": "Nextgen^Node|0-^Node|14-^Node|7-", "Children": <any>null }, { "Name": "Daily charges", "Path": "Nextgen^Node|0-^Node|14-^Node|8-", "Children": <any>null }, { "Name": "Daily charges Report", "Path": "Nextgen^Node|0-^Node|14-^Node|9-", "Children": <any>null }] }, { "Name": "Insurance Maintenance", "Path": "Nextgen^Node|0-^Node|15-", "Children": <any>null }, { "Name": "Significant Event", "Path": "Nextgen^Node|0-^Node|16-", "Children": <any>null }] }, { "Name": "EHR", "Path": "Nextgen^Node|1-", "Children": <any>null }, { "Name": "Patient Portal", "Path": "Nextgen^Node|2-", "Children": [{ "Name": "Appointment", "Path": "Nextgen^Node|2-^Node|0-", "Children": [{ "Name": "Create Appointment", "Path": "Nextgen^Node|2-^Node|0-^Node|0-", "Children": <any>null }, { "Name": "Cancel Appointment", "Path": "Nextgen^Node|2-^Node|0-^Node|1-", "Children": <any>null }] }, { "Name": "Enrollment", "Path": "Nextgen^Node|2-^Node|1-", "Children": <any>null }, { "Name": "Transaction", "Path": "Nextgen^Node|2-^Node|2-", "Children": <any>null }] }, { "Name": "Optik", "Path": "Nextgen^Node|3-", "Children": <any>null }, { "Name": "File Maintenance", "Path": "Nextgen^Node|4-", "Children": [{ "Name": "Master List", "Path": "Nextgen^Node|4-^Node|0-", "Children": <any>null }, { "Name": "Library", "Path": "Nextgen^Node|4-^Node|1-", "Children": [{ "Name": "Contracts", "Path": "Nextgen^Node|4-^Node|1-^Node|0-", "Children": <any>null }, { "Name": "NDC Library ", "Path": "Nextgen^Node|4-^Node|1-^Node|1-", "Children": <any>null }] }, { "Name": "Code Table", "Path": "Nextgen^Node|4-^Node|2-", "Children": <any>null }] }, { "Name": "System Admin", "Path": "Nextgen^Node|5-", "Children": [{ "Name": "Privacy Level", "Path": "Nextgen^Node|5-^Node|0-", "Children": <any>null }, { "Name": "Inclusion", "Path": "Nextgen^Node|5-^Node|1-", "Children": <any>null }, { "Name": "Exclusion", "Path": "Nextgen^Node|5-^Node|2-", "Children": <any>null }] }, { "Name": "Preference", "Path": "Nextgen^Node|6-", "Children": [{ "Name": "Practice Preference", "Path": "Nextgen^Node|6-^Node|0-", "Children": [{ "Name": "Enable Inprogress Encounter", "Path": "Nextgen^Node|6-^Node|0-^Node|0-", "Children": <any>null }, { "Name": "Add / Modify preference1", "Path": "Nextgen^Node|6-^Node|0-^Node|1-", "Children": <any>null }, { "Name": "Taxes", "Path": "Nextgen^Node|6-^Node|0-^Node|2-", "Children": <any>null }] }, { "Name": "Enterprise Preference", "Path": "Nextgen^Node|6-^Node|1-", "Children": <any>null }] }, { "Name": "Document Management", "Path": "Nextgen^Node|7-", "Children": <any>null }, { "Name": "Rosetta", "Path": "Nextgen^Node|8-", "Children": <any>null }, { "Name": "KBM", "Path": "Nextgen^Node|9-", "Children": [{ "Name": "Add Template", "Path": "Nextgen^Node|9-^Node|0-", "Children": <any>null }, { "Name": "Cardio template", "Path": "Nextgen^Node|9-^Node|1-", "Children": <any>null }, { "Name": "Template", "Path": "Nextgen^Node|9-^Node|2-", "Children": <any>null }, { "Name": "Node", "Path": "Nextgen^Node|9-^Node|3-", "Children": <any>null }] }]
-        }
-        ];
+        };      
     }
 
 
@@ -483,6 +448,10 @@ module App {
             }
         };
     });
+
+    angular.module('myApp').factory('functionalDetailsBl', [(): FunctionalDetailsBl => {
+        return new FunctionalDetailsBl();
+    }]);
 
     app.factory('Excel',
         function ($window: any) {

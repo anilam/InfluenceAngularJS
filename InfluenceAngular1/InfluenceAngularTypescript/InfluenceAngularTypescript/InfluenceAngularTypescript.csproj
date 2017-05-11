@@ -44,6 +44,7 @@
     <Content Include="Influence.jpeg" />
     <Content Include="note.txt" />
     <Content Include="Scripts\angular-mocks.js" />
+    <Content Include="data.json" />
     <None Include="Scripts\angular.intellisense.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
@@ -57,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="app.ts" />
+    <TypeScriptCompile Include="BusinessLogic\FunctionalDetails.ts" />
     <TypeScriptCompile Include="config.ts" />
     <TypeScriptCompile Include="entity\FuncDetails.ts" />
     <TypeScriptCompile Include="entity\settings.ts" />
