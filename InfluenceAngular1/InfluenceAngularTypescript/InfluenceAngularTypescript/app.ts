@@ -68,10 +68,12 @@ module App {
         saveNode: () => void;
         loadingNode: boolean;
         init: () => any;
-        updateExcelExport: (index: number, scope: any) => void;
+        updateExcelExport: (path: string, name: string) => void;
         exportList: any;
         id:number;
         UpdatePathNullToInsertedNode: (subMenuItems: any, status: number) => any;
+        document:any
+        updateSearchExcelExport: (path: string, name: string) => void;
     }
 
     export function influenceController($scope: IDiagnosticsScope,
@@ -97,21 +99,40 @@ module App {
         $scope.exportList = new Array();
         $scope.id = 0;
 
-        $scope.updateExcelExport = function (index: any, scope: any) {
-            var exportData = $scope.nodeData;
+        //$scope.updateExcelExport = function (Path: any, Name: any) {
+        //    if (angular.element('Path')[0]) { //If it is checked
+        //        $scope.exportList.push({ Path: Path, Name: Name});
+        //    } else {
+        //        var exportdData = $scope.exportList.indexOf({ Path: Path, Name: Name});
+        //        if (exportdData > -1) {
+        //            $scope.exportList.splice(exportdData, 1);
+        //        }
+        //    }
+        //}
 
-            if (index) { //If it is checked
-                $scope.exportList.push({
-                    id: index,
-                    Name: exportData.Name,
-                    Path: exportData.Path
-                });
-            } else {
-                var index = $scope.exportList.indexOf(index);
-                if (index > -1) {
-                    $scope.exportList.splice(index, 1);
+        var findArrayObject = function(object: any, name: string) {
+            return $filter('filter')(object, { Path: name }, true)[0];
+        }
+
+        $scope.updateExcelExport = function (path: string, name: string) {
+            var foundItem = findArrayObject($scope.exportList, path.replace("search-", ""));
+            if (document.getElementById(path) != null && document.getElementById(path).checked) {
+                if (!foundItem) {
+                    $scope.exportList.push({ Path: path.replace("search-",""), Name: name });
                 }
             }
+            else {            
+                if (foundItem) {
+                    var index = $scope.exportList.indexOf(foundItem);
+                    if (index > -1)
+                        $scope.exportList.splice(index, 1);
+                }
+            }
+        }
+
+
+        $scope.updateSearchExcelExport = function (path: string, name: string) {
+            $scope.updateExcelExport("search-" + path, name);
         }
 
         $scope.init = function() {
@@ -206,6 +227,7 @@ module App {
         };
 
         $scope.searchDuplicateName = (subMenuItems: any, name: string) => {
+         //   subMenuItems = subMenuItems.unshift(subMenuItems);
             var found = false;
             if (subMenuItems) {
                 for (var i = 0; i < subMenuItems.length; i++) {
@@ -334,7 +356,10 @@ module App {
         $scope.search = function (name: string) {
             $scope.tabselected = 1;
             $scope.filterSearchArray = new Array();
-            $scope.searchDuplicateName($scope.nodeData, name);
+            var found = $scope.searchDuplicateName($scope.nodeData, name);
+            if (found) {
+                $scope.filterSearchArray.unshift(found);
+            }
         }
 
         $scope.searchCancel = function() {

@@ -53,7 +53,7 @@
             </span>
             
             <span ng-show="node.Status!=3"  class="pull-right">
-                <span class="glyphicon glyphicon-export"></span> <input type="checkbox" ng-model="node.Path" ng-change="updateExcelExport(node.Path,this)"/>
+                <span class="glyphicon glyphicon-export"></span> <input type="checkbox" id="{{node.Path}}" ng-click="updateExcelExport(node.Path,node.Name)"/>
             </span>
             
            
@@ -67,7 +67,7 @@
     
     
     <!-- filter node template -->
-    <script type="text/ng-template" id="nodes_renderer_searach.html">
+    <!--<script type="text/ng-template" id="nodes_renderer_searach.html">
         <div ui-tree-handle class="tree-node tree-node-content" ng-class="{active : activeMenu === node.Path}" ng-click="setActive(node)">
             <a class="btn btn-success btn-xs" ng-if="node.Children && node.Children.length > 0" data-nodrag ng-click="toggle(this)">
                 <span class="glyphicon"
@@ -76,15 +76,71 @@
           'glyphicon-chevron-down': !collapsed || editItem === node.Path && editing
         }"></span>
             </a>
-            <!--<span>{{node.Path}}</span>-->
-            <span ng-bind="node.Path"></span>
+            <span>{{node.Name}}</span>
+            <span ng-bind="node.Name"></span>
 
         </div>
         <ol ui-tree-nodes="" ng-model="node.Children" ng-class="{hidden: collapsed}">
             <li ng-repeat="node in node.Children" ui-tree-node ng-include="'nodes_renderer_searach.html'">
             </li>
         </ol>
+    </script>-->
+    
+    <!--Search-->
+    <script type="text/ng-template" id="nodes_renderer_searach.html">
+        <div ui-tree-handle class="tree-node tree-node-content" ng-class="{active : activeMenu === node.Path, activeedit : editItem === node.Path && editing,deleted : node.Status==3 }" ng-click="setActive(node)">
+            <a class="btn btn-success btn-xs" ng-if="node.Children && node.Children.length > 0" data-nodrag ng-click="toggle(this)">
+                <span class="glyphicon"
+                      ng-class="{
+          'glyphicon-chevron-right': collapsed,
+          'glyphicon-chevron-down': !collapsed || editItem === node.Path && editing
+        }"></span>
+            </a>
+            <!--<span>{{node.Path}}</span>-->
+            <span ng-show="!editing || editItem != node.Path" ng-bind="node.Name"></span><input type="text" ng-model="editValue" ng-show="editItem === node.Path && editing" />
+
+            <a class="pull-right btn btn-success btn-xs" data-nodrag ng-click="editok(this)" ng-show="editItem === node.Path && editing">
+                <span class="glyphicon glyphicon-ok"></span>
+            </a>
+            <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="editcancel(this)" ng-show="editItem === node.Path && editing">
+                <span class="glyphicon glyphicon-remove"></span>
+            </a>
+
+
+            <span ng-show="settings.edit && node.Status!=3">
+                <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="edit(this)" ng-hide="editItem === node.Path && editing">
+                    <span class="glyphicon glyphicon-edit"></span>
+                </a>
+            </span>
+
+
+
+            <span ng-show="settings.delete && node.Status!=3">
+                <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="removeItem(this)" ng-hide="editItem === node.Path && editing">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </a>
+            </span>
+
+            <span ng-show="settings.add && node.Status!=3">
+                <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="newSubItem(this)" style="margin-right: 8px;" ng-hide="editItem === node.Path && editing">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </a>
+            </span>
+
+            <span ng-show="node.Status!=3" class="pull-right">
+                <span class="glyphicon glyphicon-export"></span> <input type="checkbox" id="search-{{node.Path}}" ng-click="updateSearchExcelExport(node.Path,node.Name)" />
+            </span>
+
+
+        </div>
+        <ol ui-tree-nodes="" ng-model="node.Children" ng-class="{hidden: collapsed}">
+            <li ng-repeat="node in node.Children track by $index" ui-tree-node ng-include="'nodes_renderer_searach.html'">
+            </li>
+        </ol>
     </script>
+    
+    
+
     
     <style>
         .container-fluid {
@@ -231,7 +287,14 @@
                     </div>
                 </uib-tab>
                 <uib-tab index="2" heading="Export">
-                    More Tab Content
+                    <table class="table table-bordered">
+                        <tr ng-repeat="exportdata in exportList">
+                            <td>
+                                {{exportdata.Name}}
+                            </td>
+                        </tr>
+                    </table>
+                    <div><button class="btn btn-primary"><span class="glyphicon glyphicon-export"></span> Export</button></div>                  
                 </uib-tab>
                 <span ng-show="loadingNode" class="glyphicon glyphicon-repeat normal-right-spinner" style="font-size: 2em"></span>
                 <button type="button" class="btn btn-primary pull-right" ng-click="init()">
@@ -248,7 +311,7 @@
         <div class="info">
             {{Name}}
         </div>
-        <pre class="code">{{ data | json }}</pre>
+        <!--<pre class="code">{{ data | json }}</pre>-->
 
         <button class="btn btn-default" aria-label="Left Align" ng-click="exportToExcel('#FunctionalTable', 'Functional Details')" ng-show="myDataTable.Functional.length>0" ng-controller="MyCtrl">
             <span class="glyphicon glyphicon-share" aria-hidden="true"> Export</span>

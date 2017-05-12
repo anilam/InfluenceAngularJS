@@ -20,21 +20,36 @@ var App;
         $scope.loadingNode = false;
         $scope.exportList = new Array();
         $scope.id = 0;
-        $scope.updateExcelExport = function (index, scope) {
-            var exportData = $scope.nodeData;
-            if (index) {
-                $scope.exportList.push({
-                    id: index,
-                    Name: exportData.Name,
-                    Path: exportData.Path
-                });
-            }
-            else {
-                var index = $scope.exportList.indexOf(index);
-                if (index > -1) {
-                    $scope.exportList.splice(index, 1);
+        //$scope.updateExcelExport = function (Path: any, Name: any) {
+        //    if (angular.element('Path')[0]) { //If it is checked
+        //        $scope.exportList.push({ Path: Path, Name: Name});
+        //    } else {
+        //        var exportdData = $scope.exportList.indexOf({ Path: Path, Name: Name});
+        //        if (exportdData > -1) {
+        //            $scope.exportList.splice(exportdData, 1);
+        //        }
+        //    }
+        //}
+        var findArrayObject = function (object, name) {
+            return $filter('filter')(object, { Path: name }, true)[0];
+        };
+        $scope.updateExcelExport = function (path, name) {
+            var foundItem = findArrayObject($scope.exportList, path.replace("search-", ""));
+            if (document.getElementById(path) != null && document.getElementById(path).checked) {
+                if (!foundItem) {
+                    $scope.exportList.push({ Path: path.replace("search-", ""), Name: name });
                 }
             }
+            else {
+                if (foundItem) {
+                    var index = $scope.exportList.indexOf(foundItem);
+                    if (index > -1)
+                        $scope.exportList.splice(index, 1);
+                }
+            }
+        };
+        $scope.updateSearchExcelExport = function (path, name) {
+            $scope.updateExcelExport("search-" + path, name);
         };
         $scope.init = function () {
             $scope.loadingNode = true;
@@ -120,6 +135,7 @@ var App;
             }
         };
         $scope.searchDuplicateName = function (subMenuItems, name) {
+            //   subMenuItems = subMenuItems.unshift(subMenuItems);
             var found = false;
             if (subMenuItems) {
                 for (var i = 0; i < subMenuItems.length; i++) {
@@ -228,7 +244,10 @@ var App;
         $scope.search = function (name) {
             $scope.tabselected = 1;
             $scope.filterSearchArray = new Array();
-            $scope.searchDuplicateName($scope.nodeData, name);
+            var found = $scope.searchDuplicateName($scope.nodeData, name);
+            if (found) {
+                $scope.filterSearchArray.unshift(found);
+            }
         };
         $scope.searchCancel = function () {
             $scope.tabselected = 0;

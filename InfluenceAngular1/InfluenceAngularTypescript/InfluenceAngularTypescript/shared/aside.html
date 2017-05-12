@@ -1,6 +1,9 @@
 ﻿<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
-<div class="modal-header">
-    <h3 class="modal-title">Node Settings</h3>
+<div class="modal-header">  
+    <div class="row">
+        <div class="col-md-8 pull-left"><h3 class="modal-title">Settings</h3></div>
+        <div class="col-md-4"><span ng-click="ok($event)" class="glyphicon glyphicon-remove-circle pull-right" style="font-size: 2em;cursor: pointer"></span></div>
+    </div>
 </div>
 <div class="modal-body">    
     <table class="table">
@@ -54,6 +57,5 @@
     </table>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" ng-click="ok($event)">OK</button>
-    <button class="btn btn-warning" ng-click="cancel($event)">Cancel</button>
+   
 </div>
