@@ -70,6 +70,8 @@ module App {
         init: () => any;
         updateExcelExport: (index: number, scope: any) => void;
         exportList: any;
+        id:number;
+        UpdatePathNullToInsertedNode: (subMenuItems: any, status: number) => any;
     }
 
     export function influenceController($scope: IDiagnosticsScope,
@@ -92,7 +94,8 @@ module App {
         $scope.tabselected = 0;
         $scope.loading = false;
         $scope.loadingNode = false;
-        $scope.exportList=new Array();
+        $scope.exportList = new Array();
+        $scope.id = 0;
 
         $scope.updateExcelExport = function (index: any, scope: any) {
             var exportData = $scope.nodeData;
@@ -104,9 +107,9 @@ module App {
                     Path: exportData.Path
                 });
             } else {
-                var index = exportList.indexOf(index);
+                var index = $scope.exportList.indexOf(index);
                 if (index > -1) {
-                    exportList.splice(index, 1);
+                    $scope.exportList.splice(index, 1);
                 }
             }
         }
@@ -203,7 +206,6 @@ module App {
         };
 
         $scope.searchDuplicateName = (subMenuItems: any, name: string) => {
-            var filterArray = new Array();
             var found = false;
             if (subMenuItems) {
                 for (var i = 0; i < subMenuItems.length; i++) {
@@ -329,12 +331,7 @@ module App {
                 && node.Name.indexOf($scope.query) == -1);
         };
 
-        $scope.findNodes = function () {
-
-        };
-
         $scope.search = function (name: string) {
-            var filterArray = new Array();
             $scope.tabselected = 1;
             $scope.filterSearchArray = new Array();
             $scope.searchDuplicateName($scope.nodeData, name);
@@ -349,6 +346,8 @@ module App {
 
         //Node 
         $scope.newSubItem = function (scope) {
+            $scope.id = $scope.id + 1;
+
             if ($scope.editing != true) {
 
                 var nodeData = scope.$modelValue;
@@ -358,18 +357,19 @@ module App {
                 nodeData.Children.push({
                     //  id: nodeData.id * 10 + nodeData.nodes.length,
                     Name: "EnterDetails",
-                    Path: "",
+                    Path: nodeData.Path + "_NewNode" + scope.id,
                     ParentPath: nodeData.Path,
                     Status:1,
                     Children: null
                 });
                 $scope.editing = true;
-                $scope.editItem = "EnterDetails";
+
+                $scope.editItem = nodeData.Path + "_NewNode" + scope.id;
 
                 //backup
                 $scope.editValue = "EnterDetails";
 
-                $scope.activeMenu = "EnterDetails";
+                $scope.activeMenu = nodeData.Path + "_NewNode" + scope.id;
 
             } else {
                 alert("Please complete the editing");
@@ -389,7 +389,7 @@ module App {
 
                 $scope.editing = true;
                 var nodeData = scope.$modelValue;
-                $scope.editItem = nodeData.Name;
+                $scope.editItem = nodeData.Path;
                
                 //backup
                 $scope.editValue = nodeData.Name;
@@ -412,7 +412,7 @@ module App {
                 }
                 nodeData.Name = scope.editValue;
                 $scope.editValue = "";
-                $scope.activeMenu = nodeData.Name;
+                $scope.activeMenu = nodeData.Path;
             } else {
                 if (nodeData.Name == "EnterDetails") {
                     alert("Please Rename the Node");
@@ -427,7 +427,7 @@ module App {
             scope.editValue = $scope.editValue;
             $scope.editing = false;
             var nodeData = scope.$modelValue;
-            if (nodeData.Name == "EnterDetails" || $scope.editValue == "EnterDetails") {
+            if (nodeData.Name == "EnterDetails") {
                 scope.remove();
             }
         };
@@ -449,7 +449,7 @@ module App {
 
         $scope.setActive = function (menuItem: any) {
             $scope.loading = true;
-            $scope.activeMenu = menuItem.Name;
+            $scope.activeMenu = menuItem.Path;
 
             $scope.activedata = menuItem;
             if (menuItem.Children == null)

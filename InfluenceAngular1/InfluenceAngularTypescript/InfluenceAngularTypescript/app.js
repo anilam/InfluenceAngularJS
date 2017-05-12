@@ -19,6 +19,7 @@ var App;
         $scope.loading = false;
         $scope.loadingNode = false;
         $scope.exportList = new Array();
+        $scope.id = 0;
         $scope.updateExcelExport = function (index, scope) {
             var exportData = $scope.nodeData;
             if (index) {
@@ -29,9 +30,9 @@ var App;
                 });
             }
             else {
-                var index = exportList.indexOf(index);
+                var index = $scope.exportList.indexOf(index);
                 if (index > -1) {
-                    exportList.splice(index, 1);
+                    $scope.exportList.splice(index, 1);
                 }
             }
         };
@@ -119,7 +120,6 @@ var App;
             }
         };
         $scope.searchDuplicateName = function (subMenuItems, name) {
-            var filterArray = new Array();
             var found = false;
             if (subMenuItems) {
                 for (var i = 0; i < subMenuItems.length; i++) {
@@ -225,10 +225,7 @@ var App;
             return !($scope.query && $scope.query.length > 0
                 && node.Name.indexOf($scope.query) == -1);
         };
-        $scope.findNodes = function () {
-        };
         $scope.search = function (name) {
-            var filterArray = new Array();
             $scope.tabselected = 1;
             $scope.filterSearchArray = new Array();
             $scope.searchDuplicateName($scope.nodeData, name);
@@ -240,6 +237,7 @@ var App;
         };
         //Node 
         $scope.newSubItem = function (scope) {
+            $scope.id = $scope.id + 1;
             if ($scope.editing != true) {
                 var nodeData = scope.$modelValue;
                 if (nodeData.Children == null) {
@@ -248,16 +246,16 @@ var App;
                 nodeData.Children.push({
                     //  id: nodeData.id * 10 + nodeData.nodes.length,
                     Name: "EnterDetails",
-                    Path: "",
+                    Path: nodeData.Path + "_NewNode" + scope.id,
                     ParentPath: nodeData.Path,
                     Status: 1,
                     Children: null
                 });
                 $scope.editing = true;
-                $scope.editItem = "EnterDetails";
+                $scope.editItem = nodeData.Path + "_NewNode" + scope.id;
                 //backup
                 $scope.editValue = "EnterDetails";
-                $scope.activeMenu = "EnterDetails";
+                $scope.activeMenu = nodeData.Path + "_NewNode" + scope.id;
             }
             else {
                 alert("Please complete the editing");
@@ -272,7 +270,7 @@ var App;
             if (!$scope.editing) {
                 $scope.editing = true;
                 var nodeData = scope.$modelValue;
-                $scope.editItem = nodeData.Name;
+                $scope.editItem = nodeData.Path;
                 //backup
                 $scope.editValue = nodeData.Name;
             }
@@ -293,7 +291,7 @@ var App;
                 }
                 nodeData.Name = scope.editValue;
                 $scope.editValue = "";
-                $scope.activeMenu = nodeData.Name;
+                $scope.activeMenu = nodeData.Path;
             }
             else {
                 if (nodeData.Name == "EnterDetails") {
@@ -308,7 +306,7 @@ var App;
             scope.editValue = $scope.editValue;
             $scope.editing = false;
             var nodeData = scope.$modelValue;
-            if (nodeData.Name == "EnterDetails" || $scope.editValue == "EnterDetails") {
+            if (nodeData.Name == "EnterDetails") {
                 scope.remove();
             }
         };
@@ -328,7 +326,7 @@ var App;
         };
         $scope.setActive = function (menuItem) {
             $scope.loading = true;
-            $scope.activeMenu = menuItem.Name;
+            $scope.activeMenu = menuItem.Path;
             $scope.activedata = menuItem;
             if (menuItem.Children == null)
                 $log.info("Children data load");
