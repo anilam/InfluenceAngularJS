@@ -74,6 +74,8 @@ module App {
         UpdatePathNullToInsertedNode: (subMenuItems: any, status: number) => any;
         document:any
         updateSearchExcelExport: (path: string, name: string) => void;
+        alerts: any;
+        closeAlert: (index: any) => void;
     }
 
     export function influenceController($scope: IDiagnosticsScope,
@@ -98,6 +100,7 @@ module App {
         $scope.loadingNode = false;
         $scope.exportList = new Array();
         $scope.id = 0;
+        $scope.alerts = [];
 
         //$scope.updateExcelExport = function (Path: any, Name: any) {
         //    if (angular.element('Path')[0]) { //If it is checked
@@ -155,6 +158,10 @@ module App {
         $scope.asideState = {
             open: false,
             position:'left'
+        };
+
+        $scope.closeAlert = function (index) {
+            $scope.alerts.splice(index, 1);
         };
 
         $scope.openAside = function (position, backdrop) {
@@ -397,7 +404,7 @@ module App {
                 $scope.activeMenu = nodeData.Path + "_NewNode" + scope.id;
 
             } else {
-                alert("Please complete the editing");
+                $scope.alerts.push({ type:'warning',msg: 'Please complete the edit operation' });
             }
 
         };
@@ -421,7 +428,7 @@ module App {
 
             } else {
                 $scope.activeMenu = "EnterDetails";
-                alert("Please Complete the editiing");
+                $scope.alerts.push({ msg: 'Please complete the edit operation' });
             }
            
         };
@@ -466,6 +473,7 @@ module App {
                 url: Config.Constants.default.url
             }).success((status) => {
                 console.log("success");
+                $scope.alerts.push({ type: 'success', msg: 'Updated successfully' });
                 $scope.init();
             }).error((status: Number) => {
                 $scope.loadingNode = false;

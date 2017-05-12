@@ -5,18 +5,19 @@
         <div class="col-md-4"><span ng-click="ok($event)" class="glyphicon glyphicon-remove-circle pull-right" style="font-size: 2em;cursor: pointer"></span></div>
     </div>
 </div>
-<div class="modal-body">    
+<div class="modal-body">
+    <h4 class="modal-title">Node Settings</h4>
     <table class="table">
         <tbody>
-        <tr>
-            <td>
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" ng-model="settings.expandTree"> Expand Tree Node
-                    </label>
-                </div>
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" ng-model="settings.expandTree"> Expand Tree Node
+                        </label>
+                    </div>
+                </td>
+            </tr>
             <tr>
                 <td>
                     <div class="checkbox">
@@ -26,24 +27,24 @@
                     </div>
                 </td>
             </tr>
-        <tr>          
-            <td>
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" ng-model="settings.edit"> Edit Node
-                    </label>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" ng-model="settings.delete"> Delete Node
-                    </label>
-                </div>
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" ng-model="settings.edit"> Edit Node
+                        </label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" ng-model="settings.delete"> Delete Node
+                        </label>
+                    </div>
+                </td>
+            </tr>
             <tr>
                 <td>
                     <div class="checkbox">
@@ -55,6 +56,39 @@
             </tr>
         </tbody>
     </table>
+
+    <h4 class="modal-title">Node Details Settings</h4>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" ng-model="settings.detailedit"> Edit Node Details
+                        </label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" ng-model="settings.detaildelete"> Delete Node Details
+                        </label>
+                    </div>
+                </td>
+            </tr>
+        <tr>
+            <td>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="settings.detailadd"> Add Node Details
+                    </label>
+                </div>
+            </td>
+        </tr>
+   </table>
 </div>
 <div class="modal-footer">
    

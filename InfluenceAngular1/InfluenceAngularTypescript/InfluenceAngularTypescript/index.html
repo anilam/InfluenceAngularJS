@@ -248,7 +248,8 @@
         </div>
         <hr />
     </div>
-    <div class="col-md-8">
+    <div class="col-md-6"><div uib-alert ng-repeat="alert in alerts" ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert($index)">{{alert.msg}}</div></div>
+    <div class="col-md-2">
         <button class="btn btn-default pull-right">Download XML</button>
     </div>
 </div>
@@ -266,8 +267,8 @@
 </div>-->
 
 <div class="row">
-    <div class="col-sm-4">     
-        <form name="outerForm" class="tab-form-demo">
+<div class="col-sm-4">   
+    <form name="outerForm" class="tab-form-demo">
             <uib-tabset active="tabselected">
                 <button type="button" class="btn btn-default btn-lg pull-left" ng-click="openAside('left', true)">
                     <span class="glyphicon glyphicon-align-justify"></span>
@@ -312,12 +313,8 @@
             {{Name}}
         </div>
         <!--<pre class="code">{{ data | json }}</pre>-->
-
-        <button class="btn btn-default" aria-label="Left Align" ng-click="exportToExcel('#FunctionalTable', 'Functional Details')" ng-show="myDataTable.Functional.length>0" ng-controller="MyCtrl">
-            <span class="glyphicon glyphicon-share" aria-hidden="true"> Export</span>
-        </button>
         
-        <button class="btn btn-default" aria-label="Left Align" ng-click="saveFuncDetails()" ng-show="myDataTable.Functional.length>0" ng-controller="MyCtrl">
+        <button class="btn btn btn-primary" aria-label="Left Align" ng-click="saveFuncDetails()" ng-show="myDataTable.Functional.length>0" ng-controller="MyCtrl">
             <span class="glyphicon glyphicon-share" aria-hidden="true"> Save</span>
         </button>
         <hr/>
@@ -333,7 +330,7 @@
                                 <th>MODULE</th>
                                 <th>COMPLEXITY</th>
                                 <th></th>
-                                <th><span class="pull-right" ng-show="myDataTable.Functional.length>0"><a class="pull-right btn btn-primary btn-xs" ng-click="addFuncdetails(this)"><span class="glyphicon glyphicon-plus"></span></a></span></th>
+                                <th><span class="pull-right" ng-show="myDataTable.Functional.length>0 && settings.detailadd"><a class="pull-right btn btn-primary btn-xs" ng-click="addFuncdetails(this)"><span class="glyphicon glyphicon-plus"></span></a></span></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -343,8 +340,8 @@
                             <td> <span ng-show="!Funcdetailsediting || editItemFuncdetailsId != $index">{{ Funcdetails.Module }}</span> <input type="text" ng-model="editFuncDetailsValue.ModuleEdit" ng-show="editItemFuncdetailsId === $index && Funcdetailsediting"/></td>
                             <td> <span ng-show="!Funcdetailsediting || editItemFuncdetailsId != $index">{{ Funcdetails.Complexity }}</span> <input type="text" ng-model="editFuncDetailsValue.ComplexityEdit" ng-show="editItemFuncdetailsId === $index && Funcdetailsediting"/></td>
 
-                            <td ng-show="!Funcdetailsediting || editItemFuncdetailsId != $index"><a class="pull-right btn btn-primary btn-xs" ng-click="editFuncdetails(Funcdetails,myDataTable.Functional.indexOf(Funcdetails))"><span class="glyphicon glyphicon-edit"></span></a></td>
-                            <td ng-show="!Funcdetailsediting || editItemFuncdetailsId != $index"><a class="pull-right btn btn-danger btn-xs" ng-click="removeFuncdetails(myDataTable.Functional.indexOf(Funcdetails))"><span class="glyphicon glyphicon-remove"></span></a></td>
+                            <td  ng-show="!Funcdetailsediting || editItemFuncdetailsId != $index"><a ng-show="settings.detailedit" class="pull-right btn btn-primary btn-xs" ng-click="editFuncdetails(Funcdetails,myDataTable.Functional.indexOf(Funcdetails))"><span class="glyphicon glyphicon-edit"></span></a></td>
+                            <td  ng-show="!Funcdetailsediting || editItemFuncdetailsId != $index"><a ng-show="settings.detaildelete" class="pull-right btn btn-danger btn-xs" ng-click="removeFuncdetails(myDataTable.Functional.indexOf(Funcdetails))"><span class="glyphicon glyphicon-remove"></span></a></td>
 
                             <td ng-hide="!Funcdetailsediting || editItemFuncdetailsId != $index"><a class="pull-right btn btn-primary btn-xs" ng-click="editFuncdetailsOk(Funcdetails,myDataTable.Functional.indexOf(Funcdetails))"><span class="glyphicon glyphicon-ok"></span></a></td>
                             <td ng-hide="!Funcdetailsediting || editItemFuncdetailsId != $index"><a class="pull-right btn btn-danger btn-xs" ng-click="removeFuncdetailsCancel(Funcdetails,myDataTable.Functional.indexOf(Funcdetails))"><span class="glyphicon glyphicon-remove"></span></a></td>

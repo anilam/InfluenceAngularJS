@@ -20,6 +20,7 @@ var App;
         $scope.loadingNode = false;
         $scope.exportList = new Array();
         $scope.id = 0;
+        $scope.alerts = [];
         //$scope.updateExcelExport = function (Path: any, Name: any) {
         //    if (angular.element('Path')[0]) { //If it is checked
         //        $scope.exportList.push({ Path: Path, Name: Name});
@@ -71,6 +72,9 @@ var App;
         $scope.asideState = {
             open: false,
             position: 'left'
+        };
+        $scope.closeAlert = function (index) {
+            $scope.alerts.splice(index, 1);
         };
         $scope.openAside = function (position, backdrop) {
             $scope.asideState = {
@@ -277,7 +281,7 @@ var App;
                 $scope.activeMenu = nodeData.Path + "_NewNode" + scope.id;
             }
             else {
-                alert("Please complete the editing");
+                $scope.alerts.push({ type: 'warning', msg: 'Please complete the edit operation' });
             }
         };
         $scope.removeItem = function (scope) {
@@ -295,7 +299,7 @@ var App;
             }
             else {
                 $scope.activeMenu = "EnterDetails";
-                alert("Please Complete the editiing");
+                $scope.alerts.push({ msg: 'Please complete the edit operation' });
             }
         };
         $scope.editok = function (scope) {
@@ -338,6 +342,7 @@ var App;
                 url: App.Config.Constants.default.url
             }).success(function (status) {
                 console.log("success");
+                $scope.alerts.push({ type: 'success', msg: 'Updated successfully' });
                 $scope.init();
             }).error(function (status) {
                 $scope.loadingNode = false;
