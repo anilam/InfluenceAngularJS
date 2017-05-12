@@ -163,8 +163,10 @@ var App;
                 url: App.Config.Constants.default.url + '/' + $scope.activedata.Path + '/' + "detail"
             }).success(function (status) {
                 console.log("success");
+                $scope.alerts.push({ type: 'success', msg: 'Updated successfully' });
                 $scope.loading = false;
-            }).error(function (status) {
+            }).error(function (error, status) {
+                $scope.alerts.push({ type: 'danger', msg: "Update Failed:" + error + " " + status });
                 $scope.loading = false;
             });
         };
@@ -203,7 +205,7 @@ var App;
                 $scope.editDBDetailsValue.Description = $scope.myDataTable.DatabaseDetails[index].Description;
             }
             else {
-                alert("Please Complete the editiing");
+                $scope.alerts.push({ type: 'warning', msg: 'Please complete the edit operation' });
             }
         };
         $scope.editDBdetailsOk = function (DBdetails, index) {
@@ -243,7 +245,7 @@ var App;
                 $scope.editItemDBdetailsId = 0;
             }
             else {
-                alert("Please complete the editing");
+                $scope.alerts.push({ type: 'warning', msg: 'Please complete the edit operation' });
             }
         };
         $scope.visible = function (node) {
@@ -323,7 +325,7 @@ var App;
             }
             else {
                 $scope.activeMenu = "EnterDetails";
-                $scope.alerts.push({ msg: 'Please complete the edit operation' });
+                $scope.alerts.push({ type: 'warning', msg: 'Please complete the edit operation' });
             }
         };
         $scope.editok = function (scope) {
@@ -342,10 +344,11 @@ var App;
             }
             else {
                 if (nodeData.Name == "EnterDetails") {
-                    alert("Please Rename the Node");
+                    $scope.alerts.push({ type: 'warning', msg: 'Please rename the newly added node' });
                 }
                 else {
                     alert("Duplicate Name Not allowed");
+                    $scope.alerts.push({ type: 'warning', msg: 'Node name already exist, please rename' });
                 }
             }
         };
@@ -368,8 +371,9 @@ var App;
                 console.log("success");
                 $scope.alerts.push({ type: 'success', msg: 'Updated successfully' });
                 $scope.init();
-            }).error(function (status) {
+            }).error(function (error, status) {
                 $scope.loadingNode = false;
+                $scope.alerts.push({ type: 'danger', msg: "Update Failed:" + error + " " + status });
             });
         };
         $scope.setActive = function (menuItem) {

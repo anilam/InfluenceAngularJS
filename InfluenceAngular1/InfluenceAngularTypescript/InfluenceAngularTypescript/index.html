@@ -248,7 +248,7 @@
         </div>
         <hr />
     </div>
-    <div class="col-md-6"><div uib-alert ng-repeat="alert in alerts" ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert($index)">{{alert.msg}}</div></div>
+    <div class="col-md-6"><div uib-alert ng-repeat="alert in alerts" ng-class="'alert-' + (alert.type || 'warning')" dismiss-on-timeout="5000" close="closeAlert($index)">{{alert.msg}}</div></div>
     <div class="col-md-2">
         <button class="btn btn-default pull-right">Download XML</button>
     </div>
@@ -301,7 +301,7 @@
                 <button type="button" class="btn btn-primary pull-right" ng-click="init()">
                     <span class="glyphicon glyphicon-refresh"> Refresh</span>
                 </button>
-                <button type="button" class="btn btn-primary pull-right" ng-click="saveNode()">
+                <button type="button" class="btn btn-primary pull-right" ng-hide="loadingNode" ng-click="saveNode()">
                     <span class="glyphicon glyphicon-save"> Save</span>
                 </button>           
             </uib-tabset>
@@ -314,7 +314,7 @@
         </div>
         <!--<pre class="code">{{ data | json }}</pre>-->
         
-        <button class="btn btn btn-primary" aria-label="Left Align" ng-click="saveFuncDetails()" ng-show="myDataTable.Functional.length>0" ng-controller="MyCtrl">
+        <button class="btn btn btn-primary" aria-label="Left Align" ng-hide="loading" ng-click="saveFuncDetails()" ng-show="myDataTable.Functional.length>0" ng-controller="MyCtrl">
             <span class="glyphicon glyphicon-share" aria-hidden="true"> Save</span>
         </button>
         <hr/>
