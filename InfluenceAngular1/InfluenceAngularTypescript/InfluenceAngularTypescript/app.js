@@ -4,12 +4,14 @@ var App;
 /// <reference path="scripts/typings/angularjs/angular.d.ts" />
 /// <reference path="scripts/typings/jstree/jstree.d.ts" />
 (function (App) {
-    function influenceController($scope, $http, $log, $filter, $timeout, functionalDetailsBl, $aside) {
+    function influenceController($scope, $http, $log, $filter, $timeout, functionalDetailsBl, otherDetailsBl, $aside) {
         $scope.nodeData = [];
         $scope.editing = false;
         $scope.Funcdetailsediting = false;
         $scope.DBdetailsediting = false;
+        $scope.Otherdetailsediting = false;
         $scope.settings = new Settings();
+        $scope.editOtherDetailsValue = [];
         $scope.settings.expandTree = false;
         $scope.settings.collapseTree = false;
         $scope.settings.add = false;
@@ -221,6 +223,9 @@ var App;
             $scope.myDataTable.DatabaseDetails.splice(index, 1);
         };
         $scope.addDBdetails = function (scope) {
+            if (!$scope.myDataTable.DatabaseDetails) {
+                $scope.myDataTable.DatabaseDetails = [];
+            }
             if ($scope.DBdetailsediting != true) {
                 $scope.myDataTable.DatabaseDetails.unshift({
                     DbObject: "",
@@ -257,6 +262,25 @@ var App;
             $scope.tabselected = 0;
             $scope.filterSearchArray = new Array();
             $scope.query = "";
+        };
+        //Other details
+        $scope.setOtherdetailsActive = function (index) {
+            otherDetailsBl.setOtherdetailsActive(index, $scope);
+        };
+        $scope.editOtherdetails = function (Otherdetails, index) {
+            otherDetailsBl.editOtherdetails(Otherdetails, index, $scope);
+        };
+        $scope.editOtherdetailsOk = function (Otherdetails, index) {
+            otherDetailsBl.editOtherdetailsOk(Otherdetails, index, $scope);
+        };
+        $scope.removeOtherdetailsCancel = function (Otherdetails, index) {
+            otherDetailsBl.removeOtherdetailsCancel(Otherdetails, index, $scope);
+        };
+        $scope.removeOtherdetails = function (index) {
+            otherDetailsBl.removeOtherdetails(index, $scope);
+        };
+        $scope.addOtherdetails = function (scope) {
+            otherDetailsBl.addOtherdetails(scope, $scope);
         };
         //Node 
         $scope.newSubItem = function (scope) {
@@ -394,6 +418,9 @@ var App;
     });
     angular.module('myApp').factory('functionalDetailsBl', [function () {
             return new App.FunctionalDetailsBl();
+        }]);
+    angular.module('myApp').factory('otherDetailsBl', [function () {
+            return new App.OtherDetailsBl();
         }]);
     App.app.factory('Excel', function ($window) {
         var uri = 'data:application/vnd.ms-excel;base64,', template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>', base64 = function (s) { return $window.btoa(unescape(encodeURIComponent(s))); }, format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }); };

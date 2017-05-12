@@ -330,7 +330,7 @@
                                 <th>MODULE</th>
                                 <th>COMPLEXITY</th>
                                 <th></th>
-                                <th><span class="pull-right" ng-show="myDataTable.Functional.length>0 && settings.detailadd"><a class="pull-right btn btn-primary btn-xs" ng-click="addFuncdetails(this)"><span class="glyphicon glyphicon-plus"></span></a></span></th>
+                                <th><span class="pull-right" ng-show="settings.detailadd"><a class="pull-right btn btn-primary btn-xs" ng-click="addFuncdetails(this)"><span class="glyphicon glyphicon-plus"></span></a></span></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -359,7 +359,7 @@
                                 <th>DbType</th>
                                 <th>Description</th>
                                 <th></th>
-                                <th><span class="pull-right" ng-show="myDataTable.DatabaseDetails.length>0"><a class="pull-right btn btn-primary btn-xs" ng-click="addDBdetails(this)"><span class="glyphicon glyphicon-plus"></span></a></span></th>
+                                <th><span class="pull-right" ng-show="settings.detailadd"><a class="pull-right btn btn-primary btn-xs" ng-click="addDBdetails(this)"><span class="glyphicon glyphicon-plus"></span></a></span></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -368,8 +368,8 @@
                                 <td> <span ng-show="!DBdetailsediting || editItemDBdetailsId != $index">{{ DBdetails.DbType || '123'}}</span> <input type="text" ng-model="editDBDetailsValue.DbType" ng-show="editItemDBdetailsId === $index && DBdetailsediting" /></td>
                                 <td> <span ng-show="!DBdetailsediting || editItemDBdetailsId != $index">{{ DBdetails.Description }}</span> <input type="text" ng-model="editDBDetailsValue.Description" ng-show="editItemDBdetailsId === $index && DBdetailsediting" /></td>
 
-                                <td ng-show="!DBdetailsediting || editItemDBdetailsId != $index"><a class="pull-right btn btn-primary btn-xs" ng-click="editDBdetails(DBdetails,myDataTable.DatabaseDetails.indexOf(DBdetails))"><span class="glyphicon glyphicon-edit"></span></a></td>
-                                <td ng-show="!DBdetailsediting || editItemDBdetailsId != $index"><a class="pull-right btn btn-danger btn-xs" ng-click="removeDBdetails(myDataTable.DatabaseDetails.indexOf(DBdetails))"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                <td ng-show="!DBdetailsediting || editItemDBdetailsId != $index"><a ng-show="settings.detailedit" class="pull-right btn btn-primary btn-xs" ng-click="editDBdetails(DBdetails,myDataTable.DatabaseDetails.indexOf(DBdetails))"><span class="glyphicon glyphicon-edit"></span></a></td>
+                                <td ng-show="!DBdetailsediting || editItemDBdetailsId != $index"><a ng-show="settings.detaildelete" class="pull-right btn btn-danger btn-xs" ng-click="removeDBdetails(myDataTable.DatabaseDetails.indexOf(DBdetails))"><span class="glyphicon glyphicon-remove"></span></a></td>
 
                                 <td ng-hide="!DBdetailsediting || editItemDBdetailsId != $index"><a class="pull-right btn btn-primary btn-xs" ng-click="editDBdetailsOk(DBdetails,myDataTable.DatabaseDetails.indexOf(DBdetails))"><span class="glyphicon glyphicon-ok"></span></a></td>
                                 <td ng-hide="!DBdetailsediting || editItemDBdetailsId != $index"><a class="pull-right btn btn-danger btn-xs" ng-click="removeDBdetailsCancel(DBdetails,myDataTable.DatabaseDetails.indexOf(DBdetails))"><span class="glyphicon glyphicon-remove"></span></a></td>
@@ -383,17 +383,28 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th>Impact Details</th>
-                                <th>Product</th>
+                                <th>Description</th>
+                                <th>Type</th>
                                 <th>Module</th>
-                                <th>Compexity</th>
+                                <th>Complexity</th>
+                                <th></th>
+                                <th><span class="pull-right" ng-show="settings.detailadd"><a class="pull-right btn btn-primary btn-xs" ng-click="addOtherdetails(this)"><span class="glyphicon glyphicon-plus"></span></a></span></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="AddDetails in myDataTable.AdditionalDetails">
-                                <td>{{ AddDetails.DbType }}</td>
-                                <td>{{ AddDetails.DbObject }}</td>
-                                <td>{{ AddDetails.Description }}</td>
+                            <tr ng-repeat="Otherdetails in myDataTable.AdditionalDetails track by $index" ng-click="setOtherdetailsActive($index)" ng-class="{active : activeOtherdetailsId === $index,activeedit : editItemOtherdetailsId === $index && Otherdetailsediting}">
+                                <td> <span ng-show="!Otherdetailsediting || editItemOtherdetailsId != $index">{{ Otherdetails.Description }}</span> <input type="text" ng-model="editOtherDetailsValue.DescriptionEdit" ng-show="editItemOtherdetailsId === $index && Otherdetailsediting" /></td>
+                                <td> <span ng-show="!Otherdetailsediting || editItemOtherdetailsId != $index">{{ Otherdetails.Type || '123'}}</span> <input type="text" ng-model="editOtherDetailsValue.TypeEdit" ng-show="editItemOtherdetailsId === $index && Otherdetailsediting" /></td>
+                                <td> <span ng-show="!Otherdetailsediting || editItemOtherdetailsId != $index">{{ Otherdetails.Module || '123' }}</span> <input type="text" ng-model="editOtherDetailsValue.ModuleEdit" ng-show="editItemOtherdetailsId === $index && Otherdetailsediting" /></td>
+                                <td> <span ng-show="!Otherdetailsediting || editItemOtherdetailsId != $index">{{ Otherdetails.Complexity || '123' }}</span> <input type="text" ng-model="editOtherDetailsValue.ComplexityEdit" ng-show="editItemOtherdetailsId === $index && Otherdetailsediting" /></td>
+
+                             
+
+                                <td ng-show="!Otherdetailsediting || editItemOtherdetailsId != $index"><a ng-show="settings.detailedit" class="pull-right btn btn-primary btn-xs" ng-click="editOtherdetails(Otherdetails,myDataTable.AdditionalDetails.indexOf(Otherdetails))"><span class="glyphicon glyphicon-edit"></span></a></td>
+                                <td ng-show="!Otherdetailsediting || editItemOtherdetailsId != $index"><a ng-show="settings.detaildelete" class="pull-right btn btn-danger btn-xs" ng-click="removeOtherdetails(myDataTable.AdditionalDetails.indexOf(Otherdetails))"><span class="glyphicon glyphicon-remove"></span></a></td>
+
+                                <td ng-hide="!Otherdetailsediting || editItemOtherdetailsId != $index"><a class="pull-right btn btn-primary btn-xs" ng-click="editOtherdetailsOk(Otherdetails,myDataTable.AdditionalDetails.indexOf(Otherdetails))"><span class="glyphicon glyphicon-ok"></span></a></td>
+                                <td ng-hide="!Otherdetailsediting || editItemOtherdetailsId != $index"><a class="pull-right btn btn-danger btn-xs" ng-click="removeOtherdetailsCancel(Otherdetails,myDataTable.AdditionalDetails.indexOf(Otherdetails))"><span class="glyphicon glyphicon-remove"></span></a></td>
                             </tr>
                         </tbody>
                     </table>

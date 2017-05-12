@@ -76,6 +76,18 @@ module App {
         updateSearchExcelExport: (path: string, name: string) => void;
         alerts: any;
         closeAlert: (index: any) => void;
+        activeOtherdetailsId: number;
+        Otherdetailsediting: any;
+        editItemOtherdetailsId: number;
+        editOtherDetailsValue: any;
+        setOtherdetailsActive: (index: number) => void;
+        editOtherdetails: (Otherdetails: AdditionalDetail, index: number) => void;
+        editOtherdetailsOk: (Otherdetails: AdditionalDetail, index: number) => void;
+        removeOtherdetailsCancel: (Otherdetails: AdditionalDetail, index: number) => void;
+        
+        removeOtherdetails: (index: number) => void;
+        addOtherdetails: (scope: any) => void;
+     
     }
 
     export function influenceController($scope: IDiagnosticsScope,
@@ -83,13 +95,16 @@ module App {
         $log: angular.ILogService,
         $filter:any,
         $timeout: angular.ITimeoutService,
-        functionalDetailsBl:FunctionalDetailsBl,
+        functionalDetailsBl: FunctionalDetailsBl,
+        otherDetailsBl: OtherDetailsBl,
         $aside:any) {
         $scope.nodeData = [];
         $scope.editing = false;
         $scope.Funcdetailsediting = false;
         $scope.DBdetailsediting = false;
+        $scope.Otherdetailsediting = false;
         $scope.settings = new Settings();
+        $scope.editOtherDetailsValue = [];
         $scope.settings.expandTree = false;
         $scope.settings.collapseTree = false;
         $scope.settings.add = false;
@@ -331,7 +346,9 @@ module App {
         }
 
         $scope.addDBdetails = function (scope: any) {
-
+            if (!$scope.myDataTable.DatabaseDetails) {
+                $scope.myDataTable.DatabaseDetails = [];
+            }
             if ($scope.DBdetailsediting != true) {
                 $scope.myDataTable.DatabaseDetails.unshift({
                     DbObject: "",
@@ -375,6 +392,31 @@ module App {
             $scope.query = "";
         }
 
+
+        //Other details
+        $scope.setOtherdetailsActive = (index: number) => {
+            otherDetailsBl.setOtherdetailsActive(index, $scope);
+        }
+
+        $scope.editOtherdetails = function (Otherdetails: AdditionalDetail, index: number) {
+            otherDetailsBl.editOtherdetails(Otherdetails, index, $scope);
+        }
+
+        $scope.editOtherdetailsOk = function (Otherdetails: AdditionalDetail, index: number) {
+            otherDetailsBl.editOtherdetailsOk(Otherdetails, index, $scope);
+        }
+
+        $scope.removeOtherdetailsCancel = function (Otherdetails: AdditionalDetail, index: number) {
+            otherDetailsBl.removeOtherdetailsCancel(Otherdetails, index, $scope);
+        }
+
+        $scope.removeOtherdetails = function (index: number) {
+            otherDetailsBl.removeOtherdetails(index, $scope);
+        }
+
+        $scope.addOtherdetails = function (scope: any) {
+            otherDetailsBl.addOtherdetails(scope, $scope);
+        }
 
         //Node 
         $scope.newSubItem = function (scope) {
@@ -535,6 +577,10 @@ module App {
 
     angular.module('myApp').factory('functionalDetailsBl', [(): FunctionalDetailsBl => {
         return new FunctionalDetailsBl();
+    }]);
+
+    angular.module('myApp').factory('otherDetailsBl', [(): OtherDetailsBl => {
+        return new OtherDetailsBl();
     }]);
 
     app.factory('Excel',
