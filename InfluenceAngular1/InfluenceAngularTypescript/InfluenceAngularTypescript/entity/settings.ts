@@ -7,5 +7,7 @@
 
     detailedit: boolean;
     detaildelete: boolean;
-    detailadd:boolean;
+    detailadd: boolean;
+
+    exportexcel:boolean;
 }

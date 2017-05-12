@@ -56,6 +56,7 @@ var App;
         };
         $scope.init = function () {
             $scope.loadingNode = true;
+            $scope.nodeData = [];
             ////aside
             $http({
                 method: "GET",

@@ -52,7 +52,7 @@
                 </a>
             </span>
             
-            <span ng-show="node.Status!=3"  class="pull-right">
+            <span ng-show="settings.exportexcel && node.Status!=3"  class="pull-right">
                 <span class="glyphicon glyphicon-export"></span> <input type="checkbox" id="{{node.Path}}" ng-click="updateExcelExport(node.Path,node.Name)"/>
             </span>
             
@@ -127,7 +127,7 @@
                 </a>
             </span>
 
-            <span ng-show="node.Status!=3" class="pull-right">
+            <span ng-show="settings.exportexcel && node.Status!=3" class="pull-right">
                 <span class="glyphicon glyphicon-export"></span> <input type="checkbox" id="search-{{node.Path}}" ng-click="updateSearchExcelExport(node.Path,node.Name)" />
             </span>
 
@@ -229,7 +229,7 @@
 <div ng-include="'shared/header.html'"></div>
 <hr /> 
 
-<div class="container-fluid">
+<div class="container-fluid" ng-cloak>
 
 <div class="row">
     <div class="col-md-4">      
@@ -250,7 +250,7 @@
     </div>
     <div class="col-md-6"><div uib-alert ng-repeat="alert in alerts" ng-class="'alert-' + (alert.type || 'warning')" dismiss-on-timeout="5000" close="closeAlert($index)">{{alert.msg}}</div></div>
     <div class="col-md-2">
-        <button class="btn btn-default pull-right">Download XML</button>
+        <!--<button class="btn btn-default pull-right">Download XML</button>-->
     </div>
 </div>
 
