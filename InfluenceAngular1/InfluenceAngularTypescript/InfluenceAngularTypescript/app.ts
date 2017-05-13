@@ -8,6 +8,32 @@ module App {
     export var app = angular.module('myApp', ['ui.tree', 'ngRoute', 'ui.bootstrap', 'ngSanitize', 'ngAside']);
 
 
+    angular.module("myApp").config(function ($locationProvider:any) {
+        $locationProvider.html5Mode({
+            enabled: false,
+            requireBase: false
+        });
+        $locationProvider.hashPrefix('!');
+    });
+
+    app.config(($routeProvider:any) => {
+        $routeProvider
+            .when('/', {
+                controller: 'InfluenceController',
+                templateUrl: 'templates/main.html'
+            })
+            .when('/graph', {
+                controller: 'graphController',
+                templateUrl: 'templates/graph.html'
+            })
+            .when('/login', {
+                controller: 'LoginController',
+                templateUrl: 'templates/login.html'
+            })
+
+            .otherwise({ redirectTo: '/' });
+    });
+
     angular.module('myApp').directive('focusOn', function () {
         return function (scope, elem, attr) {
             scope.$on('focusOn', function (e, name) {
@@ -70,6 +96,8 @@ module App {
             }
         });
 
+    
+    app.controller("graphController", graphController);
     app.controller("InfluenceController", influenceController);
 
 }

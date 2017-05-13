@@ -22,6 +22,8 @@ var App;
         $scope.exportList = new Array();
         $scope.id = 0;
         $scope.alerts = [];
+        var s = new Array();
+        s.push({ Label: "", count: "" });
         var findArrayObject = function (object, name) {
             return $filter('filter')(object, { Path: name }, true)[0];
         };

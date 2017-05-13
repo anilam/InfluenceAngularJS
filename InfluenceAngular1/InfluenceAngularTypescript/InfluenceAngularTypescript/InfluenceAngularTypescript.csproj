@@ -54,6 +54,8 @@
     <Content Include="shared\aside.html" />
     <Content Include="shared\footer.html" />
     <Content Include="shared\header.html" />
+    <Content Include="templates\graph.html" />
+    <Content Include="templates\main.html" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -63,6 +65,7 @@
     <TypeScriptCompile Include="BusinessLogic\NodeBl.ts" />
     <TypeScriptCompile Include="BusinessLogic\OtherDetailsBl.ts" />
     <TypeScriptCompile Include="config.ts" />
+    <TypeScriptCompile Include="controllers\graphController.ts" />
     <TypeScriptCompile Include="controllers\influenceController.ts" />
     <TypeScriptCompile Include="DBLogic\DBStore.ts" />
     <TypeScriptCompile Include="entity\AdditionalDetail.ts" />

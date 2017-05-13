@@ -5,6 +5,29 @@ var App;
 /// <reference path="scripts/typings/jstree/jstree.d.ts" />
 (function (App) {
     App.app = angular.module('myApp', ['ui.tree', 'ngRoute', 'ui.bootstrap', 'ngSanitize', 'ngAside']);
+    angular.module("myApp").config(function ($locationProvider) {
+        $locationProvider.html5Mode({
+            enabled: false,
+            requireBase: false
+        });
+        $locationProvider.hashPrefix('!');
+    });
+    App.app.config(function ($routeProvider) {
+        $routeProvider
+            .when('/', {
+            controller: 'InfluenceController',
+            templateUrl: 'templates/main.html'
+        })
+            .when('/graph', {
+            controller: 'graphController',
+            templateUrl: 'templates/graph.html'
+        })
+            .when('/login', {
+            controller: 'LoginController',
+            templateUrl: 'templates/login.html'
+        })
+            .otherwise({ redirectTo: '/' });
+    });
     angular.module('myApp').directive('focusOn', function () {
         return function (scope, elem, attr) {
             scope.$on('focusOn', function (e, name) {
@@ -51,6 +74,7 @@ var App;
             $timeout(function () { location.href = exportHref; }, 100); // trigger download
         };
     });
+    App.app.controller("graphController", App.graphController);
     App.app.controller("InfluenceController", App.influenceController);
 })(App || (App = {}));
 //# sourceMappingURL=app.js.map
