@@ -47,7 +47,7 @@
              </span>
             
             <span ng-show="settings.add && node.Status!=3">
-                <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="newSubItem(this);toggle(this)" style="margin-right: 8px;" ng-hide="editItem === node.Path && editing">
+                <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="newSubItem(this)" style="margin-right: 8px;" ng-hide="editItem === node.Path && editing">
                     <span class="glyphicon glyphicon-plus"></span>
                 </a>
             </span>
@@ -83,7 +83,7 @@
         <ol ui-tree-nodes="" ng-model="node.Children" ng-class="{hidden: collapsed}">
             <li ng-repeat="node in node.Children" ui-tree-node ng-include="'nodes_renderer_searach.html'">
             </li>
-        </ol>
+        </ol>nodes_renderer_searach
     </script>-->
     
     <!--Search-->
@@ -93,11 +93,11 @@
                 <span class="glyphicon"
                       ng-class="{
           'glyphicon-chevron-right': collapsed,
-          'glyphicon-chevron-down': !collapsed || editItem === node.Path && editing
+          'glyphicon-chevron-down': !collapsed
         }"></span>
             </a>
             <!--<span>{{node.Path}}</span>-->
-            <span ng-show="!editing || editItem != node.Path" ng-bind="node.Name"></span><input type="text" ng-model="editValue" ng-show="editItem === node.Path && editing" />
+            <span ng-show="!editing || editItem != node.Path" ng-bind="node.Name"></span><input type="text" ng-model="editValue" focus-on="{{node.Path}}" ng-show="editItem === node.Path && editing" />
 
             <a class="pull-right btn btn-success btn-xs" data-nodrag ng-click="editok(this)" ng-show="editItem === node.Path && editing">
                 <span class="glyphicon glyphicon-ok"></span>
@@ -128,16 +128,17 @@
             </span>
 
             <span ng-show="settings.exportexcel && node.Status!=3" class="pull-right">
-                <span class="glyphicon glyphicon-export"></span> <input type="checkbox" id="search-{{node.Path}}" ng-click="updateSearchExcelExport(node.Path,node.Name)" />
+                <span class="glyphicon glyphicon-export"></span> <input type="checkbox" id="{{node.Path}}" ng-click="updateExcelExport(node.Path,node.Name)" />
             </span>
 
 
         </div>
         <ol ui-tree-nodes="" ng-model="node.Children" ng-class="{hidden: collapsed}">
-            <li ng-repeat="node in node.Children track by $index" ui-tree-node ng-include="'nodes_renderer_searach.html'">
+            <li ng-repeat="node in node.Children track by $index" ui-tree-node ng-include="'nodes_renderer.html'">
             </li>
         </ol>
     </script>
+    
     
     
 
@@ -314,7 +315,7 @@
         </div>
         <!--<pre class="code">{{ data | json }}</pre>-->
         
-        <button class="btn btn btn-primary" aria-label="Left Align" ng-hide="loading" ng-click="saveFuncDetails()" ng-show="myDataTable.Functional.length>0" ng-controller="MyCtrl">
+        <button class="btn btn btn-primary" aria-label="Left Align" ng-hide="loading" ng-click="saveNodeDetails()" ng-show="myDataTable.Functional.length>0" ng-controller="MyCtrl">
             <span class="glyphicon glyphicon-share" aria-hidden="true"> Save</span>
         </button>
         <hr/>
@@ -515,27 +516,39 @@
     <script src="bower_components/jquery-3.2.1.min/index.js"></script>
     <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
     <script src="https://rawgit.com/dbtek/angular-aside/master/dist/js/angular-aside.js"></script>
- 	
-    
-     <script src="main.js"></script>
+
+
+    <script src="main.js"></script>
+
+    <script src="Interface/IDiagnosticsScope.js"></script>
+
     <script src="controllers/handleCtrl.js"></script>
     <script src="controllers/nodeCtrl.js"></script>
     <script src="controllers/nodesCtrl.js"></script>
     <script src="controllers/treeCtrl.js"></script>
+    <script src="controllers/influenceController.js"></script>
+
     <script src="directives/uiTree.js"></script>
     <script src="directives/uiTreeHandle.js"></script>
     <script src="directives/uiTreeNode.js"></script>
-     <script src="directives/uiTreeNodes.js"></script>
-     <script src="services/helper.js"></script>
+    <script src="directives/uiTreeNodes.js"></script>
+
+    <script src="services/helper.js"></script>
     <script src="entity/DatabaseDetail.js"></script>
     <script src="entity/AdditionalDetail.js"></script>
     <script src="entity/NodeDetail.js"></script>
     <script src="entity/FuncDetails.js"></script>
-    <script src="BusinessLogic/DBDetailsBL.js">   
-    </script><script src="BusinessLogic/NodeBl.js"></script><script src="BusinessLogic/OtherDetailsBl.js"></script>
+
+    <script src="BusinessLogic/DBDetailsBL.js">
+    </script>
+    <script src="BusinessLogic/NodeBl.js"></script>
+    <script src="BusinessLogic/OtherDetailsBl.js"></script>
     <script src="BusinessLogic/FunctionalDetails.js"></script>
+    <script src="DBLogic/DBStore.js"></script>
+
     <script src="entity/settings.js"></script>
     <script src="config.js"></script>
+
     <script src="app.js"></script>
 
 </body>

@@ -5,6 +5,7 @@ var App;
             this.newSubItem = function (scope, $scope, focus) {
                 $scope.id = $scope.id + 1;
                 if ($scope.editing != true) {
+                    $scope.toggleOpen(scope);
                     var nodeData = scope.$modelValue;
                     if (nodeData.Children == null) {
                         nodeData.Children = [];
@@ -79,21 +80,8 @@ var App;
                     scope.remove();
                 }
             };
-            this.saveNode = function ($scope, $http) {
-                $scope.loadingNode = true;
-                var storedata = $scope.nodeData;
-                $http({
-                    method: "Post",
-                    data: storedata.shift(),
-                    url: App.Config.Constants.default.url
-                }).success(function (status) {
-                    console.log("success");
-                    $scope.alerts.push({ type: 'success', msg: 'Updated successfully' });
-                    $scope.init();
-                }).error(function (error, status) {
-                    $scope.loadingNode = false;
-                    $scope.alerts.push({ type: 'danger', msg: "Update Failed:" + error + " " + status });
-                });
+            this.saveNode = function ($scope, $http, dBStore) {
+                dBStore.saveNode($scope, $http);
             };
             this.setActive = function (menuItem, $scope, $http, $log) {
                 $scope.loading = true;

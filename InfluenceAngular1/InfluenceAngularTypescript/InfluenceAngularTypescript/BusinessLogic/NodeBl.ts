@@ -9,6 +9,8 @@ module App {
 
             if ($scope.editing != true) {
 
+                $scope.toggleOpen(scope);
+
                 var nodeData = scope.$modelValue;
                 if (nodeData.Children == null) {
                     nodeData.Children = [];
@@ -31,6 +33,8 @@ module App {
                 $scope.activeMenu = nodeData.Path + "_NewNode" + scope.id;
 
                 focus(nodeData.Path + "_NewNode" + scope.id);
+
+
 
             } else {
                 $scope.alerts.push({ type: 'warning', msg: 'Please complete the edit operation' });
@@ -96,21 +100,8 @@ module App {
             }
         };
 
-        saveNode = function ($scope: IDiagnosticsScope, $http:angular.IHttpService) {
-            $scope.loadingNode = true;
-            var storedata = $scope.nodeData;
-            $http({
-                method: "Post",
-                data: storedata.shift(),
-                url: Config.Constants.default.url
-            }).success((status:any) => {
-                console.log("success");
-                $scope.alerts.push({ type: 'success', msg: 'Updated successfully' });
-                $scope.init();
-            }).error((error:any, status:any) => {
-                $scope.loadingNode = false;
-                $scope.alerts.push({ type: 'danger', msg: "Update Failed:" + error + " " + status });
-            });
+        saveNode = function ($scope: IDiagnosticsScope, $http: angular.IHttpService, dBStore:DBStore) {
+            dBStore.saveNode($scope, $http);
         }
 
         setActive = function (menuItem: any, $scope: IDiagnosticsScope, $http: angular.IHttpService,$log:angular.ILogService) {

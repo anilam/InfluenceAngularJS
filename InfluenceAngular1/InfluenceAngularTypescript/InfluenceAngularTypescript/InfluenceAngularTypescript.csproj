@@ -63,11 +63,14 @@
     <TypeScriptCompile Include="BusinessLogic\NodeBl.ts" />
     <TypeScriptCompile Include="BusinessLogic\OtherDetailsBl.ts" />
     <TypeScriptCompile Include="config.ts" />
+    <TypeScriptCompile Include="controllers\influenceController.ts" />
+    <TypeScriptCompile Include="DBLogic\DBStore.ts" />
     <TypeScriptCompile Include="entity\AdditionalDetail.ts" />
     <TypeScriptCompile Include="entity\DatabaseDetail.ts" />
     <TypeScriptCompile Include="entity\FuncDetails.ts" />
     <TypeScriptCompile Include="entity\NodeDetail.ts" />
     <TypeScriptCompile Include="entity\settings.ts" />
+    <TypeScriptCompile Include="Interface\IDiagnosticsScope.ts" />
     <TypeScriptCompile Include="main.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-animate.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-component-router.d.ts" />
