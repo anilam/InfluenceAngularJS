@@ -93,10 +93,10 @@ module App {
     export function influenceController($scope: IDiagnosticsScope,
         $http: angular.IHttpService,
         $log: angular.ILogService,
-        $filter:any,
-        $timeout: angular.ITimeoutService,
+        $filter: any,
         functionalDetailsBl: FunctionalDetailsBl,
         otherDetailsBl: OtherDetailsBl,
+        focus:any,
         $aside:any) {
         $scope.nodeData = [];
         $scope.editing = false;
@@ -448,6 +448,8 @@ module App {
 
                 $scope.activeMenu = nodeData.Path + "_NewNode" + scope.id;
 
+                focus(nodeData.Path + "_NewNode" + scope.id);
+
             } else {
                 $scope.alerts.push({ type:'warning',msg: 'Please complete the edit operation' });
             }
@@ -470,6 +472,9 @@ module App {
                
                 //backup
                 $scope.editValue = nodeData.Name;
+
+                //focus
+                focus(nodeData.Path);
 
             } else {
                 $scope.activeMenu = "EnterDetails";
@@ -561,23 +566,25 @@ module App {
     }
 
 
-    export var app = angular.module('myApp', ['ui.tree', 'ngRoute', 'ui.bootstrap', 'ngSanitize','ngAside']);
+    export var app = angular.module('myApp', ['ui.tree', 'ngRoute', 'ui.bootstrap', 'ngSanitize', 'ngAside']);
 
-    app.directive('focusMe', <any>function ($timeout: any) {
-        return {
-            scope: { trigger: '=?focusMe' },
-            link: function (scope:any, element:any) {
-                scope.$watch('trigger', function (value:any) {
-                    if (value === true) {
-                        //console.log('trigger',value);
-                        //$timeout(function() {
-                        element[0].focus();
-                        scope.trigger = false;
-                        //});
-                    }
-                });
-            }
+
+    angular.module('myApp').directive('focusOn', function () {
+        return function (scope, elem, attr) {
+            scope.$on('focusOn', function (e, name) {
+                if (name === attr.focusOn) {
+                    elem[0].focus();
+                }
+            });
         };
+    });
+
+    angular.module('myApp').factory('focus', function ($rootScope: any, $timeout: any) {
+        return function (name:any) {
+            $timeout(function () {
+                $rootScope.$broadcast('focusOn', name);
+            });
+        }
     });
 
     angular.module('myApp').factory('functionalDetailsBl', [(): FunctionalDetailsBl => {

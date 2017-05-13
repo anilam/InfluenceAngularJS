@@ -18,11 +18,11 @@
                 <span class="glyphicon"
                       ng-class="{
           'glyphicon-chevron-right': collapsed,
-          'glyphicon-chevron-down': !collapsed || editItem === node.Path && editing
+          'glyphicon-chevron-down': !collapsed 
         }"></span>
             </a>
             <!--<span>{{node.Path}}</span>--> 
-            <span ng-show="!editing || editItem != node.Path" ng-bind="node.Name"></span><input type="text" ng-model="editValue" ng-show="editItem === node.Path && editing"/>
+            <span ng-show="!editing || editItem != node.Path" ng-bind="node.Name"></span><input type="text" ng-model="editValue" focus-on="{{node.Path}}" ng-show="editItem === node.Path && editing"/>
             
             <a class="pull-right btn btn-success btn-xs" data-nodrag ng-click="editok(this)" ng-show="editItem === node.Path && editing">
                 <span class="glyphicon glyphicon-ok"></span>
@@ -47,7 +47,7 @@
              </span>
             
             <span ng-show="settings.add && node.Status!=3">
-                <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="newSubItem(this)" style="margin-right: 8px;" ng-hide="editItem === node.Path && editing">
+                <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="newSubItem(this);toggle(this)" style="margin-right: 8px;" ng-hide="editItem === node.Path && editing">
                     <span class="glyphicon glyphicon-plus"></span>
                 </a>
             </span>
