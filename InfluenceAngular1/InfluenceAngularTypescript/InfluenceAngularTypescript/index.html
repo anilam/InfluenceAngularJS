@@ -335,7 +335,7 @@
                         </thead>
                         <tbody>
                         <tr class="funcdetails" ng-repeat="Funcdetails in myDataTable.Functional track by $index" ng-click="setFuncdetailsActive($index)" ng-class="{active : activeFuncdetailsId === $index,activeedit : editItemFuncdetailsId === $index && Funcdetailsediting}">
-                            <td> <span ng-show="!Funcdetailsediting || editItemFuncdetailsId != $index">{{ Funcdetails.Impact }}</span> <input type="text" ng-model="editFuncDetailsValue.ImpactEdit" ng-show="editItemFuncdetailsId === $index && Funcdetailsediting"/></td>
+                            <td> <span ng-show="!Funcdetailsediting || editItemFuncdetailsId != $index">{{ Funcdetails.Impact }}</span> <input focus-on="funcdetails-{{$index}}"  type="text" ng-model="editFuncDetailsValue.ImpactEdit" ng-show="editItemFuncdetailsId === $index && Funcdetailsediting"/></td>
                             <td> <span ng-show="!Funcdetailsediting || editItemFuncdetailsId != $index">{{ Funcdetails.Product }}</span> <input type="text" ng-model="editFuncDetailsValue.ProductEdit" ng-show="editItemFuncdetailsId === $index && Funcdetailsediting"/></td>
                             <td> <span ng-show="!Funcdetailsediting || editItemFuncdetailsId != $index">{{ Funcdetails.Module }}</span> <input type="text" ng-model="editFuncDetailsValue.ModuleEdit" ng-show="editItemFuncdetailsId === $index && Funcdetailsediting"/></td>
                             <td> <span ng-show="!Funcdetailsediting || editItemFuncdetailsId != $index">{{ Funcdetails.Complexity }}</span> <input type="text" ng-model="editFuncDetailsValue.ComplexityEdit" ng-show="editItemFuncdetailsId === $index && Funcdetailsediting"/></td>
@@ -363,8 +363,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="DBdetails in myDataTable.DatabaseDetails track by $index" ng-click="setDBdetailsActive($index)" ng-class="{active : activeDBdetailsId === $index,activeedit : editItemDBdetailsId === $index && DBdetailsediting}">
-                                <td> <span ng-show="!DBdetailsediting || editItemDBdetailsId != $index">{{ DBdetails.DbObject || '123' }}</span> <input type="text" ng-model="editDBDetailsValue.DbObject" ng-show="editItemDBdetailsId === $index && DBdetailsediting" /></td>
+                            <tr ng-repeat="DBdetails in myDataTable.DatabaseDetails track by $index" ng-click="setDBdetailsActive($index)"  ng-class="{active : activeDBdetailsId === $index,activeedit : editItemDBdetailsId === $index && DBdetailsediting}">
+                                <td> <span ng-show="!DBdetailsediting || editItemDBdetailsId != $index">{{ DBdetails.DbObject || '' }}</span> <input focus-on="DBdetails-{{$index}}" type="text" ng-model="editDBDetailsValue.DbObject" ng-show="editItemDBdetailsId === $index && DBdetailsediting" /></td>
                                 <td> <span ng-show="!DBdetailsediting || editItemDBdetailsId != $index">{{ DBdetails.DbType || '123'}}</span> <input type="text" ng-model="editDBDetailsValue.DbType" ng-show="editItemDBdetailsId === $index && DBdetailsediting" /></td>
                                 <td> <span ng-show="!DBdetailsediting || editItemDBdetailsId != $index">{{ DBdetails.Description }}</span> <input type="text" ng-model="editDBDetailsValue.Description" ng-show="editItemDBdetailsId === $index && DBdetailsediting" /></td>
 
@@ -393,7 +393,7 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="Otherdetails in myDataTable.AdditionalDetails track by $index" ng-click="setOtherdetailsActive($index)" ng-class="{active : activeOtherdetailsId === $index,activeedit : editItemOtherdetailsId === $index && Otherdetailsediting}">
-                                <td> <span ng-show="!Otherdetailsediting || editItemOtherdetailsId != $index">{{ Otherdetails.Description }}</span> <input type="text" ng-model="editOtherDetailsValue.DescriptionEdit" ng-show="editItemOtherdetailsId === $index && Otherdetailsediting" /></td>
+                                <td> <span ng-show="!Otherdetailsediting || editItemOtherdetailsId != $index">{{ Otherdetails.Description }}</span> <input type="text" focus-on="Otherdetails-{{$index}}" ng-model="editOtherDetailsValue.DescriptionEdit" ng-show="editItemOtherdetailsId === $index && Otherdetailsediting" /></td>
                                 <td> <span ng-show="!Otherdetailsediting || editItemOtherdetailsId != $index">{{ Otherdetails.Type || '123'}}</span> <input type="text" ng-model="editOtherDetailsValue.TypeEdit" ng-show="editItemOtherdetailsId === $index && Otherdetailsediting" /></td>
                                 <td> <span ng-show="!Otherdetailsediting || editItemOtherdetailsId != $index">{{ Otherdetails.Module || '123' }}</span> <input type="text" ng-model="editOtherDetailsValue.ModuleEdit" ng-show="editItemOtherdetailsId === $index && Otherdetailsediting" /></td>
                                 <td> <span ng-show="!Otherdetailsediting || editItemOtherdetailsId != $index">{{ Otherdetails.Complexity || '123' }}</span> <input type="text" ng-model="editOtherDetailsValue.ComplexityEdit" ng-show="editItemOtherdetailsId === $index && Otherdetailsediting" /></td>
@@ -526,11 +526,16 @@
     <script src="directives/uiTreeHandle.js"></script>
     <script src="directives/uiTreeNode.js"></script>
      <script src="directives/uiTreeNodes.js"></script>
-     <script src="services/helper.js"></script>   
-     <script src="entity/FuncDetails.js"></script>
+     <script src="services/helper.js"></script>
+    <script src="entity/DatabaseDetail.js"></script>
+    <script src="entity/AdditionalDetail.js"></script>
+    <script src="entity/NodeDetail.js"></script>
+    <script src="entity/FuncDetails.js"></script>
+    <script src="BusinessLogic/DBDetailsBL.js">   
+    </script><script src="BusinessLogic/NodeBl.js"></script><script src="BusinessLogic/OtherDetailsBl.js"></script>
     <script src="BusinessLogic/FunctionalDetails.js"></script>
     <script src="entity/settings.js"></script>
-<script src="config.js"></script>
+    <script src="config.js"></script>
     <script src="app.js"></script>
 
 </body>

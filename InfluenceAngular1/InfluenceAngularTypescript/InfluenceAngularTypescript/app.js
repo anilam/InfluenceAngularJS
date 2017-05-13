@@ -4,7 +4,7 @@ var App;
 /// <reference path="scripts/typings/angularjs/angular.d.ts" />
 /// <reference path="scripts/typings/jstree/jstree.d.ts" />
 (function (App) {
-    function influenceController($scope, $http, $log, $filter, functionalDetailsBl, otherDetailsBl, focus, $aside) {
+    function influenceController($scope, $http, $log, $filter, functionalDetailsBl, otherDetailsBl, dBDetailsBL, nodeBl, focus, $aside) {
         $scope.nodeData = [];
         $scope.editing = false;
         $scope.Funcdetailsediting = false;
@@ -23,16 +23,6 @@ var App;
         $scope.exportList = new Array();
         $scope.id = 0;
         $scope.alerts = [];
-        //$scope.updateExcelExport = function (Path: any, Name: any) {
-        //    if (angular.element('Path')[0]) { //If it is checked
-        //        $scope.exportList.push({ Path: Path, Name: Name});
-        //    } else {
-        //        var exportdData = $scope.exportList.indexOf({ Path: Path, Name: Name});
-        //        if (exportdData > -1) {
-        //            $scope.exportList.splice(exportdData, 1);
-        //        }
-        //    }
-        //}
         var findArrayObject = function (object, name) {
             return $filter('filter')(object, { Path: name }, true)[0];
         };
@@ -176,7 +166,7 @@ var App;
             functionalDetailsBl.setFuncdetailsActive(index, $scope);
         };
         $scope.editFuncdetails = function (Funcdetails, index) {
-            functionalDetailsBl.editFuncdetails(Funcdetails, index, $scope);
+            functionalDetailsBl.editFuncdetails(Funcdetails, index, $scope, focus);
         };
         $scope.editFuncdetailsOk = function (Funcdetails, index) {
             functionalDetailsBl.editFuncdetailsOk(Funcdetails, index, $scope);
@@ -188,71 +178,76 @@ var App;
             functionalDetailsBl.removeFuncdetails(index, $scope);
         };
         $scope.addFuncdetails = function (scope) {
-            functionalDetailsBl.addFuncdetails(scope, $scope);
+            functionalDetailsBl.addFuncdetails(scope, $scope, focus);
         };
         //DB Details
         $scope.setDBdetailsActive = function (index) {
-            $scope.activeDBdetailsId = index;
+            dBDetailsBL.setDBdetailsActive(index, $scope);
         };
         $scope.editDBdetails = function (DBdetails, index) {
-            if (!$scope.DBdetailsediting) {
-                $scope.DBdetailsediting = true;
-                $scope.editItemDBdetailsId = index;
-                //backup
-                //$scope.editDBDetailsValue = new DBtionalDetail();
-                $scope.editDBDetailsValue = new Array();
-                $scope.editDBDetailsValue.DbObject = $scope.myDataTable.DatabaseDetails[index].DbObject;
-                $scope.editDBDetailsValue.DbType = $scope.myDataTable.DatabaseDetails[index].DbType;
-                $scope.editDBDetailsValue.Description = $scope.myDataTable.DatabaseDetails[index].Description;
-            }
-            else {
-                $scope.alerts.push({ type: 'warning', msg: 'Please complete the edit operation' });
-            }
+            dBDetailsBL.editDBdetails(DBdetails, index, $scope, focus);
         };
         $scope.editDBdetailsOk = function (DBdetails, index) {
-            $scope.DBdetailsediting = false;
-            //Mapping
-            $scope.myDataTable.DatabaseDetails[index].DbObject = $scope.editDBDetailsValue.DbObject;
-            $scope.myDataTable.DatabaseDetails[index].DbType = $scope.editDBDetailsValue.DbType;
-            $scope.myDataTable.DatabaseDetails[index].Description = $scope.editDBDetailsValue.Description;
+            dBDetailsBL.editDBdetailsOk(DBdetails, index, $scope);
         };
         $scope.removeDBdetailsCancel = function (DBdetails, index) {
-            $scope.DBdetailsediting = false;
-            if (DBdetails.DbObject == "" && DBdetails.DbType == "" && DBdetails.Description == "") {
-                $scope.myDataTable.DatabaseDetails.splice(index, 1);
-            }
+            dBDetailsBL.removeDBdetailsCancel(DBdetails, index, $scope);
         };
         $scope.removeDBdetails = function (index) {
-            $scope.myDataTable.DatabaseDetails.splice(index, 1);
+            dBDetailsBL.removeDBdetails(index, $scope);
         };
         $scope.addDBdetails = function (scope) {
-            if (!$scope.myDataTable.DatabaseDetails) {
-                $scope.myDataTable.DatabaseDetails = [];
-            }
-            if ($scope.DBdetailsediting != true) {
-                $scope.myDataTable.DatabaseDetails.unshift({
-                    DbObject: "",
-                    Description: "",
-                    DbType: "",
-                    MachineName: "",
-                    ModifyDtTm: "",
-                    Modifyby: ""
-                });
-                $scope.editDBDetailsValue = new Array();
-                $scope.editDBDetailsValue.DbObject = $scope.myDataTable.DatabaseDetails[0].DbObject;
-                $scope.editDBDetailsValue.Description = $scope.myDataTable.DatabaseDetails[0].Description;
-                $scope.editDBDetailsValue.DbType = $scope.myDataTable.DatabaseDetails[0].DbType;
-                $scope.DBdetailsediting = true;
-                $scope.editItemDBdetailsId = 0;
-            }
-            else {
-                $scope.alerts.push({ type: 'warning', msg: 'Please complete the edit operation' });
-            }
+            dBDetailsBL.addDBdetails(scope, $scope, focus);
         };
-        $scope.visible = function (node) {
-            return !($scope.query && $scope.query.length > 0
-                && node.Name.indexOf($scope.query) == -1);
+        //Other details
+        $scope.setOtherdetailsActive = function (index) {
+            otherDetailsBl.setOtherdetailsActive(index, $scope);
         };
+        $scope.editOtherdetails = function (Otherdetails, index) {
+            otherDetailsBl.editOtherdetails(Otherdetails, index, $scope, focus);
+        };
+        $scope.editOtherdetailsOk = function (Otherdetails, index) {
+            otherDetailsBl.editOtherdetailsOk(Otherdetails, index, $scope);
+        };
+        $scope.removeOtherdetailsCancel = function (Otherdetails, index) {
+            otherDetailsBl.removeOtherdetailsCancel(Otherdetails, index, $scope);
+        };
+        $scope.removeOtherdetails = function (index) {
+            otherDetailsBl.removeOtherdetails(index, $scope);
+        };
+        $scope.addOtherdetails = function (scope) {
+            otherDetailsBl.addOtherdetails(scope, $scope, focus);
+        };
+        //Node 
+        $scope.newSubItem = function (scope) {
+            nodeBl.newSubItem(scope, $scope, focus);
+        };
+        $scope.removeItem = function (scope) {
+            nodeBl.removeItem(scope, $scope);
+        };
+        $scope.edit = function (scope) {
+            nodeBl.edit(scope, $scope, focus);
+        };
+        $scope.editok = function (scope) {
+            nodeBl.editok(scope, $scope);
+        };
+        $scope.editcancel = function (scope) {
+            nodeBl.editcancel(scope, $scope);
+        };
+        $scope.saveNode = function () {
+            nodeBl.saveNode($scope, $http);
+        };
+        $scope.setActive = function (menuItem) {
+            $scope.loading = true;
+            nodeBl.setActive(menuItem, $scope, $http, $log);
+        };
+        $scope.collapseAll = function () {
+            nodeBl.collapseAll($scope);
+        };
+        $scope.expandAll = function () {
+            nodeBl.expandAll($scope);
+        };
+        //serach
         $scope.search = function (name) {
             $scope.tabselected = 1;
             $scope.filterSearchArray = new Array();
@@ -265,145 +260,6 @@ var App;
             $scope.tabselected = 0;
             $scope.filterSearchArray = new Array();
             $scope.query = "";
-        };
-        //Other details
-        $scope.setOtherdetailsActive = function (index) {
-            otherDetailsBl.setOtherdetailsActive(index, $scope);
-        };
-        $scope.editOtherdetails = function (Otherdetails, index) {
-            otherDetailsBl.editOtherdetails(Otherdetails, index, $scope);
-        };
-        $scope.editOtherdetailsOk = function (Otherdetails, index) {
-            otherDetailsBl.editOtherdetailsOk(Otherdetails, index, $scope);
-        };
-        $scope.removeOtherdetailsCancel = function (Otherdetails, index) {
-            otherDetailsBl.removeOtherdetailsCancel(Otherdetails, index, $scope);
-        };
-        $scope.removeOtherdetails = function (index) {
-            otherDetailsBl.removeOtherdetails(index, $scope);
-        };
-        $scope.addOtherdetails = function (scope) {
-            otherDetailsBl.addOtherdetails(scope, $scope);
-        };
-        //Node 
-        $scope.newSubItem = function (scope) {
-            $scope.id = $scope.id + 1;
-            if ($scope.editing != true) {
-                var nodeData = scope.$modelValue;
-                if (nodeData.Children == null) {
-                    nodeData.Children = [];
-                }
-                nodeData.Children.push({
-                    //  id: nodeData.id * 10 + nodeData.nodes.length,
-                    Name: "EnterDetails",
-                    Path: nodeData.Path + "_NewNode" + scope.id,
-                    ParentPath: nodeData.Path,
-                    Status: 1,
-                    Children: null
-                });
-                $scope.editing = true;
-                $scope.editItem = nodeData.Path + "_NewNode" + scope.id;
-                //backup
-                $scope.editValue = "EnterDetails";
-                $scope.activeMenu = nodeData.Path + "_NewNode" + scope.id;
-                focus(nodeData.Path + "_NewNode" + scope.id);
-            }
-            else {
-                $scope.alerts.push({ type: 'warning', msg: 'Please complete the edit operation' });
-            }
-        };
-        $scope.removeItem = function (scope) {
-            var nodeData = scope.$modelValue;
-            nodeData.Status = 3;
-        };
-        //Node ----- End
-        $scope.edit = function (scope) {
-            if (!$scope.editing) {
-                $scope.editing = true;
-                var nodeData = scope.$modelValue;
-                $scope.editItem = nodeData.Path;
-                //backup
-                $scope.editValue = nodeData.Name;
-                //focus
-                focus(nodeData.Path);
-            }
-            else {
-                $scope.activeMenu = "EnterDetails";
-                $scope.alerts.push({ type: 'warning', msg: 'Please complete the edit operation' });
-            }
-        };
-        $scope.editok = function (scope) {
-            var nodeData = scope.$modelValue;
-            if (!$scope.checkDuplicateName($scope.nodeData, scope.editValue)) {
-                $scope.editing = false;
-                if (nodeData.Name == "EnterDetails") {
-                    nodeData.Status = 1;
-                }
-                else {
-                    nodeData.Status = 2;
-                }
-                nodeData.Name = scope.editValue;
-                $scope.editValue = "";
-                $scope.activeMenu = nodeData.Path;
-            }
-            else {
-                if (nodeData.Name == "EnterDetails") {
-                    $scope.alerts.push({ type: 'warning', msg: 'Please rename the newly added node' });
-                }
-                else {
-                    alert("Duplicate Name Not allowed");
-                    $scope.alerts.push({ type: 'warning', msg: 'Node name already exist, please rename' });
-                }
-            }
-        };
-        $scope.editcancel = function (scope) {
-            scope.editValue = $scope.editValue;
-            $scope.editing = false;
-            var nodeData = scope.$modelValue;
-            if (nodeData.Name == "EnterDetails") {
-                scope.remove();
-            }
-        };
-        $scope.saveNode = function () {
-            $scope.loadingNode = true;
-            var storedata = $scope.nodeData;
-            $http({
-                method: "Post",
-                data: storedata.shift(),
-                url: App.Config.Constants.default.url
-            }).success(function (status) {
-                console.log("success");
-                $scope.alerts.push({ type: 'success', msg: 'Updated successfully' });
-                $scope.init();
-            }).error(function (error, status) {
-                $scope.loadingNode = false;
-                $scope.alerts.push({ type: 'danger', msg: "Update Failed:" + error + " " + status });
-            });
-        };
-        $scope.setActive = function (menuItem) {
-            $scope.loading = true;
-            $scope.activeMenu = menuItem.Path;
-            $scope.activedata = menuItem;
-            if (menuItem.Children == null)
-                $log.info("Children data load");
-            $http({
-                method: "GET",
-                url: App.Config.Constants.default.url + '/' + menuItem.Path
-            }).success(function (data) {
-                $scope.myDataTable = data;
-                $scope.loading = false;
-            }).error(function (status) {
-                $scope.loading = false;
-            });
-            //    then(response => {
-            //    $scope.myDataTable = response.data;
-            //});
-        };
-        $scope.collapseAll = function () {
-            $scope.$broadcast('angular-ui-tree:collapse-all');
-        };
-        $scope.expandAll = function () {
-            $scope.$broadcast('angular-ui-tree:expand-all');
         };
     }
     App.influenceController = influenceController;
@@ -429,6 +285,12 @@ var App;
         }]);
     angular.module('myApp').factory('otherDetailsBl', [function () {
             return new App.OtherDetailsBl();
+        }]);
+    angular.module('myApp').factory('dBDetailsBL', [function () {
+            return new App.DBDetailsBL();
+        }]);
+    angular.module('myApp').factory('nodeBl', [function () {
+            return new App.NodeBl();
         }]);
     App.app.factory('Excel', function ($window) {
         var uri = 'data:application/vnd.ms-excel;base64,', template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>', base64 = function (s) { return $window.btoa(unescape(encodeURIComponent(s))); }, format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }); };

@@ -58,9 +58,15 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="app.ts" />
+    <TypeScriptCompile Include="BusinessLogic\DBDetailsBL.ts" />
     <TypeScriptCompile Include="BusinessLogic\FunctionalDetails.ts" />
+    <TypeScriptCompile Include="BusinessLogic\NodeBl.ts" />
+    <TypeScriptCompile Include="BusinessLogic\OtherDetailsBl.ts" />
     <TypeScriptCompile Include="config.ts" />
+    <TypeScriptCompile Include="entity\AdditionalDetail.ts" />
+    <TypeScriptCompile Include="entity\DatabaseDetail.ts" />
     <TypeScriptCompile Include="entity\FuncDetails.ts" />
+    <TypeScriptCompile Include="entity\NodeDetail.ts" />
     <TypeScriptCompile Include="entity\settings.ts" />
     <TypeScriptCompile Include="main.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-animate.d.ts" />
