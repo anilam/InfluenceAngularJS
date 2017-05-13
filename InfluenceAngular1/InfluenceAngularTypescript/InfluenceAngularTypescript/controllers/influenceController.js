@@ -1,5 +1,7 @@
 var App;
 (function (App) {
+    var Mode = App.Config.Mode;
+    var Constants = App.Config.Constants;
     function influenceController($scope, $http, $log, $filter, functionalDetailsBl, otherDetailsBl, dBDetailsBL, nodeBl, focus, dBStore, $aside) {
         $scope.nodeData = [];
         $scope.editing = false;
@@ -13,6 +15,7 @@ var App;
         $scope.settings.add = false;
         $scope.settings.delete = false;
         $scope.settings.edit = false;
+        $scope.settings.runningMode = Mode.Select;
         $scope.tabselected = 0;
         $scope.loading = false;
         $scope.loadingNode = false;
@@ -43,7 +46,7 @@ var App;
         $scope.init = function () {
             dBStore.initNode($scope, $http);
         };
-        $scope.init();
+        // $scope.init();
         //aside
         $scope.asideState = {
             open: false,
@@ -89,6 +92,10 @@ var App;
                 }
                 if ($scope.settings.collapseTree) {
                     $scope.collapseAll();
+                }
+                Constants.runningMode = $scope.settings.runningMode;
+                if ($scope.settings.runningMode == Mode.Pm) {
+                    $scope.init();
                 }
             }, function () {
                 $log.info('modal-component dismissed at: ' + new Date());

@@ -10,14 +10,26 @@
     <table class="table">
         <tbody>
             <tr>
-                <td>
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" ng-model="settings.expandTree"> Expand Tree Node
-                        </label>
+                <td>                   
+                    <div class="input-group">                      
+                        <select id="runningMode" ng-model="settings.runningMode">
+                            <option value="1">PH</option>
+                            <option value="2">EHR</option>
+                        </select>
+                        <span> Select Source</span>
                     </div>
                 </td>
             </tr>
+
+        <tr>
+            <td>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="settings.expandTree"> Expand Tree Node
+                    </label>
+                </div>
+            </td>
+        </tr>
         <tr>
             <td>
                 <div class="checkbox">
@@ -27,42 +39,42 @@
                 </div>
             </td>
         </tr>
-            <tr>
-                <td>
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" ng-model="settings.exportexcel"> Export Excel
-                        </label>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" ng-model="settings.edit"> Edit Node
-                        </label>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" ng-model="settings.delete"> Delete Node
-                        </label>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" ng-model="settings.add"> Add Node
-                        </label>
-                    </div>
-                </td>
-            </tr>
+        <tr>
+            <td>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="settings.exportexcel"> Export Excel
+                    </label>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="settings.edit"> Edit Node
+                    </label>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="settings.delete"> Delete Node
+                    </label>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="settings.add"> Add Node
+                    </label>
+                </div>
+            </td>
+        </tr>
         </tbody>
     </table>
 

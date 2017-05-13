@@ -1,4 +1,7 @@
 ﻿module App {
+    import Mode = App.Config.Mode;
+    import Constants = App.Config.Constants;
+
     export function influenceController($scope: IDiagnosticsScope,
         $http: angular.IHttpService,
         $log: angular.ILogService,
@@ -26,6 +29,7 @@
         $scope.settings.add = false;
         $scope.settings.delete = false;
         $scope.settings.edit = false;
+        $scope.settings.runningMode = Mode.Select;
         $scope.tabselected = 0;
         $scope.loading = false;
         $scope.loadingNode = false;
@@ -38,6 +42,7 @@
         }
 
         $scope.updateExcelExport = function (path: string, name: string) {
+         
             var foundItem = findArrayObject($scope.exportList, path.replace("search-", ""));
             if (document.getElementById(path) != null && document.getElementById(path).checked) {
                 if (!foundItem) {
@@ -62,7 +67,7 @@
            dBStore.initNode($scope,$http);
         }
 
-        $scope.init();
+       // $scope.init();
         //aside
         $scope.asideState = {
             open: false,
@@ -106,13 +111,17 @@
                     };
                 }
             });
-            modalInstance.result.then(function (selectedSettings: any) {
+            modalInstance.result.then(function (selectedSettings: Settings) {
                 $scope.settings = selectedSettings;
                 if ($scope.settings.expandTree) {
                     $scope.expandAll();
                 }
                 if ($scope.settings.collapseTree) {
                     $scope.collapseAll();
+                }
+                Constants.runningMode = $scope.settings.runningMode;
+                if ($scope.settings.runningMode == Mode.Pm) {
+                    $scope.init();
                 }
 
             }, function () {

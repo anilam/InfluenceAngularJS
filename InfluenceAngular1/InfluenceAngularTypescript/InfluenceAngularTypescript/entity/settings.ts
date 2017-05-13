@@ -9,5 +9,7 @@
     detaildelete: boolean;
     detailadd: boolean;
 
-    exportexcel:boolean;
+    exportexcel: boolean;
+
+    runningMode: App.Config.Mode;
 }
