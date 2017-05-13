@@ -4,7 +4,7 @@ var App;
 /// <reference path="scripts/typings/angularjs/angular.d.ts" />
 /// <reference path="scripts/typings/jstree/jstree.d.ts" />
 (function (App) {
-    App.app = angular.module('myApp', ['ui.tree', 'ngRoute', 'ui.bootstrap', 'ngSanitize', 'ngAside']);
+    App.app = angular.module('myApp', ['ui.tree', 'ngRoute', 'ui.bootstrap', 'ngSanitize', 'ngAside', 'chart.js']);
     angular.module("myApp").config(function ($locationProvider) {
         $locationProvider.html5Mode({
             enabled: false,
@@ -12,7 +12,7 @@ var App;
         });
         $locationProvider.hashPrefix('!');
     });
-    App.app.config(function ($routeProvider) {
+    App.app.config(function ($routeProvider, ChartJsProvider) {
         $routeProvider
             .when('/', {
             controller: 'InfluenceController',
@@ -27,6 +27,7 @@ var App;
             templateUrl: 'templates/login.html'
         })
             .otherwise({ redirectTo: '/' });
+        ChartJsProvider.setOptions({ colors: ['#803690', '#00ADF9', '#DCDCDC', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360'] });
     });
     angular.module('myApp').directive('focusOn', function () {
         return function (scope, elem, attr) {

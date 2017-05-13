@@ -1,1 +1,95 @@
-﻿<div>Graph</div>
+﻿
+<style>
+    select {
+ padding:3px;
+    margin: 0;
+    -webkit-border-radius:4px;
+    -moz-border-radius:4px;
+    border-radius:4px;
+    -webkit-box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
+    -moz-box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
+    box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
+    background: #f8f8f8;
+    color:#888;
+    border:none;
+    outline:none;
+    display: inline-block;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    appearance:none;
+    cursor:pointer;
+    font-size: 25px;
+}
+
+label {position:relative}
+label:after {
+    content:'<>';
+    font:25px "Consolas", monospace;
+    color:#aaa;
+    -webkit-transform:rotate(90deg);
+    -moz-transform:rotate(90deg);
+    -ms-transform:rotate(90deg);
+    transform:rotate(90deg);
+    right:8px; top:-10px;
+    padding:0 0 2px;
+    border-bottom:1px solid #ddd;
+    position:absolute;
+    pointer-events:none;
+}
+label:before {
+    content:'';
+    right:6px; top:0px;
+    width:20px; height:20px;
+    background:#f8f8f8;
+    position:absolute;
+    pointer-events:none;
+    display:block;
+}
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  select {padding-right:100px}
+}
+
+option {
+  border: 1px solid #fff;
+}
+
+</style>
+
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="input-group">
+            <span><h2>Select Product </h2></span> <select ng-model="graphmodel" ng-options="item as item.ProductName for item in graphData" ng-change="init()"></select>
+            <button class="btn btn-primary" type="button" ng-click="generateGraph()">
+                <i class="glyphicon glyphicon-search"> Generate</i>
+            </button>
+        </div>
+        </div>
+    <hr />
+        <div class="row" ng-show="graphmodel.Dependencies.length > 0">
+
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">{{graphmodel.ProductName}} Bar Chart Dependency</div>
+                    <div class="panel-body">
+                        <canvas id="bar"
+                                class="chart chart-bar"
+                                chart-data="data"
+                                chart-labels="labels"
+                                chart-series="series" height="100"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">{{graphmodel.ProductName}} Pie Chart Dependency</div>
+                    <div class="panel-body">
+                        <canvas id="pie" class="chart chart-pie"
+                                chart-data="data" chart-labels="labels" height="100"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>

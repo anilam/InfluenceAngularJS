@@ -83,5 +83,12 @@
         removeOtherdetails: (index: number) => void;
         addOtherdetails: (scope: any) => void;
         toggleOpen: (scope: any) => void;
+        graphmodel: any;
+        graphData: { ProductName: string;Dependencies: { ProductName: string;Impact: string;DependentOn: string }[] }[];
+        generateGraph: () => void;
+        labels: string[];
+        series: string[];
+        data: number[][];
+        options: { cutoutPercentage: number };
     }
 }

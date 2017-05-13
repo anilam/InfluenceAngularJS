@@ -5,7 +5,7 @@
 module App {
     declare function unescape(s: string): string;
 
-    export var app = angular.module('myApp', ['ui.tree', 'ngRoute', 'ui.bootstrap', 'ngSanitize', 'ngAside']);
+    export var app = angular.module('myApp', ['ui.tree', 'ngRoute', 'ui.bootstrap', 'ngSanitize', 'ngAside', 'chart.js']);
 
 
     angular.module("myApp").config(function ($locationProvider:any) {
@@ -16,7 +16,7 @@ module App {
         $locationProvider.hashPrefix('!');
     });
 
-    app.config(($routeProvider:any) => {
+    app.config(($routeProvider: any, ChartJsProvider:any) => {
         $routeProvider
             .when('/', {
                 controller: 'InfluenceController',
@@ -32,6 +32,7 @@ module App {
             })
 
             .otherwise({ redirectTo: '/' });
+        ChartJsProvider.setOptions({ colors: ['#803690', '#00ADF9', '#DCDCDC', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360'] });
     });
 
     angular.module('myApp').directive('focusOn', function () {
