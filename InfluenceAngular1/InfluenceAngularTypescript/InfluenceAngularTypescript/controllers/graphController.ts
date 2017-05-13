@@ -1,7 +1,7 @@
 ﻿module App {
 
-    export function graphController($scope: IDiagnosticsScope) {
-
+    export function graphController($scope: IDiagnosticsScope, LoginService:any) {
+        
         $scope.graphmodel = {};
         $scope.labels = [];
         $scope.data = [];

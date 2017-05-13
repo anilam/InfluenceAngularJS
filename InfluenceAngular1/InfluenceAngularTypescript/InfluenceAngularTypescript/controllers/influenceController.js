@@ -2,7 +2,8 @@ var App;
 (function (App) {
     var Mode = App.Config.Mode;
     var Constants = App.Config.Constants;
-    function influenceController($scope, $http, $log, $filter, functionalDetailsBl, otherDetailsBl, dBDetailsBL, nodeBl, focus, dBStore, $aside) {
+    function influenceController($scope, $http, $log, $filter, functionalDetailsBl, otherDetailsBl, dBDetailsBL, nodeBl, focus, dBStore, LoginService, $rootScope, $aside) {
+        $rootScope.authenticated = LoginService.isAuthenticated();
         $scope.nodeData = [];
         $scope.editing = false;
         $scope.Funcdetailsediting = false;

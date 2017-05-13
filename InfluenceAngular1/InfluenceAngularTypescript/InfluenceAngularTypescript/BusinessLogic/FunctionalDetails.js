@@ -23,12 +23,20 @@ var App;
                 }
             };
             this.editFuncdetailsOk = function (Funcdetails, index, $scope) {
-                $scope.Funcdetailsediting = false;
-                //Mapping
-                $scope.myDataTable.Functional[index].Complexity = $scope.editFuncDetailsValue.ComplexityEdit;
-                $scope.myDataTable.Functional[index].Impact = $scope.editFuncDetailsValue.ImpactEdit;
-                $scope.myDataTable.Functional[index].Product = $scope.editFuncDetailsValue.ProductEdit;
-                $scope.myDataTable.Functional[index].Module = $scope.editFuncDetailsValue.ModuleEdit;
+                if ($scope.editFuncDetailsValue.ComplexityEdit == "" &&
+                    $scope.editFuncDetailsValue.ImpactEdit == "" &&
+                    $scope.editFuncDetailsValue.ProductEdit == "" &&
+                    $scope.editFuncDetailsValue.ModuleEdit == "") {
+                    alert("Please enter the details");
+                }
+                else {
+                    $scope.Funcdetailsediting = false;
+                    //Mapping
+                    $scope.myDataTable.Functional[index].Complexity = $scope.editFuncDetailsValue.ComplexityEdit;
+                    $scope.myDataTable.Functional[index].Impact = $scope.editFuncDetailsValue.ImpactEdit;
+                    $scope.myDataTable.Functional[index].Product = $scope.editFuncDetailsValue.ProductEdit;
+                    $scope.myDataTable.Functional[index].Module = $scope.editFuncDetailsValue.ModuleEdit;
+                }
             };
             this.removeFuncdetailsCancel = function (Funcdetails, index, $scope) {
                 $scope.Funcdetailsediting = false;

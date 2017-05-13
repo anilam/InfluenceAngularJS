@@ -90,5 +90,10 @@
         series: string[];
         data: number[][];
         options: { cutoutPercentage: number };
+        formSubmit: () => void;
+        username: any;
+        password: any;
+        error: string;
+        authenticated: any;
     }
 }

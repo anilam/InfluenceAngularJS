@@ -12,10 +12,11 @@
         nodeBl: NodeBl,
         focus: any,
         dBStore: DBStore,
+        LoginService: any,
+        $rootScope:any,
         $aside: any) {
 
-
-
+        $rootScope.authenticated = LoginService.isAuthenticated();
 
         $scope.nodeData = [];
         $scope.editing = false;

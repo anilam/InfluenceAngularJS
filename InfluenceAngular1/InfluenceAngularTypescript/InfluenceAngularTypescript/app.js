@@ -12,6 +12,20 @@ var App;
         });
         $locationProvider.hashPrefix('!');
     });
+    App.app.factory('LoginService', function () {
+        var admin = 'admin';
+        var pass = 'admin';
+        var isAuthenticated = false;
+        return {
+            login: function (username, password) {
+                isAuthenticated = username === admin && password === pass;
+                return isAuthenticated;
+            },
+            isAuthenticated: function () {
+                return isAuthenticated;
+            }
+        };
+    });
     App.app.config(function ($routeProvider, ChartJsProvider) {
         $routeProvider
             .when('/', {
@@ -23,11 +37,20 @@ var App;
             templateUrl: 'templates/graph.html'
         })
             .when('/login', {
-            controller: 'LoginController',
+            controller: 'loginController',
             templateUrl: 'templates/login.html'
         })
             .otherwise({ redirectTo: '/' });
         ChartJsProvider.setOptions({ colors: ['#803690', '#00ADF9', '#DCDCDC', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360'] });
+    });
+    App.app.run(function ($rootScope, $location, LoginService) {
+        $rootScope.$on('$locationChangeStart', function (event, next, current) {
+            var publicPages = ['/login'];
+            var restrictedPage = publicPages.indexOf($location.path()) === -1;
+            //if (restrictedPage && !LoginService.isAuthenticated()) {
+            //    $location.path('/login');
+            //}
+        });
     });
     angular.module('myApp').directive('focusOn', function () {
         return function (scope, elem, attr) {
@@ -77,5 +100,6 @@ var App;
     });
     App.app.controller("graphController", App.graphController);
     App.app.controller("InfluenceController", App.influenceController);
+    App.app.controller("loginController", App.loginController);
 })(App || (App = {}));
 //# sourceMappingURL=app.js.map

@@ -212,11 +212,14 @@
             </div>
             <hr />
         </div>
-        <div class="col-md-6"><div uib-alert ng-repeat="alert in alerts" ng-class="'alert-' + (alert.type || 'warning')" dismiss-on-timeout="5000" close="closeAlert($index)">{{alert.msg}}</div></div>
         <div class="col-md-2">
-            <!--<button class="btn btn-default pull-right">Download XML</button>-->
+           
+            <!--<span>Select Source</span>-->
         </div>
+        <div class="col-md-6"><div uib-alert ng-repeat="alert in alerts" ng-class="'alert-' + (alert.type || 'warning')" dismiss-on-timeout="5000" close="closeAlert($index)">{{alert.msg}}</div></div>
     </div>
+
+ 
 
 
     <div class="row">
@@ -227,7 +230,7 @@
                         <span class="glyphicon glyphicon-align-justify"></span>
                     </button>
                     <uib-tab index="0" heading="List">
-                        <div ui-tree style="height: 45em; overflow: scroll;" class="wrapper" data-drag-enabled="false" id="tree-root">
+                        <div ui-tree style="overflow: scroll;" class="wrapper" data-drag-enabled="false" id="tree-root">
                             <ol ui-tree-nodes ng-model="nodeData" style="height: 600px;">
                                 <li ng-repeat="node in nodeData track by $index" ui-tree-node ng-include="'nodes_renderer.html'" data-scroll-container=".wrapper"></li>
                             </ol>

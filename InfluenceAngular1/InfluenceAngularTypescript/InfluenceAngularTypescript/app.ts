@@ -16,7 +16,24 @@ module App {
         $locationProvider.hashPrefix('!');
     });
 
-    app.config(($routeProvider: any, ChartJsProvider:any) => {
+    app.factory('LoginService', function () {
+        var admin = 'admin';
+        var pass = 'admin';
+        var isAuthenticated = false;
+
+        return {
+            login: function (username:any, password:any) {
+                isAuthenticated = username === admin && password === pass;
+                return isAuthenticated;
+            },
+            isAuthenticated: function () {
+                return isAuthenticated;
+            }
+        };
+
+    });
+
+    app.config(($routeProvider: any, ChartJsProvider: any) => {
         $routeProvider
             .when('/', {
                 controller: 'InfluenceController',
@@ -27,12 +44,26 @@ module App {
                 templateUrl: 'templates/graph.html'
             })
             .when('/login', {
-                controller: 'LoginController',
+                controller: 'loginController',
                 templateUrl: 'templates/login.html'
             })
 
             .otherwise({ redirectTo: '/' });
         ChartJsProvider.setOptions({ colors: ['#803690', '#00ADF9', '#DCDCDC', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360'] });
+    });
+
+
+
+    app.run(function ($rootScope: any, $location: any, LoginService: any) {
+
+        $rootScope.$on('$locationChangeStart',
+            (event:any, next:any, current:any) => {
+                var publicPages = ['/login'];
+                var restrictedPage = publicPages.indexOf($location.path()) === -1;
+                //if (restrictedPage && !LoginService.isAuthenticated()) {
+                //    $location.path('/login');
+                //}
+            });
     });
 
     angular.module('myApp').directive('focusOn', function () {
@@ -100,6 +131,7 @@ module App {
     
     app.controller("graphController", graphController);
     app.controller("InfluenceController", influenceController);
+    app.controller("loginController", loginController);
 
 }
 

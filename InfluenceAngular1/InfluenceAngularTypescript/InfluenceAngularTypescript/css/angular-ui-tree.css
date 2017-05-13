@@ -1,7 +1,7 @@
 .angular-ui-tree {
 }
 
-.angular-ui-tree-empty {
+/*.angular-ui-tree-empty {
     border: 1px dashed #bbb;
     min-height: 100px;
     background-color: #e5e5e5;
@@ -11,7 +11,7 @@
     background-size: 60px 60px;
     background-position: 0 0, 30px 30px;
     pointer-events: none;
-}
+}*/
 
 .angular-ui-tree-nodes {
     position: relative;

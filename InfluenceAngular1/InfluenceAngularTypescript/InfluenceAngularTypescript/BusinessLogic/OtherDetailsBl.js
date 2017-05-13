@@ -23,12 +23,19 @@ var App;
                 }
             };
             this.editOtherdetailsOk = function (Otherdetails, index, $scope) {
-                $scope.Otherdetailsediting = false;
-                //Mapping
-                $scope.myDataTable.AdditionalDetails[index].Description = $scope.editOtherDetailsValue.DescriptionEdit;
-                $scope.myDataTable.AdditionalDetails[index].Type = $scope.editOtherDetailsValue.TypeEdit;
-                $scope.myDataTable.AdditionalDetails[index].Module = $scope.editOtherDetailsValue.ModuleEdit;
-                $scope.myDataTable.AdditionalDetails[index].Complexity = $scope.editOtherDetailsValue.ComplexityEdit;
+                if ($scope.editOtherDetailsValue.DescriptionEdit == "" &&
+                    $scope.editOtherDetailsValue.TypeEdit == "" &&
+                    $scope.editOtherDetailsValue.ModuleEdit == "" &&
+                    $scope.editOtherDetailsValue.ComplexityEdit == "")
+                    alert("Please enter the details");
+                else {
+                    $scope.Otherdetailsediting = false;
+                    //Mapping
+                    $scope.myDataTable.AdditionalDetails[index].Description = $scope.editOtherDetailsValue.DescriptionEdit;
+                    $scope.myDataTable.AdditionalDetails[index].Type = $scope.editOtherDetailsValue.TypeEdit;
+                    $scope.myDataTable.AdditionalDetails[index].Module = $scope.editOtherDetailsValue.ModuleEdit;
+                    $scope.myDataTable.AdditionalDetails[index].Complexity = $scope.editOtherDetailsValue.ComplexityEdit;
+                }
             };
             this.removeOtherdetailsCancel = function (Otherdetails, index, $scope) {
                 $scope.Otherdetailsediting = false;

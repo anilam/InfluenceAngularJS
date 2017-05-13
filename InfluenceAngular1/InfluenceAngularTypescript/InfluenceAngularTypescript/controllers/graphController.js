@@ -1,6 +1,6 @@
 var App;
 (function (App) {
-    function graphController($scope) {
+    function graphController($scope, LoginService) {
         $scope.graphmodel = {};
         $scope.labels = [];
         $scope.data = [];

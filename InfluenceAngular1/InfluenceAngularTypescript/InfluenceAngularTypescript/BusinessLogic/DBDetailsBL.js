@@ -22,11 +22,16 @@ var App;
                 }
             };
             this.editDBdetailsOk = function (DBdetails, index, $scope) {
-                $scope.DBdetailsediting = false;
-                //Mapping
-                $scope.myDataTable.DatabaseDetails[index].DbObject = $scope.editDBDetailsValue.DbObject;
-                $scope.myDataTable.DatabaseDetails[index].DbType = $scope.editDBDetailsValue.DbType;
-                $scope.myDataTable.DatabaseDetails[index].Description = $scope.editDBDetailsValue.Description;
+                if ($scope.editDBDetailsValue.DbObject == "" && $scope.editDBDetailsValue.DbType == "" && $scope.editDBDetailsValue.Description == "") {
+                    alert("Please enter the details");
+                }
+                else {
+                    $scope.DBdetailsediting = false;
+                    //Mapping
+                    $scope.myDataTable.DatabaseDetails[index].DbObject = $scope.editDBDetailsValue.DbObject;
+                    $scope.myDataTable.DatabaseDetails[index].DbType = $scope.editDBDetailsValue.DbType;
+                    $scope.myDataTable.DatabaseDetails[index].Description = $scope.editDBDetailsValue.Description;
+                }
             };
             this.removeDBdetailsCancel = function (DBdetails, index, $scope) {
                 $scope.DBdetailsediting = false;
