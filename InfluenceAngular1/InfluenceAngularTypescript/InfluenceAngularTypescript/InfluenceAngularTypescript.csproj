@@ -71,6 +71,7 @@
     <TypeScriptCompile Include="controllers\loginController.ts" />
     <TypeScriptCompile Include="DBLogic\DBStore.ts" />
     <TypeScriptCompile Include="entity\AdditionalDetail.ts" />
+    <TypeScriptCompile Include="entity\Alerts.ts" />
     <TypeScriptCompile Include="entity\DatabaseDetail.ts" />
     <TypeScriptCompile Include="entity\FuncDetails.ts" />
     <TypeScriptCompile Include="entity\NodeDetail.ts" />

@@ -69,7 +69,7 @@
         UpdatePathNullToInsertedNode: (subMenuItems: any, status: number) => any;
         document: any
         updateSearchExcelExport: (path: string, name: string) => void;
-        alerts: any;
+        alerts: Alerts[];
         closeAlert: (index: any) => void;
         activeOtherdetailsId: number;
         Otherdetailsediting: any;

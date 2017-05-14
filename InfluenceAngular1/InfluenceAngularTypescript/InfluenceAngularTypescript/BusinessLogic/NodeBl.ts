@@ -37,7 +37,7 @@ module App {
 
 
             } else {
-                $scope.alerts.push({ type: 'warning', msg: 'Please complete the edit operation' });
+                $scope.alerts.push({ type: Config.ErrorType[Config.ErrorType.warning], msg: Config.Constants.errorMessage.editing });
             }
 
         };
@@ -63,7 +63,7 @@ module App {
 
             } else {
                 $scope.activeMenu = "EnterDetails";
-                $scope.alerts.push({ type: 'warning', msg: 'Please complete the edit operation' });
+                $scope.alerts.push({ type: Config.ErrorType[Config.ErrorType.warning], msg: Config.Constants.errorMessage.editing });
             }
 
         };
@@ -82,10 +82,9 @@ module App {
                 $scope.activeMenu = nodeData.Path;
             } else {
                 if (nodeData.Name == "EnterDetails") {
-                    $scope.alerts.push({ type: 'warning', msg: 'Please rename the newly added node' });
+                    $scope.alerts.push({ type: Config.ErrorType[Config.ErrorType.warning], msg: Config.Constants.errorMessage.renameNode });
                 } else {
-                    alert("Duplicate Name Not allowed");
-                    $scope.alerts.push({ type: 'warning', msg: 'Node name already exist, please rename' });
+                    $scope.alerts.push({ type: Config.ErrorType[Config.ErrorType.warning], msg: Config.Constants.errorMessage.duplicateNode });
                 }
 
             }

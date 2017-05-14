@@ -1,6 +1,5 @@
 var App;
 (function (App) {
-    var Mode = App.Config.Mode;
     var Constants = App.Config.Constants;
     function influenceController($scope, $http, $log, $filter, functionalDetailsBl, otherDetailsBl, dBDetailsBL, nodeBl, focus, dBStore, LoginService, $rootScope, $aside) {
         $rootScope.authenticated = LoginService.isAuthenticated();
@@ -16,7 +15,7 @@ var App;
         $scope.settings.add = false;
         $scope.settings.delete = false;
         $scope.settings.edit = false;
-        $scope.settings.runningMode = Mode.Select;
+        $scope.settings.runningMode = ("0");
         $scope.tabselected = 0;
         $scope.loading = false;
         $scope.loadingNode = false;
@@ -83,7 +82,7 @@ var App;
                         e.stopPropagation();
                     };
                     $scope.cancel = function (e) {
-                        $uibModalInstance.dismiss();
+                        $uibModalInstance.dismiss($scope.settings);
                         e.stopPropagation();
                     };
                 }
@@ -96,8 +95,8 @@ var App;
                 if ($scope.settings.collapseTree) {
                     $scope.collapseAll();
                 }
-                Constants.runningMode = $scope.settings.runningMode;
-                if ($scope.settings.runningMode == Mode.Pm) {
+                if ($scope.settings.runningMode != Constants.runningMode) {
+                    Constants.runningMode = $scope.settings.runningMode;
                     $scope.init();
                 }
             }, function () {

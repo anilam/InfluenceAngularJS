@@ -18,12 +18,12 @@ var App;
                     $scope.editDBDetailsValue.Description = $scope.myDataTable.DatabaseDetails[index].Description;
                 }
                 else {
-                    $scope.alerts.push({ type: 'warning', msg: 'Please complete the edit operation' });
+                    $scope.alerts.push({ type: App.Config.ErrorType[App.Config.ErrorType.warning], msg: App.Config.Constants.errorMessage.editing });
                 }
             };
             this.editDBdetailsOk = function (DBdetails, index, $scope) {
                 if ($scope.editDBDetailsValue.DbObject == "" && $scope.editDBDetailsValue.DbType == "" && $scope.editDBDetailsValue.Description == "") {
-                    alert("Please enter the details");
+                    $scope.alerts.push({ type: App.Config.ErrorType[App.Config.ErrorType.warning], msg: App.Config.Constants.errorMessage.validateinput });
                 }
                 else {
                     $scope.DBdetailsediting = false;
@@ -64,7 +64,7 @@ var App;
                     focus("DBdetails-0");
                 }
                 else {
-                    $scope.alerts.push({ type: 'warning', msg: 'Please complete the edit operation' });
+                    $scope.alerts.push({ type: App.Config.ErrorType[App.Config.ErrorType.warning], msg: App.Config.Constants.errorMessage.editing });
                 }
             };
         }

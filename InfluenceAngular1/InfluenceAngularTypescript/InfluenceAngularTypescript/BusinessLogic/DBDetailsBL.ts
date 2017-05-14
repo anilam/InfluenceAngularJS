@@ -22,13 +22,13 @@ module App {
                 $scope.editDBDetailsValue.Description = $scope.myDataTable.DatabaseDetails[index].Description;
 
             } else {
-                $scope.alerts.push({ type: 'warning', msg: 'Please complete the edit operation' });
+                $scope.alerts.push({ type: Config.ErrorType[Config.ErrorType.warning], msg: Config.Constants.errorMessage.editing });
             }
         }
 
         editDBdetailsOk = function (DBdetails: DatabaseDetail, index: number, $scope: IDiagnosticsScope) {
             if ($scope.editDBDetailsValue.DbObject == "" && $scope.editDBDetailsValue.DbType =="" && $scope.editDBDetailsValue.Description == "") {
-                alert("Please enter the details");
+                $scope.alerts.push({ type: Config.ErrorType[Config.ErrorType.warning], msg: Config.Constants.errorMessage.validateinput });
             } else {
 
                 $scope.DBdetailsediting = false;
@@ -74,7 +74,7 @@ module App {
                 $scope.editItemDBdetailsId = 0;
                 focus("DBdetails-0");
             } else {
-                $scope.alerts.push({ type: 'warning', msg: 'Please complete the edit operation' });
+                $scope.alerts.push({ type: Config.ErrorType[Config.ErrorType.warning], msg: Config.Constants.errorMessage.editing });
             }
         }
 

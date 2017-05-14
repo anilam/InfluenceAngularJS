@@ -30,13 +30,13 @@
         $scope.settings.add = false;
         $scope.settings.delete = false;
         $scope.settings.edit = false;
-        $scope.settings.runningMode = Mode.Select;
+        $scope.settings.runningMode = <any>("0");
         $scope.tabselected = 0;
         $scope.loading = false;
         $scope.loadingNode = false;
         $scope.exportList = new Array();
         $scope.id = 0;
-        $scope.alerts = [];
+        $scope.alerts =[];
         var s = new Array();
         s.push({ Label: "", count: "" });
 
@@ -81,6 +81,8 @@
             $scope.alerts.splice(index, 1);
         };
 
+        
+
         $scope.openAside = function (position, backdrop) {
             $scope.asideState = {
                 open: true,
@@ -102,14 +104,14 @@
                     }
                 },
                 controller: function ($scope: any, $uibModalInstance: any, selectedSettings: Settings) {
-                    $scope.settings = selectedSettings;
+                    $scope.settings = selectedSettings;                
 
                     $scope.ok = function (e: any) {
                         $uibModalInstance.close($scope.settings);
                         e.stopPropagation();
                     };
                     $scope.cancel = function (e: any) {
-                        $uibModalInstance.dismiss();
+                        $uibModalInstance.dismiss($scope.settings);
                         e.stopPropagation();
                     };
                 }
@@ -122,10 +124,13 @@
                 if ($scope.settings.collapseTree) {
                     $scope.collapseAll();
                 }
-                Constants.runningMode = $scope.settings.runningMode;
-                if ($scope.settings.runningMode == Mode.Pm) {
-                    $scope.init();
-                }
+             
+            
+                    if ($scope.settings.runningMode != Constants.runningMode) {
+                        Constants.runningMode = $scope.settings.runningMode;
+                        $scope.init();
+                    }
+             
 
             }, function () {
                 $log.info('modal-component dismissed at: ' + new Date());

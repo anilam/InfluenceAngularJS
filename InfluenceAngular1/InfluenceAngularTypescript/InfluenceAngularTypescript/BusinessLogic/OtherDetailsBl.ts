@@ -23,7 +23,7 @@ module App {
                 $scope.editOtherDetailsValue.ComplexityEdit = $scope.myDataTable.AdditionalDetails[index].Complexity;
 
             } else {
-                alert("Please Complete the editiing");
+                $scope.alerts.push({ type: Config.ErrorType[Config.ErrorType.warning], msg: Config.Constants.errorMessage.editing });
             }
         }
 
@@ -31,9 +31,9 @@ module App {
             if ($scope.editOtherDetailsValue.DescriptionEdit == "" &&
                 $scope.editOtherDetailsValue.TypeEdit == "" &&
                 $scope.editOtherDetailsValue.ModuleEdit == "" &&
-                $scope.editOtherDetailsValue.ComplexityEdit == "")
-                alert("Please enter the details");
-            else {
+                $scope.editOtherDetailsValue.ComplexityEdit == "") {
+                $scope.alerts.push({type:Config.ErrorType[Config.ErrorType.warning], msg:Config.Constants.errorMessage.validateinput});
+            } else {
 
                 $scope.Otherdetailsediting = false;
                 //Mapping
@@ -78,7 +78,7 @@ module App {
                 focus("Otherdetails-0");
 
             } else {
-                alert("Please complete the editing");
+                    $scope.alerts.push({ type: Config.ErrorType[Config.ErrorType.warning], msg: Config.Constants.errorMessage.editing });
             }
         }
     }

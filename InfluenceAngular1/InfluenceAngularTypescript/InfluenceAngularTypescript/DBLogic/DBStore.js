@@ -1,5 +1,6 @@
 var App;
 (function (App) {
+    var Mode = App.Config.Mode;
     var DBStore = (function () {
         function DBStore() {
             this.saveNode = function ($scope, $http) {
@@ -11,11 +12,11 @@ var App;
                     url: App.Config.Constants.default.url
                 }).success(function (status) {
                     console.log("success");
-                    $scope.alerts.push({ type: 'success', msg: 'Updated successfully' });
+                    $scope.alerts.push({ type: App.Config.ErrorType[App.Config.ErrorType.success], msg: App.Config.Constants.errorMessage.success });
                     $scope.init();
                 }).error(function (error, status) {
                     $scope.loadingNode = false;
-                    $scope.alerts.push({ type: 'danger', msg: "Update Failed:" + error + " " + status });
+                    $scope.alerts.push({ type: App.Config.ErrorType[App.Config.ErrorType.danger], msg: App.Config.Constants.errorMessage.failure + error + " " + status });
                 });
             };
             this.saveNodeDetails = function ($scope, $http) {
@@ -26,10 +27,10 @@ var App;
                     url: App.Config.Constants.default.url + '/' + $scope.activedata.Path + '/' + "detail"
                 }).success(function (status) {
                     console.log("success");
-                    $scope.alerts.push({ type: 'success', msg: 'Updated successfully' });
+                    $scope.alerts.push({ type: App.Config.ErrorType[App.Config.ErrorType.success], msg: App.Config.Constants.errorMessage.success });
                     $scope.loading = false;
                 }).error(function (error, status) {
-                    $scope.alerts.push({ type: 'danger', msg: "Update Failed:" + error + " " + status });
+                    $scope.alerts.push({ type: App.Config.ErrorType[App.Config.ErrorType.danger], msg: App.Config.Constants.errorMessage.failure + error + " " + status });
                     $scope.loading = false;
                 });
             };
@@ -37,17 +38,30 @@ var App;
                 $scope.loadingNode = true;
                 $scope.nodeData = [];
                 ////aside
-                $http({
-                    method: "GET",
-                    url: App.Config.Constants.default.url
-                }).success(function (data) {
-                    var arraypush = new Array();
-                    arraypush.unshift(data);
-                    $scope.nodeData = arraypush;
+                if (App.Config.Constants.runningMode == Mode.Pm) {
+                    $http({
+                        method: "GET",
+                        url: App.Config.Constants.default.url
+                    }).success(function (data) {
+                        var arraypush = new Array();
+                        arraypush.unshift(data);
+                        $scope.nodeData = arraypush;
+                        $scope.alerts.push({
+                            type: App.Config.ErrorType[App.Config.ErrorType.success],
+                            msg: App.Config.Constants.errorMessage.success
+                        });
+                        $scope.loadingNode = false;
+                    }).error(function (error, status) {
+                        $scope.loadingNode = false;
+                        $scope.alerts.push({
+                            type: App.Config.ErrorType[App.Config.ErrorType.danger],
+                            msg: App.Config.Constants.errorMessage.failure + error + " " + status
+                        });
+                    });
+                }
+                else {
                     $scope.loadingNode = false;
-                }).error(function () {
-                    $scope.loadingNode = false;
-                });
+                }
             };
         }
         return DBStore;

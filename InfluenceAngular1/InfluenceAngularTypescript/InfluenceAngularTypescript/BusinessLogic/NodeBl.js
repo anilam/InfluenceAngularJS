@@ -26,7 +26,7 @@ var App;
                     focus(nodeData.Path + "_NewNode" + scope.id);
                 }
                 else {
-                    $scope.alerts.push({ type: 'warning', msg: 'Please complete the edit operation' });
+                    $scope.alerts.push({ type: App.Config.ErrorType[App.Config.ErrorType.warning], msg: App.Config.Constants.errorMessage.editing });
                 }
             };
             this.removeItem = function (scope, $scope) {
@@ -45,7 +45,7 @@ var App;
                 }
                 else {
                     $scope.activeMenu = "EnterDetails";
-                    $scope.alerts.push({ type: 'warning', msg: 'Please complete the edit operation' });
+                    $scope.alerts.push({ type: App.Config.ErrorType[App.Config.ErrorType.warning], msg: App.Config.Constants.errorMessage.editing });
                 }
             };
             this.editok = function (scope, $scope) {
@@ -64,11 +64,10 @@ var App;
                 }
                 else {
                     if (nodeData.Name == "EnterDetails") {
-                        $scope.alerts.push({ type: 'warning', msg: 'Please rename the newly added node' });
+                        $scope.alerts.push({ type: App.Config.ErrorType[App.Config.ErrorType.warning], msg: App.Config.Constants.errorMessage.renameNode });
                     }
                     else {
-                        alert("Duplicate Name Not allowed");
-                        $scope.alerts.push({ type: 'warning', msg: 'Node name already exist, please rename' });
+                        $scope.alerts.push({ type: App.Config.ErrorType[App.Config.ErrorType.warning], msg: App.Config.Constants.errorMessage.duplicateNode });
                     }
                 }
             };

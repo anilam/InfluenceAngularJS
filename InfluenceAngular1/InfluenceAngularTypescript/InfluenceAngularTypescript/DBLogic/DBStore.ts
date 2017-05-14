@@ -1,4 +1,6 @@
 ﻿module App {
+    import Mode = App.Config.Mode;
+
     export class DBStore {
         constructor() {
 
@@ -13,11 +15,11 @@
                 url: Config.Constants.default.url
             }).success((status: any) => {
                 console.log("success");
-                $scope.alerts.push({ type: 'success', msg: 'Updated successfully' });
+                $scope.alerts.push({ type: Config.ErrorType[Config.ErrorType.success], msg: Config.Constants.errorMessage.success });
                 $scope.init();
             }).error((error: any, status: any) => {
                 $scope.loadingNode = false;
-                $scope.alerts.push({ type: 'danger', msg: "Update Failed:" + error + " " + status });
+                $scope.alerts.push({ type: Config.ErrorType[Config.ErrorType.danger], msg: Config.Constants.errorMessage.failure + error + " " + status });
             });
         }
 
@@ -29,10 +31,10 @@
                 url: Config.Constants.default.url + '/' + $scope.activedata.Path + '/' + "detail"
             }).success((status) => {
                 console.log("success");
-                $scope.alerts.push({ type: 'success', msg: 'Updated successfully' });
+                $scope.alerts.push({ type: Config.ErrorType[Config.ErrorType.success], msg: Config.Constants.errorMessage.success });
                 $scope.loading = false;
             }).error((error, status) => {
-                $scope.alerts.push({ type: 'danger', msg: "Update Failed:" + error + " " + status });
+                $scope.alerts.push({ type: Config.ErrorType[Config.ErrorType.danger], msg: Config.Constants.errorMessage.failure + error + " " + status });
                 $scope.loading = false;
             });
         }
@@ -41,17 +43,29 @@
             $scope.loadingNode = true;
             $scope.nodeData = [];
             ////aside
-            $http({
-                method: "GET",
-                url: Config.Constants.default.url
-            }).success((data) => {
-                var arraypush = new Array();
-                arraypush.unshift(data);
-                $scope.nodeData = arraypush;
+            if (Config.Constants.runningMode == Mode.Pm) {
+                $http({
+                    method: "GET",
+                    url: Config.Constants.default.url
+                }).success((data) => {
+                    var arraypush = new Array();
+                    arraypush.unshift(data);
+                    $scope.nodeData = arraypush;
+                    $scope.alerts.push({
+                        type: Config.ErrorType[Config.ErrorType.success],
+                        msg: Config.Constants.errorMessage.success
+                    });
+                    $scope.loadingNode = false;
+                }).error((error, status) => {
+                    $scope.loadingNode = false;
+                    $scope.alerts.push({
+                        type: Config.ErrorType[Config.ErrorType.danger],
+                        msg: Config.Constants.errorMessage.failure + error + " " + status
+                    });
+                });
+            } else {
                 $scope.loadingNode = false;
-            }).error(() => {
-                $scope.loadingNode = false;
-            });
+            }
         }
     }
 }

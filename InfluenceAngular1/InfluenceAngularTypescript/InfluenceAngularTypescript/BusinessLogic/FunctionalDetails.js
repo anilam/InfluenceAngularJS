@@ -19,7 +19,7 @@ var App;
                     $scope.editFuncDetailsValue.ModuleEdit = $scope.myDataTable.Functional[index].Module;
                 }
                 else {
-                    alert("Please Complete the editiing");
+                    $scope.alerts.push({ type: App.Config.ErrorType[App.Config.ErrorType.warning], msg: App.Config.Constants.errorMessage.editing });
                 }
             };
             this.editFuncdetailsOk = function (Funcdetails, index, $scope) {
@@ -27,7 +27,7 @@ var App;
                     $scope.editFuncDetailsValue.ImpactEdit == "" &&
                     $scope.editFuncDetailsValue.ProductEdit == "" &&
                     $scope.editFuncDetailsValue.ModuleEdit == "") {
-                    alert("Please enter the details");
+                    $scope.alerts.push({ type: App.Config.ErrorType[App.Config.ErrorType.warning], msg: App.Config.Constants.errorMessage.validateinput });
                 }
                 else {
                     $scope.Funcdetailsediting = false;
@@ -68,7 +68,7 @@ var App;
                     focus("funcdetails-0");
                 }
                 else {
-                    alert("Please complete the editing");
+                    $scope.alerts.push({ type: App.Config.ErrorType[App.Config.ErrorType.warning], msg: App.Config.Constants.errorMessage.editing });
                 }
             };
         }

@@ -212,11 +212,7 @@
             </div>
             <hr />
         </div>
-        <div class="col-md-2">
-           
-            <!--<span>Select Source</span>-->
-        </div>
-        <div class="col-md-6"><div uib-alert ng-repeat="alert in alerts" ng-class="'alert-' + (alert.type || 'warning')" dismiss-on-timeout="5000" close="closeAlert($index)">{{alert.msg}}</div></div>
+        <div class="col-md-8"><div uib-alert ng-repeat="alert in alerts" ng-class="'alert-' + (alert.type || 'warning')" dismiss-on-timeout="5000" close="closeAlert($index)">{{alert.msg}}</div></div>
     </div>
 
  
