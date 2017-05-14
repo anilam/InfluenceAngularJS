@@ -1,5 +1,6 @@
 var App;
 (function (App) {
+    var Mode = App.Config.Mode;
     var Constants = App.Config.Constants;
     function influenceController($scope, $http, $log, $filter, functionalDetailsBl, otherDetailsBl, dBDetailsBL, nodeBl, focus, dBStore, LoginService, $rootScope, $aside) {
         $rootScope.authenticated = LoginService.isAuthenticated();
@@ -22,6 +23,7 @@ var App;
         $scope.exportList = new Array();
         $scope.id = 0;
         $scope.alerts = [];
+        Constants.runningMode = Mode.Select;
         var s = new Array();
         s.push({ Label: "", count: "" });
         var findArrayObject = function (object, name) {

@@ -36,7 +36,8 @@
         $scope.loadingNode = false;
         $scope.exportList = new Array();
         $scope.id = 0;
-        $scope.alerts =[];
+        $scope.alerts = [];
+        Constants.runningMode = Mode.Select;
         var s = new Array();
         s.push({ Label: "", count: "" });
 
