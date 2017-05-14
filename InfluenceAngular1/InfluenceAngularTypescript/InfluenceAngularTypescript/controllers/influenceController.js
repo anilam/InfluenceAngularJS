@@ -23,7 +23,6 @@ var App;
         $scope.exportList = new Array();
         $scope.id = 0;
         $scope.alerts = [];
-        Constants.runningMode = Mode.Select;
         var s = new Array();
         s.push({ Label: "", count: "" });
         var findArrayObject = function (object, name) {
@@ -105,6 +104,11 @@ var App;
                 $log.info('modal-component dismissed at: ' + new Date());
             });
         };
+        // add remaining mode
+        if (Constants.runningMode != Mode.Select) {
+            $scope.settings.runningMode = Constants.runningMode;
+            $scope.init();
+        }
         $scope.toggle = function (scope) {
             scope.toggle();
         };

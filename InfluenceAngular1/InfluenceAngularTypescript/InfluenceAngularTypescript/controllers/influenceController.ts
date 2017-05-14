@@ -37,7 +37,6 @@
         $scope.exportList = new Array();
         $scope.id = 0;
         $scope.alerts = [];
-        Constants.runningMode = Mode.Select;
         var s = new Array();
         s.push({ Label: "", count: "" });
 
@@ -117,6 +116,7 @@
                     };
                 }
             });
+          
             modalInstance.result.then(function (selectedSettings: Settings) {
                 $scope.settings = selectedSettings;
                 if ($scope.settings.expandTree) {
@@ -136,6 +136,11 @@
             }, function () {
                 $log.info('modal-component dismissed at: ' + new Date());
             });
+        }
+
+        // add remaining mode
+        if (Constants.runningMode != Mode.Select) {
+            $scope.init();
         }
 
         $scope.toggle = function (scope) {
