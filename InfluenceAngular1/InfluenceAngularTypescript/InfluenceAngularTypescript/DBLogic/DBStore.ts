@@ -39,11 +39,28 @@
             });
         }
 
+
+        excelExport = function ($scope: IDiagnosticsScope, $http: angular.IHttpService,urllist:string) {
+            $http({
+                method: "GET",
+                url: Config.Constants.default.reportURL + urllist
+            }).success(function (data:any, status:any, headers:any, config:any) {
+                var anchor = angular.element('<a/>');
+                anchor.attr({
+                    href: Config.Constants.default.reportURL + urllist,
+                    target: '_blank',
+                    download: 'export.xlsx'
+                })[0].click();
+                $scope.alerts.push({ type: Config.ErrorType[Config.ErrorType.success], msg: Config.Constants.errorMessage.downloadSuccess });
+            }).error((error, status) => {
+                $scope.alerts.push({ type: Config.ErrorType[Config.ErrorType.danger], msg: Config.Constants.errorMessage.failure + error + " " + status });
+            });
+        }
+
         initNode = function ($scope: IDiagnosticsScope, $http: angular.IHttpService) {
             $scope.loadingNode = true;
             $scope.nodeData = [];
             ////aside
-            if (Config.Constants.runningMode == Mode.Pm) {
                 $http({
                     method: "GET",
                     url: Config.Constants.default.url
@@ -63,9 +80,17 @@
                         msg: Config.Constants.errorMessage.failure + error + " " + status
                     });
                 });
-            } else {
+        }
+
+        initGraph = function ($scope: IDiagnosticsScope, $http: angular.IHttpService) {
+            $http({
+                method: "GET",
+                url: Config.Constants.default.graphURL
+            }).success((data:any) => {
+                $scope.graphData = data;
+            }).error((error, status) => {
                 $scope.loadingNode = false;
-            }
+            });
         }
     }
 }

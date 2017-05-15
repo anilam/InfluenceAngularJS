@@ -60,9 +60,9 @@ module App {
             (event:any, next:any, current:any) => {
                 var publicPages = ['/login'];
                 var restrictedPage = publicPages.indexOf($location.path()) === -1;
-                if (restrictedPage && !LoginService.isAuthenticated()) {
-                    $location.path('/login');
-                }
+                //if (restrictedPage && !LoginService.isAuthenticated()) {
+                //    $location.path('/login');
+                //}
             });
     });
 

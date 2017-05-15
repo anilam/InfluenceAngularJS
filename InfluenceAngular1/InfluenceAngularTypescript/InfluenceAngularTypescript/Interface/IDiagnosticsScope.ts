@@ -14,7 +14,6 @@
         myDataTable: NodeDetail;
         setActive: (menuItem: any) => void;
         activeMenu: string;
-        exportToExcel: (tableId: any, sheetname: any) => void;
         edit: (scope: any) => void;
         editing: boolean;
         editItem: string;
@@ -95,5 +94,6 @@
         password: any;
         error: string;
         authenticated: any;
+        exportToExcel: () => void;
     }
 }

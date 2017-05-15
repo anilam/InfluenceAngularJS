@@ -25,7 +25,8 @@ var App;
                         success: 'Updated successfully',
                         failure: "Update Failed:",
                         renameNode: "Please rename the newly added node",
-                        duplicateNode: "Node name already exist, please rename"
+                        duplicateNode: "Node name already exist, please rename",
+                        downloadSuccess: "Downloaded Successfully"
                     };
                 },
                 enumerable: true,
@@ -33,16 +34,11 @@ var App;
             });
             Object.defineProperty(Constants, "default", {
                 get: function () {
-                    if (this.runningMode == Mode.Pm) {
-                        return {
-                            url: 'http://124.124.79.181/Influence/Structure/pm/Nodes'
-                        };
-                    }
-                    if (this.runningMode == Mode.Ehr) {
-                        return {
-                            url: 'http://124.124.79.181/Influence/Structure/pm/Nodes'
-                        };
-                    }
+                    return {
+                        url: 'http://124.124.79.181/Influence/Structure/' + Mode[this.runningMode] + '/Nodes',
+                        reportURL: 'http://124.124.79.181/Influence/Reports/' + Mode[this.runningMode] + '/export/nodes/',
+                        graphURL: 'http://124.124.79.181/Influence/Reports/' + Mode[this.runningMode] + '/dependencyreport'
+                    };
                 },
                 enumerable: true,
                 configurable: true

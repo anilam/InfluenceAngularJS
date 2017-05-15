@@ -1,6 +1,5 @@
 var App;
 (function (App) {
-    var Mode = App.Config.Mode;
     var DBStore = (function () {
         function DBStore() {
             this.saveNode = function ($scope, $http) {
@@ -34,34 +33,55 @@ var App;
                     $scope.loading = false;
                 });
             };
+            this.excelExport = function ($scope, $http, urllist) {
+                $http({
+                    method: "GET",
+                    url: App.Config.Constants.default.reportURL + urllist
+                }).success(function (data, status, headers, config) {
+                    var anchor = angular.element('<a/>');
+                    anchor.attr({
+                        href: App.Config.Constants.default.reportURL + urllist,
+                        target: '_blank',
+                        download: 'export.xlsx'
+                    })[0].click();
+                    $scope.alerts.push({ type: App.Config.ErrorType[App.Config.ErrorType.success], msg: App.Config.Constants.errorMessage.downloadSuccess });
+                }).error(function (error, status) {
+                    $scope.alerts.push({ type: App.Config.ErrorType[App.Config.ErrorType.danger], msg: App.Config.Constants.errorMessage.failure + error + " " + status });
+                });
+            };
             this.initNode = function ($scope, $http) {
                 $scope.loadingNode = true;
                 $scope.nodeData = [];
                 ////aside
-                if (App.Config.Constants.runningMode == Mode.Pm) {
-                    $http({
-                        method: "GET",
-                        url: App.Config.Constants.default.url
-                    }).success(function (data) {
-                        var arraypush = new Array();
-                        arraypush.unshift(data);
-                        $scope.nodeData = arraypush;
-                        $scope.alerts.push({
-                            type: App.Config.ErrorType[App.Config.ErrorType.success],
-                            msg: App.Config.Constants.errorMessage.success
-                        });
-                        $scope.loadingNode = false;
-                    }).error(function (error, status) {
-                        $scope.loadingNode = false;
-                        $scope.alerts.push({
-                            type: App.Config.ErrorType[App.Config.ErrorType.danger],
-                            msg: App.Config.Constants.errorMessage.failure + error + " " + status
-                        });
+                $http({
+                    method: "GET",
+                    url: App.Config.Constants.default.url
+                }).success(function (data) {
+                    var arraypush = new Array();
+                    arraypush.unshift(data);
+                    $scope.nodeData = arraypush;
+                    $scope.alerts.push({
+                        type: App.Config.ErrorType[App.Config.ErrorType.success],
+                        msg: App.Config.Constants.errorMessage.success
                     });
-                }
-                else {
                     $scope.loadingNode = false;
-                }
+                }).error(function (error, status) {
+                    $scope.loadingNode = false;
+                    $scope.alerts.push({
+                        type: App.Config.ErrorType[App.Config.ErrorType.danger],
+                        msg: App.Config.Constants.errorMessage.failure + error + " " + status
+                    });
+                });
+            };
+            this.initGraph = function ($scope, $http) {
+                $http({
+                    method: "GET",
+                    url: App.Config.Constants.default.graphURL
+                }).success(function (data) {
+                    $scope.graphData = data;
+                }).error(function (error, status) {
+                    $scope.loadingNode = false;
+                });
             };
         }
         return DBStore;

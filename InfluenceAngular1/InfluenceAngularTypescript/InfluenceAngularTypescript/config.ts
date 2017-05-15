@@ -23,21 +23,17 @@
                     success: 'Updated successfully',
                     failure: "Update Failed:",
                     renameNode: "Please rename the newly added node",
-                    duplicateNode:"Node name already exist, please rename"
+                    duplicateNode: "Node name already exist, please rename",
+                    downloadSuccess:"Downloaded Successfully"
                 }
         }
 
         static get default(): any {
-            if (this.runningMode == Mode.Pm) {
                 return {
-                    url: 'http://124.124.79.181/Influence/Structure/pm/Nodes'
+                    url: 'http://124.124.79.181/Influence/Structure/' + Mode[this.runningMode] +'/Nodes',
+                    reportURL: 'http://124.124.79.181/Influence/Reports/' + Mode[this.runningMode] + '/export/nodes/',
+                    graphURL: 'http://124.124.79.181/Influence/Reports/' + Mode[this.runningMode] + '/dependencyreport'
                 }
-            }
-            if (this.runningMode == Mode.Ehr) {
-                return {
-                    url: 'http://124.124.79.181/Influence/Structure/pm/Nodes'
-                }
-            }
         }
     }
 }

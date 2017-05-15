@@ -58,6 +58,14 @@ var App;
         $scope.closeAlert = function (index) {
             $scope.alerts.splice(index, 1);
         };
+        $scope.exportToExcel = function () {
+            var urllist = "";
+            for (var i = 0; i < $scope.exportList.length; i++) {
+                urllist = urllist + $scope.exportList[i].Path + ',';
+            }
+            urllist = urllist.slice(0, -1);
+            dBStore.excelExport($scope, $http, urllist);
+        };
         $scope.openAside = function (position, backdrop) {
             $scope.asideState = {
                 open: true,
@@ -106,7 +114,6 @@ var App;
         };
         // add remaining mode
         if (Constants.runningMode != Mode.Select) {
-            $scope.settings.runningMode = Constants.runningMode;
             $scope.init();
         }
         $scope.toggle = function (scope) {
