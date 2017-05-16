@@ -1,5 +1,4 @@
 ﻿module App {
-    import Mode = App.Config.Mode;
 
     export class DBStore {
         constructor() {
@@ -70,7 +69,7 @@
                     $scope.nodeData = arraypush;
                     $scope.alerts.push({
                         type: Config.ErrorType[Config.ErrorType.success],
-                        msg: Config.Constants.errorMessage.success
+                        msg: Config.Constants.errorMessage.nodesuccess
                     });
                     $scope.loadingNode = false;
                 }).error((error, status) => {

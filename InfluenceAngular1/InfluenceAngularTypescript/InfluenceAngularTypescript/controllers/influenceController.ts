@@ -16,7 +16,7 @@
         $aside: any) {
 
         $rootScope.authenticated = LoginService.isAuthenticated();
-  
+
         $scope.nodeData = [];
         $scope.editing = false;
         $scope.Funcdetailsediting = false;
@@ -133,11 +133,13 @@
                         Constants.runningMode = $scope.settings.runningMode;
                         $scope.init();
                     }
-             
-
             }, function () {
                 $log.info('modal-component dismissed at: ' + new Date());
             });
+        }
+
+        if (Constants.runningMode != "") {
+            $scope.init();
         }
 
         $scope.toggle = function (scope) {

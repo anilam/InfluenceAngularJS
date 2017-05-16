@@ -109,6 +109,9 @@ var App;
                 $log.info('modal-component dismissed at: ' + new Date());
             });
         };
+        if (Constants.runningMode != "") {
+            $scope.init();
+        }
         $scope.toggle = function (scope) {
             scope.toggle();
         };

@@ -17,6 +17,7 @@ var App;
                         editing: 'Please complete the editing',
                         validateinput: 'Please enter the details',
                         success: 'Updated successfully',
+                        nodesuccess: 'Source Loaded successfully',
                         failure: "Update Failed:",
                         renameNode: "Please rename the newly added node",
                         duplicateNode: "Node name already exist, please rename",

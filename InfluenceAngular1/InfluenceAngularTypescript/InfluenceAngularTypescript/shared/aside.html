@@ -9,35 +9,18 @@
     <h4 class="modal-title">Node Settings</h4>
     <table class="table">
         <tbody>
-            <tr>
-                <td>               
-                    <div class="styled-select slate input-group">                      
-                        <label for="source"> Select Source: </label><br>
+        <tr>
+            <td>               
+                <div class="input-group">                      
+                    <label for="source"> Select Source: </label><br>
+                    <div class="styled-select slate">
                         <select name="source" ng-model="settings.runningMode">
                             <option ng-repeat="option in settings.sourceList" value="{{option}}">{{option}}</option>
-                        </select>                    
-                    </div>
-                </td>
-            </tr>
-
-        <tr>
-            <td>
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" ng-model="settings.expandTree"> Expand Tree Node
-                    </label>
+                        </select>  
+                    </div>                 
                 </div>
             </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" ng-model="settings.collapseTree"> Collapse Tree Node
-                    </label>
-                </div>
-            </td>
-        </tr>
+        </tr>  
         <tr>
             <td>
                 <div class="checkbox">
@@ -74,6 +57,26 @@
                 </div>
             </td>
         </tr>
+
+            <tr>
+                <td>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" ng-model="settings.collapseTree"> Collapse Tree Node
+                        </label>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" ng-model="settings.expandTree"> Expand Tree Node
+                        </label>
+                    </div>
+                </td>
+            </tr>
         </tbody>
     </table>
 

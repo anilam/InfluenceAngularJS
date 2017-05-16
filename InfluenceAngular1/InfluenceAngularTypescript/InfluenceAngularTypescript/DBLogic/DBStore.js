@@ -62,7 +62,7 @@ var App;
                     $scope.nodeData = arraypush;
                     $scope.alerts.push({
                         type: App.Config.ErrorType[App.Config.ErrorType.success],
-                        msg: App.Config.Constants.errorMessage.success
+                        msg: App.Config.Constants.errorMessage.nodesuccess
                     });
                     $scope.loadingNode = false;
                 }).error(function (error, status) {
