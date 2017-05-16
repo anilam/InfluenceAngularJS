@@ -215,7 +215,17 @@
         <div class="col-md-8"><div uib-alert ng-repeat="alert in alerts" ng-class="'alert-' + (alert.type || 'warning')" dismiss-on-timeout="5000" close="closeAlert($index)">{{alert.msg}}</div></div>
     </div>
 
- 
+<div class="row">
+    <div class="col-md-4">
+        <button type="button" class="btn btn-primary" ng-click="init()">
+            <span class="glyphicon glyphicon-refresh"> Refresh</span>
+        </button>
+        <button type="button" class="btn btn-primary" ng-hide="loadingNode" ng-click="saveNode()">
+            <span class="glyphicon glyphicon-save"> Save</span>
+        </button>       
+        <hr />
+    </div>
+</div>
 
 
     <div class="row">
@@ -250,12 +260,7 @@
                         <div ng-show="exportList.length > 0"><button class="btn btn-primary" ng-click="exportToExcel()"><span class="glyphicon glyphicon-export"></span> Export</button></div>
                     </uib-tab>
                     <span ng-show="loadingNode" class="glyphicon glyphicon-repeat normal-right-spinner" style="font-size: 2em"></span>
-                    <button type="button" class="btn btn-primary pull-right" ng-click="init()">
-                        <span class="glyphicon glyphicon-refresh"> Refresh</span>
-                    </button>
-                    <button type="button" class="btn btn-primary pull-right" ng-hide="loadingNode" ng-click="saveNode()">
-                        <span class="glyphicon glyphicon-save"> Save</span>
-                    </button>
+                 
                 </uib-tabset>
             </form>
         </div>
@@ -266,10 +271,9 @@
             </div>
             <!--<pre class="code">{{ data | json }}</pre>-->
 
-            <button class="btn btn btn-primary" aria-label="Left Align" ng-hide="loading" ng-click="saveNodeDetails()" ng-show="myDataTable.Functional.length>0" ng-controller="MyCtrl">
+            <button class="btn btn btn-primary pull-right" aria-label="Left Align" ng-hide="loading" ng-click="saveNodeDetails()" ng-show="myDataTable.Functional.length>0" ng-controller="MyCtrl">
                 <span class="glyphicon glyphicon-share" aria-hidden="true"> Save</span>
             </button>
-            <hr />
 
             <uib-tabset active="3">
                 <uib-tab index="3" heading="Functional">
