@@ -1,10 +1,4 @@
 ﻿module App.Config {
-    export enum Mode {
-        Select,
-        Pm,
-        Ehr
-    }
-
     export enum ErrorType {
         danger,
         success,
@@ -13,7 +7,7 @@
     export class Constants {
 
         //Default
-        static runningMode = Mode.Select;
+        static runningMode = "";
 
 
         static get errorMessage(): any {
@@ -24,15 +18,17 @@
                     failure: "Update Failed:",
                     renameNode: "Please rename the newly added node",
                     duplicateNode: "Node name already exist, please rename",
-                    downloadSuccess:"Downloaded Successfully"
+                    downloadSuccess: "Downloaded Successfully",
+                    loginfailed:"Unauthorized access"
                 }
         }
 
         static get default(): any {
                 return {
-                    url: 'http://124.124.79.181/Influence/Structure/' + Mode[this.runningMode] +'/Nodes',
-                    reportURL: 'http://124.124.79.181/Influence/Reports/' + Mode[this.runningMode] + '/export/nodes/',
-                    graphURL: 'http://124.124.79.181/Influence/Reports/' + Mode[this.runningMode] + '/dependencyreport'
+                    url: 'http://124.124.79.181/Influence/Structure/' + this.runningMode +'/Nodes',
+                    reportURL: 'http://124.124.79.181/Influence/Reports/' + this.runningMode + '/export/nodes/',
+                    graphURL: 'http://124.124.79.181/Influence/Reports/' + this.runningMode + '/dependencyreport',
+                    authentication:'http://124.124.79.181/influence/users/authenticate'
                 }
         }
     }

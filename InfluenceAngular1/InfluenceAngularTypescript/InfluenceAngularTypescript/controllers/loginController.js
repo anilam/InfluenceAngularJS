@@ -1,17 +1,12 @@
 var App;
 (function (App) {
-    function loginController($scope, $rootScope, LoginService, $location) {
+    function loginController($scope, $rootScope, LoginService, $location, dBStore) {
         $rootScope.title = "Nextgen Influence Login";
+        $scope.logOnModel = new LogOnModel();
+        $scope.logOnModel.Username = '';
+        $scope.logOnModel.Password = '';
         $scope.formSubmit = function () {
-            if (LoginService.login($scope.username, $scope.password)) {
-                $scope.error = '';
-                $scope.username = '';
-                $scope.password = '';
-                $location.path("/");
-            }
-            else {
-                $scope.error = "Incorrect username/password !";
-            }
+            LoginService.login(dBStore, $scope);
         };
     }
     App.loginController = loginController;

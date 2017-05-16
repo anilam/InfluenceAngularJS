@@ -1,5 +1,4 @@
 ﻿module App {
-    import Mode = App.Config.Mode;
     import Constants = App.Config.Constants;
 
     export function influenceController($scope: IDiagnosticsScope,
@@ -17,7 +16,7 @@
         $aside: any) {
 
         $rootScope.authenticated = LoginService.isAuthenticated();
-
+  
         $scope.nodeData = [];
         $scope.editing = false;
         $scope.Funcdetailsediting = false;
@@ -25,27 +24,27 @@
         $scope.Otherdetailsediting = false;
         $scope.settings = new Settings();
         $scope.editOtherDetailsValue = [];
+
         $scope.settings.expandTree = false;
         $scope.settings.collapseTree = false;
         $scope.settings.add = false;
         $scope.settings.delete = false;
         $scope.settings.edit = false;
-        $scope.settings.runningMode = <any>("0");
+        $scope.settings.runningMode = "";
+        $scope.settings.sourceList = LoginService.isRolePermissions();
+
         $scope.tabselected = 0;
         $scope.loading = false;
         $scope.loadingNode = false;
         $scope.exportList = new Array();
         $scope.id = 0;
         $scope.alerts = [];
-        var s = new Array();
-        s.push({ Label: "", count: "" });
 
         var findArrayObject = function (object: any, name: string) {
             return $filter('filter')(object, { Path: name }, true)[0];
         }
 
-        $scope.updateExcelExport = function (path: string, name: string) {
-         
+        $scope.updateExcelExport = function (path: string, name: string) {        
             var foundItem = findArrayObject($scope.exportList, path.replace("search-", ""));
             if (document.getElementById(path) != null && document.getElementById(path).checked) {
                 if (!foundItem) {
@@ -61,16 +60,23 @@
             }
         }
 
-
         $scope.updateSearchExcelExport = function (path: string, name: string) {
             $scope.updateExcelExport("search-" + path, name);
+        }
+
+        $scope.exportToExcel = function () {
+            var urllist: string = "";
+            for (var i = 0; i < $scope.exportList.length; i++) {
+                urllist = urllist + $scope.exportList[i].Path + ',';
+            }
+            urllist = urllist.slice(0, -1);
+            dBStore.excelExport($scope, $http, urllist);
         }
 
         $scope.init = function () {
            dBStore.initNode($scope,$http);
         }
 
-       // $scope.init();
         //aside
         $scope.asideState = {
             open: false,
@@ -80,17 +86,7 @@
         $scope.closeAlert = function (index) {
             $scope.alerts.splice(index, 1);
         };
-
-        $scope.exportToExcel = function () {
-            var urllist: string="";
-            for (var i = 0; i < $scope.exportList.length; i++) {
-                urllist = urllist + $scope.exportList[i].Path + ',';
-            }
-            urllist = urllist.slice(0,-1);
-            dBStore.excelExport($scope, $http, urllist);
-        }
-        
-
+  
         $scope.openAside = function (position, backdrop) {
             $scope.asideState = {
                 open: true,
@@ -132,10 +128,8 @@
                 }
                 if ($scope.settings.collapseTree) {
                     $scope.collapseAll();
-                }
-             
-            
-                    if ($scope.settings.runningMode != Constants.runningMode) {
+                }          
+                if ($scope.settings.runningMode !== "" && Constants.runningMode !== $scope.settings.runningMode) {
                         Constants.runningMode = $scope.settings.runningMode;
                         $scope.init();
                     }
@@ -144,11 +138,6 @@
             }, function () {
                 $log.info('modal-component dismissed at: ' + new Date());
             });
-        }
-
-        // add remaining mode
-        if (Constants.runningMode != Mode.Select) {
-            $scope.init();
         }
 
         $scope.toggle = function (scope) {

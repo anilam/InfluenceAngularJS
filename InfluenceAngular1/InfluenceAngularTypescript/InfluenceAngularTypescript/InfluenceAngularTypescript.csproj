@@ -74,6 +74,7 @@
     <TypeScriptCompile Include="entity\Alerts.ts" />
     <TypeScriptCompile Include="entity\DatabaseDetail.ts" />
     <TypeScriptCompile Include="entity\FuncDetails.ts" />
+    <TypeScriptCompile Include="entity\LogOnModel.ts" />
     <TypeScriptCompile Include="entity\NodeDetail.ts" />
     <TypeScriptCompile Include="entity\settings.ts" />
     <TypeScriptCompile Include="Interface\IDiagnosticsScope.ts" />

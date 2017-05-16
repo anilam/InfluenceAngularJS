@@ -83,6 +83,13 @@ var App;
                     $scope.loadingNode = false;
                 });
             };
+            this.authenticate = function (logonmodel, $http) {
+                return $http({
+                    method: "POST",
+                    data: logonmodel,
+                    url: App.Config.Constants.default.authentication
+                });
+            };
         }
         return DBStore;
     }());

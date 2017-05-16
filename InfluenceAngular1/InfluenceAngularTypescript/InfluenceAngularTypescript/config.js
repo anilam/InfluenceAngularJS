@@ -2,12 +2,6 @@ var App;
 (function (App) {
     var Config;
     (function (Config) {
-        var Mode;
-        (function (Mode) {
-            Mode[Mode["Select"] = 0] = "Select";
-            Mode[Mode["Pm"] = 1] = "Pm";
-            Mode[Mode["Ehr"] = 2] = "Ehr";
-        })(Mode = Config.Mode || (Config.Mode = {}));
         var ErrorType;
         (function (ErrorType) {
             ErrorType[ErrorType["danger"] = 0] = "danger";
@@ -26,7 +20,8 @@ var App;
                         failure: "Update Failed:",
                         renameNode: "Please rename the newly added node",
                         duplicateNode: "Node name already exist, please rename",
-                        downloadSuccess: "Downloaded Successfully"
+                        downloadSuccess: "Downloaded Successfully",
+                        loginfailed: "Unauthorized access"
                     };
                 },
                 enumerable: true,
@@ -35,9 +30,10 @@ var App;
             Object.defineProperty(Constants, "default", {
                 get: function () {
                     return {
-                        url: 'http://124.124.79.181/Influence/Structure/' + Mode[this.runningMode] + '/Nodes',
-                        reportURL: 'http://124.124.79.181/Influence/Reports/' + Mode[this.runningMode] + '/export/nodes/',
-                        graphURL: 'http://124.124.79.181/Influence/Reports/' + Mode[this.runningMode] + '/dependencyreport'
+                        url: 'http://124.124.79.181/Influence/Structure/' + this.runningMode + '/Nodes',
+                        reportURL: 'http://124.124.79.181/Influence/Reports/' + this.runningMode + '/export/nodes/',
+                        graphURL: 'http://124.124.79.181/Influence/Reports/' + this.runningMode + '/dependencyreport',
+                        authentication: 'http://124.124.79.181/influence/users/authenticate'
                     };
                 },
                 enumerable: true,
@@ -46,7 +42,7 @@ var App;
             return Constants;
         }());
         //Default
-        Constants.runningMode = Mode.Select;
+        Constants.runningMode = "";
         Config.Constants = Constants;
     })(Config = App.Config || (App.Config = {}));
 })(App || (App = {}));

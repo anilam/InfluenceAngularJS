@@ -11,13 +11,11 @@
         <tbody>
             <tr>
                 <td>               
-                    <div class="styled-select slate">                      
-                        <select id="runningMode" ng-model="settings.runningMode">
-                            <option value="0">Select Source</option>
-                            <option value="1">PH</option>
-                            <option value="2">EHR</option>
-                        </select>
-                        
+                    <div class="styled-select slate input-group">                      
+                        <label for="source"> Select Source: </label><br>
+                        <select name="source" ng-model="settings.runningMode">
+                            <option ng-repeat="option in settings.sourceList" value="{{option}}">{{option}}</option>
+                        </select>                    
                     </div>
                 </td>
             </tr>

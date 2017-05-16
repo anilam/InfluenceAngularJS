@@ -1,5 +1,6 @@
 ﻿module App {
 
+
     export interface IDiagnosticsScope extends ng.IScope {
         treeData: any;
         loadData: string;
@@ -95,5 +96,7 @@
         error: string;
         authenticated: any;
         exportToExcel: () => void;
+        logOnModel: LogOnModel;
+        authenticateResult: AuthenticateResult;
     }
 }

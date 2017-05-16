@@ -95,13 +95,13 @@
         </span>
 
         <span ng-show="settings.exportexcel && node.Status!=3" class="pull-right">
-            <span class="glyphicon glyphicon-export"></span> <input type="checkbox" id="{{node.Path}}" ng-click="updateExcelExport(node.Path,node.Name)" />
+            <span class="glyphicon glyphicon-export"></span> <input type="checkbox" id="search-{{node.Path}}" ng-click="updateSearchExcelExport(node.Path,node.Name)" />
         </span>
 
 
     </div>
     <ol ui-tree-nodes="" ng-model="node.Children" ng-class="{hidden: collapsed}">
-        <li ng-repeat="node in node.Children track by $index" ui-tree-node ng-include="'nodes_renderer.html'">
+        <li ng-repeat="node in node.Children track by $index" ui-tree-node ng-include="'nodes_renderer_searach.html'">
         </li>
     </ol>
 </script>

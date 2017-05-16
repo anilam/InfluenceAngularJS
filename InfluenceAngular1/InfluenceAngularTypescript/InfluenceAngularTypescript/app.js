@@ -12,17 +12,28 @@ var App;
         });
         $locationProvider.hashPrefix('!');
     });
-    App.app.factory('LoginService', function () {
-        var admin = 'admin';
-        var pass = 'admin';
-        var isAuthenticated = false;
+    App.app.factory('LoginService', function ($http, $location) {
+        var authenticateResult = new AuthenticateResult;
+        authenticateResult.rolePermissions = [];
+        var authenticateSuccess = false;
+        var rolePermissions = {};
         return {
-            login: function (username, password) {
-                isAuthenticated = username === admin && password === pass;
-                return isAuthenticated;
+            login: function (dBStore, $scope) {
+                $scope.authenticateResult = authenticateResult;
+                dBStore.authenticate($scope.logOnModel, $http).success(function (data) {
+                    authenticateSuccess = $scope.authenticateResult.isAuthenticated = true;
+                    rolePermissions = data;
+                    $location.path('/');
+                }).error(function (error, status) {
+                    $scope.authenticateResult.isAuthenticated = false;
+                    $scope.authenticateResult.errorMessage = (error == null ? App.Config.Constants.errorMessage.loginfailed : error) + " " + status;
+                });
             },
             isAuthenticated: function () {
-                return isAuthenticated;
+                return authenticateSuccess;
+            },
+            isRolePermissions: function () {
+                return rolePermissions;
             }
         };
     });
@@ -47,9 +58,9 @@ var App;
         $rootScope.$on('$locationChangeStart', function (event, next, current) {
             var publicPages = ['/login'];
             var restrictedPage = publicPages.indexOf($location.path()) === -1;
-            //if (restrictedPage && !LoginService.isAuthenticated()) {
-            //    $location.path('/login');
-            //}
+            if (restrictedPage && !LoginService.isAuthenticated()) {
+                $location.path('/login');
+            }
         });
     });
     angular.module('myApp').directive('focusOn', function () {

@@ -92,5 +92,13 @@
                 $scope.loadingNode = false;
             });
         }
+
+        authenticate = function (logonmodel: LogOnModel, $http: angular.IHttpService) {
+            return $http({
+                method: "POST",
+                data: logonmodel,
+                url: Config.Constants.default.authentication
+            });
+        }
     }
 }

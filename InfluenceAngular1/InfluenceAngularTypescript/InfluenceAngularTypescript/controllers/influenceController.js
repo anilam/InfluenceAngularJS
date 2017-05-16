@@ -1,6 +1,5 @@
 var App;
 (function (App) {
-    var Mode = App.Config.Mode;
     var Constants = App.Config.Constants;
     function influenceController($scope, $http, $log, $filter, functionalDetailsBl, otherDetailsBl, dBDetailsBL, nodeBl, focus, dBStore, LoginService, $rootScope, $aside) {
         $rootScope.authenticated = LoginService.isAuthenticated();
@@ -16,15 +15,14 @@ var App;
         $scope.settings.add = false;
         $scope.settings.delete = false;
         $scope.settings.edit = false;
-        $scope.settings.runningMode = ("0");
+        $scope.settings.runningMode = "";
+        $scope.settings.sourceList = LoginService.isRolePermissions();
         $scope.tabselected = 0;
         $scope.loading = false;
         $scope.loadingNode = false;
         $scope.exportList = new Array();
         $scope.id = 0;
         $scope.alerts = [];
-        var s = new Array();
-        s.push({ Label: "", count: "" });
         var findArrayObject = function (object, name) {
             return $filter('filter')(object, { Path: name }, true)[0];
         };
@@ -46,18 +44,6 @@ var App;
         $scope.updateSearchExcelExport = function (path, name) {
             $scope.updateExcelExport("search-" + path, name);
         };
-        $scope.init = function () {
-            dBStore.initNode($scope, $http);
-        };
-        // $scope.init();
-        //aside
-        $scope.asideState = {
-            open: false,
-            position: 'left'
-        };
-        $scope.closeAlert = function (index) {
-            $scope.alerts.splice(index, 1);
-        };
         $scope.exportToExcel = function () {
             var urllist = "";
             for (var i = 0; i < $scope.exportList.length; i++) {
@@ -65,6 +51,17 @@ var App;
             }
             urllist = urllist.slice(0, -1);
             dBStore.excelExport($scope, $http, urllist);
+        };
+        $scope.init = function () {
+            dBStore.initNode($scope, $http);
+        };
+        //aside
+        $scope.asideState = {
+            open: false,
+            position: 'left'
+        };
+        $scope.closeAlert = function (index) {
+            $scope.alerts.splice(index, 1);
         };
         $scope.openAside = function (position, backdrop) {
             $scope.asideState = {
@@ -104,7 +101,7 @@ var App;
                 if ($scope.settings.collapseTree) {
                     $scope.collapseAll();
                 }
-                if ($scope.settings.runningMode != Constants.runningMode) {
+                if ($scope.settings.runningMode !== "" && Constants.runningMode !== $scope.settings.runningMode) {
                     Constants.runningMode = $scope.settings.runningMode;
                     $scope.init();
                 }
@@ -112,10 +109,6 @@ var App;
                 $log.info('modal-component dismissed at: ' + new Date());
             });
         };
-        // add remaining mode
-        if (Constants.runningMode != Mode.Select) {
-            $scope.init();
-        }
         $scope.toggle = function (scope) {
             scope.toggle();
         };

@@ -11,5 +11,13 @@
 
     exportexcel: boolean;
 
-    runningMode: App.Config.Mode;
+    runningMode: string;
+
+    sourceList:string[];
+}
+
+class AuthenticateResult {
+    isAuthenticated: boolean;
+    rolePermissions: string[];
+    errorMessage:string;
 }
