@@ -2,6 +2,8 @@ var App;
 (function (App) {
     function loginController($scope, $rootScope, LoginService, $location, dBStore) {
         $rootScope.menuItems = [];
+        $rootScope.authenticated = false;
+        LoginService.logout();
         $rootScope.menuItems.push({ Menu: "Home", Url: "#!/" });
         $rootScope.menuItems.push({ Menu: "Graph", Url: "#!/graph" });
         $rootScope.menuItems.push({ Menu: "Logout", Url: "#!/login" });

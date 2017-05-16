@@ -2,7 +2,9 @@
 
     export function loginController($scope: IDiagnosticsScope, $rootScope: any, LoginService: any, $location: any, dBStore: DBStore) {
 
-        $rootScope.menuItems= [];
+        $rootScope.menuItems = [];
+        $rootScope.authenticated = false;
+        LoginService.logout();
         $rootScope.menuItems.push({ Menu: "Home", Url: "#!/" });
         $rootScope.menuItems.push({ Menu: "Graph", Url: "#!/graph" });
         $rootScope.menuItems.push({ Menu: "Logout", Url: "#!/login" });

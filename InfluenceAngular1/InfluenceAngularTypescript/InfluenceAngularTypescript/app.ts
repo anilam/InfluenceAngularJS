@@ -40,6 +40,10 @@ module App {
             },
             isRolePermissions: function() {
                 return rolePermissions;
+            },
+            logout:function() {
+                authenticateSuccess = false;
+                rolePermissions = {};
             }
         };
 
