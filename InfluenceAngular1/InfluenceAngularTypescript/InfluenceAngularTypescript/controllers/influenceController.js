@@ -20,10 +20,13 @@ var App;
         $scope.alerts = [];
         $scope.funcsortType = 'Impact';
         $scope.funcsortReverse = false;
+        $scope.funcsearch = '';
         $scope.dbsortType = 'DbObject';
         $scope.dbsortReverse = false;
+        $scope.dbsearch = '';
         $scope.OthersortType = 'Description';
         $scope.OthersortReverse = false;
+        $scope.Othersearch = '';
         $scope.searchFuncDetails = ''; // set the default search/filter term
         var findArrayObject = function (object, name) {
             return $filter('filter')(object, { Path: name }, true)[0];

@@ -107,5 +107,8 @@
         dbsortReverse: boolean;
         OthersortType: string;
         OthersortReverse: boolean;
+        funcsearch: string;
+        dbsearch: string;
+        Othersearch: string;
     }
 }
