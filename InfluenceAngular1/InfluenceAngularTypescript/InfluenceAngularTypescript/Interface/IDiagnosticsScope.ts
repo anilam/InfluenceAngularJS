@@ -98,5 +98,14 @@
         exportToExcel: () => void;
         logOnModel: LogOnModel;
         authenticateResult: AuthenticateResult;
+        sortType: string;
+        sortReverse: boolean;
+        searchFuncDetails: string;
+        funcsortType: string;
+        funcsortReverse: boolean;
+        dbsortType: string;
+        dbsortReverse: boolean;
+        OthersortType: string;
+        OthersortReverse: boolean;
     }
 }
