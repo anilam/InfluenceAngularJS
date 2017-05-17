@@ -289,8 +289,14 @@
         }
 
         $scope.setActive = function (menuItem: any) {
-            $scope.loading = true;
-            nodeBl.setActive(menuItem, $scope, $http, $log);
+           
+            if (menuItem.ParentPath != null) {
+                $scope.myDataTable = new NodeDetail();
+                $scope.activeMenu = menuItem.Path;
+            } else {
+                $scope.loading = true;
+                nodeBl.setActive(menuItem, $scope, $http, $log);
+            }       
         }
 
 

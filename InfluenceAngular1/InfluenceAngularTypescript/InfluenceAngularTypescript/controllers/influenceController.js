@@ -224,8 +224,14 @@ var App;
             nodeBl.saveNode($scope, $http, dBStore);
         };
         $scope.setActive = function (menuItem) {
-            $scope.loading = true;
-            nodeBl.setActive(menuItem, $scope, $http, $log);
+            if (menuItem.ParentPath != null) {
+                $scope.myDataTable = new NodeDetail();
+                $scope.activeMenu = menuItem.Path;
+            }
+            else {
+                $scope.loading = true;
+                nodeBl.setActive(menuItem, $scope, $http, $log);
+            }
         };
         $scope.collapseAll = function () {
             nodeBl.collapseAll($scope);

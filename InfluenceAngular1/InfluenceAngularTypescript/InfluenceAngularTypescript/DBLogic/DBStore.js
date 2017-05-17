@@ -5,6 +5,7 @@ var App;
             this.saveNode = function ($scope, $http) {
                 $scope.loadingNode = true;
                 var storedata = $scope.nodeData;
+                console.log($scope.nodeData);
                 $http({
                     method: "Post",
                     data: storedata.shift(),
