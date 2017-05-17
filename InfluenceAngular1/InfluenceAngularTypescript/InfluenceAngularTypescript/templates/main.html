@@ -41,7 +41,7 @@
         </span>
 
         <span ng-show="settings.exportexcel && node.Status!=3" class="pull-right">
-            <span class="glyphicon glyphicon-export"></span> <input type="checkbox" id="{{node.Path}}" ng-click="updateExcelExport(node.Path,node.Name)" />
+            <input type="checkbox" id="{{node.Path}}" ng-click="updateExcelExport(node.Path,node.Name)" />
         </span>
 
 
@@ -95,7 +95,7 @@
         </span>
 
         <span ng-show="settings.exportexcel && node.Status!=3" class="pull-right">
-            <span class="glyphicon glyphicon-export"></span> <input type="checkbox" id="search-{{node.Path}}" ng-click="updateSearchExcelExport(node.Path,node.Name)" />
+         <input type="checkbox" id="search-{{node.Path}}" ng-click="updateSearchExcelExport(node.Path,node.Name)" />
         </span>
 
 
@@ -119,6 +119,7 @@
         color: #438eb9;
         background: gainsboro;
         border-color: #dce2e8;
+        
     }
 
     .funcdetails.activeedit {
@@ -199,42 +200,42 @@
         <div class="col-md-4">
             <div id="custom-search-input">
                 <div class="input-group col-md-12">
-                    <input type="text" ng-model="query" class="search-input form-control input-lg" placeholder="Quick search..." />
-                    <span class="input-group-btn">
-                        <button class="btn btn-info btn-lg" type="button" ng-click="search(query)">
-                            <i class="glyphicon glyphicon-search"></i>
-                        </button>
-                        <button class="btn btn-info btn-lg" type="button" ng-click="searchCancel(query)">
-                            <i class="glyphicon glyphicon-remove"></i>
-                        </button>
-                    </span>
+                    <table>
+                        <tr>
+                            <td>
+                                <button type="button" class="btn btn-default btn-lg pull-left" ng-click="openAside('left', true)">
+                                    <span class="glyphicon glyphicon-align-justify"></span>
+                                </button>
+                            </td>
+                            <td>
+                                <input type="text" style="width: 20em;" ng-model="query" class="search-input form-control input-lg" placeholder="Quick search..." />
+                            </td>
+                            <td>
+                                <span class="input-group-btn">
+                                    <button class="btn btn-info btn-lg" type="button" ng-click="search(query)">
+                                        <i class="glyphicon glyphicon-search"></i>
+                                    </button>
+                                </span>
+                            </td>
+                            <td>
+                                <span class="input-group-btn">
+                                    <button class="btn btn-info btn-lg" type="button" ng-click="searchCancel(query)">
+                                        <i class="glyphicon glyphicon-remove"></i>
+                                    </button>
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </div>
             <hr />
         </div>
         <div class="col-md-8"><div uib-alert ng-repeat="alert in alerts" ng-class="'alert-' + (alert.type || 'warning')" dismiss-on-timeout="5000" close="closeAlert($index)">{{alert.msg}}</div></div>
     </div>
-
-<div class="row">
-    <div class="col-md-4">
-        <button type="button" class="btn btn-primary" ng-click="init()">
-            <span class="glyphicon glyphicon-refresh"> Refresh</span>
-        </button>
-        <button type="button" class="btn btn-primary" ng-hide="loadingNode" ng-click="saveNode()">
-            <span class="glyphicon glyphicon-save"> Save</span>
-        </button>       
-        <hr />
-    </div>
-</div>
-
-
     <div class="row">
         <div class="col-sm-4">
             <form name="outerForm" class="tab-form-demo">
                 <uib-tabset active="tabselected">
-                    <button type="button" class="btn btn-default btn-lg pull-left" ng-click="openAside('left', true)">
-                        <span class="glyphicon glyphicon-align-justify"></span>
-                    </button>
                     <uib-tab index="0" heading="List">
                         <div ui-tree style="overflow: scroll;" class="wrapper" data-drag-enabled="false" id="tree-root">
                             <ol ui-tree-nodes ng-model="nodeData" style="height: 600px;">
@@ -260,7 +261,12 @@
                         <div ng-show="exportList.length > 0"><button class="btn btn-primary" ng-click="exportToExcel()"><span class="glyphicon glyphicon-export"></span> Export</button></div>
                     </uib-tab>
                     <span ng-show="loadingNode" class="glyphicon glyphicon-repeat normal-right-spinner" style="font-size: 2em"></span>
-                 
+                    <button type="button" class="btn btn-primary pull-right" ng-click="init()">
+                        <span class="glyphicon glyphicon-refresh"> </span>
+                    </button>
+                    <button type="button" class="btn btn-primary pull-right" ng-hide="loadingNode" ng-click="saveNode()">
+                        <span class="glyphicon glyphicon-save"></span>
+                    </button>
                 </uib-tabset>
             </form>
         </div>
@@ -272,7 +278,7 @@
             <!--<pre class="code">{{ data | json }}</pre>-->
 
             <button class="btn btn btn-primary pull-right" aria-label="Left Align" ng-hide="loading" ng-click="saveNodeDetails()" ng-show="myDataTable.Functional.length>0" ng-controller="MyCtrl">
-                <span class="glyphicon glyphicon-share" aria-hidden="true"> Save</span>
+                <span class="glyphicon glyphicon-save"></span>
             </button>
 
             <uib-tabset active="3">

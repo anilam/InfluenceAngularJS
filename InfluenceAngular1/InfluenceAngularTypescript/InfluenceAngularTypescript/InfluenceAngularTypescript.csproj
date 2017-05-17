@@ -30,7 +30,7 @@
     <Content Include="controllers\treeCtrl.js" />
     <Content Include="css\angular-ui-tree.css" />
     <Content Include="css\bootstrap.min.css" />
-    <Content Include="css\images\logo.JPG" />
+    <Content Include="css\images\logo.jpeg" />
     <Content Include="directives\highlight.js" />
     <Content Include="directives\uiTree.js" />
     <Content Include="directives\uiTree.spec.js" />
