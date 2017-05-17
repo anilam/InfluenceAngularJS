@@ -44,7 +44,7 @@
         activedata: any;
         asideState: { open: boolean, position: any };
         openAside: (position: any, backdrop: any) => void;
-        settings: Settings;
+        settings: UserSetting;
         tabselected: number;
         searchCancel: () => any;
         setDBdetailsActive: (index: number) => void;

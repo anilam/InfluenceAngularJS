@@ -1,20 +1,17 @@
-﻿class Settings {
-    expandTree: boolean;
-    collapseTree: boolean;
-    edit: boolean;
-    delete: boolean;
-    add: boolean;
+﻿class UserSetting {
+          ExportExcel:boolean;
+          EditNode:boolean;
+          DeleteNode:boolean;
+          AddNode: boolean;
 
-    detailedit: boolean;
-    detaildelete: boolean;
-    detailadd: boolean;
+          ExpandTree:boolean;
+          EditNodeDetail:boolean;
+          DeleteNodeDetail:boolean;
+          AddNodeDetail:boolean;
 
-    exportexcel: boolean;
-
-    runningMode: string;
-
-    sourceList:string[];
-}
+          Sources:string[];
+          DefaultSource:string;
+    }
 
 class AuthenticateResult {
     isAuthenticated: boolean;

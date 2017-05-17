@@ -90,6 +90,26 @@ var App;
                     url: App.Config.Constants.default.authentication
                 });
             };
+            this.saveSettings = function ($scope, $http) {
+                $scope.loadingNode = true;
+                $http({
+                    method: "PUT",
+                    data: $scope.settings,
+                    url: App.Config.Constants.default.settings + 'admin'
+                }).success(function (data) {
+                    $scope.loadingNode = false;
+                    $scope.alerts.push({
+                        type: App.Config.ErrorType[App.Config.ErrorType.success],
+                        msg: App.Config.Constants.errorMessage.settingsuccess
+                    });
+                }).error(function (error, status) {
+                    $scope.alerts.push({
+                        type: App.Config.ErrorType[App.Config.ErrorType.danger],
+                        msg: App.Config.Constants.errorMessage.failure + error + " " + status
+                    });
+                    $scope.loadingNode = false;
+                });
+            };
         }
         return DBStore;
     }());

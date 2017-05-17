@@ -1,7 +1,7 @@
-var Settings = (function () {
-    function Settings() {
+var UserSetting = (function () {
+    function UserSetting() {
     }
-    return Settings;
+    return UserSetting;
 }());
 var AuthenticateResult = (function () {
     function AuthenticateResult() {

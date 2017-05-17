@@ -21,14 +21,14 @@ module App {
         authenticateResult.rolePermissions = [];
         var authenticateSuccess = false;
 
-        var rolePermissions = {};
+        var userSettings = {};
 
         return {
             login: function (dBStore: DBStore, $scope: IDiagnosticsScope) {
                 $scope.authenticateResult = authenticateResult;
-                dBStore.authenticate($scope.logOnModel, $http).success((data: any) => {
+                dBStore.authenticate($scope.logOnModel, $http).success((data: UserSetting) => {
                         authenticateSuccess=$scope.authenticateResult.isAuthenticated = true;
-                        rolePermissions = data;
+                        userSettings = data;
                         $location.path('/');
                 }).error((error, status) => {
                     $scope.authenticateResult.isAuthenticated = false;
@@ -38,12 +38,12 @@ module App {
             isAuthenticated: function () {
                 return authenticateSuccess;
             },
-            isRolePermissions: function() {
-                return rolePermissions;
+            userSettingsInfo: function() {
+                return userSettings;
             },
             logout:function() {
                 authenticateSuccess = false;
-                rolePermissions = {};
+                userSettings = {};
             }
         };
 

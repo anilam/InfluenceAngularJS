@@ -16,13 +16,13 @@ var App;
         var authenticateResult = new AuthenticateResult;
         authenticateResult.rolePermissions = [];
         var authenticateSuccess = false;
-        var rolePermissions = {};
+        var userSettings = {};
         return {
             login: function (dBStore, $scope) {
                 $scope.authenticateResult = authenticateResult;
                 dBStore.authenticate($scope.logOnModel, $http).success(function (data) {
                     authenticateSuccess = $scope.authenticateResult.isAuthenticated = true;
-                    rolePermissions = data;
+                    userSettings = data;
                     $location.path('/');
                 }).error(function (error, status) {
                     $scope.authenticateResult.isAuthenticated = false;
@@ -32,12 +32,12 @@ var App;
             isAuthenticated: function () {
                 return authenticateSuccess;
             },
-            isRolePermissions: function () {
-                return rolePermissions;
+            userSettingsInfo: function () {
+                return userSettings;
             },
             logout: function () {
                 authenticateSuccess = false;
-                rolePermissions = {};
+                userSettings = {};
             }
         };
     });

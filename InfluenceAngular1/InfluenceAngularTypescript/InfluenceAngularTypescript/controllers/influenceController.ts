@@ -22,16 +22,10 @@
         $scope.Funcdetailsediting = false;
         $scope.DBdetailsediting = false;
         $scope.Otherdetailsediting = false;
-        $scope.settings = new Settings();
+        $scope.settings = new UserSetting();
         $scope.editOtherDetailsValue = [];
-
-        $scope.settings.expandTree = false;
-        $scope.settings.collapseTree = false;
-        $scope.settings.add = false;
-        $scope.settings.delete = false;
-        $scope.settings.edit = false;
-        $scope.settings.runningMode = "";
-        $scope.settings.sourceList = LoginService.isRolePermissions();
+        $scope.settings = LoginService.userSettingsInfo();
+        Constants.runningMode = $scope.settings.DefaultSource;
 
         $scope.tabselected = 0;
         $scope.loading = false;
@@ -107,11 +101,12 @@
                         return $scope.settings;
                     }
                 },
-                controller: function ($scope: any, $uibModalInstance: any, selectedSettings: Settings) {
+                controller: function ($scope: any, $uibModalInstance: any, selectedSettings: UserSetting,$http:angular.IHttpService) {
                     $scope.settings = selectedSettings;                
 
                     $scope.ok = function (e: any) {
                         $uibModalInstance.close($scope.settings);
+                        
                         e.stopPropagation();
                     };
                     $scope.cancel = function (e: any) {
@@ -121,16 +116,16 @@
                 }
             });
           
-            modalInstance.result.then(function (selectedSettings: Settings) {
+            modalInstance.result.then(function (selectedSettings: UserSetting) {
                 $scope.settings = selectedSettings;
-                if ($scope.settings.expandTree) {
+                if ($scope.settings.ExpandTree) {
                     $scope.expandAll();
-                }
-                if ($scope.settings.collapseTree) {
+                } else {
                     $scope.collapseAll();
-                }          
-                if ($scope.settings.runningMode !== "" && Constants.runningMode !== $scope.settings.runningMode) {
-                        Constants.runningMode = $scope.settings.runningMode;
+                }
+                dBStore.saveSettings($scope, $http);        
+                if (Constants.runningMode !== $scope.settings.DefaultSource) {
+                    Constants.runningMode = $scope.settings.DefaultSource;
                         $scope.init();
                     }
             }, function () {
@@ -282,6 +277,7 @@
             nodeBl.setActive(menuItem, $scope, $http, $log);
         }
 
+
         $scope.collapseAll = function () {
             nodeBl.collapseAll($scope);
         };
@@ -289,8 +285,6 @@
         $scope.expandAll = function () {
             nodeBl.expandAll($scope);
         };
-
-
         //serach
 
         $scope.search = function (name: string) {
@@ -323,6 +317,12 @@
             }
         }
 
+        //Load Settings
+        if ($scope.settings.ExpandTree) {
+            $scope.expandAll();
+        } else {
+            $scope.collapseAll();
+        }
     }
 
 

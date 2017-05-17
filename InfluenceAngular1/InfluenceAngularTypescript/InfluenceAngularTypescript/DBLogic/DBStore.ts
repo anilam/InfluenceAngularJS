@@ -99,5 +99,26 @@
                 url: Config.Constants.default.authentication
             });
         }
+
+        saveSettings = function ($scope: IDiagnosticsScope, $http: angular.IHttpService) {
+            $scope.loadingNode = true;
+            $http({
+                method: "PUT",
+                data:$scope.settings,
+                url: Config.Constants.default.settings +'admin'
+            }).success((data: any) => {
+                $scope.loadingNode = false;
+                $scope.alerts.push({
+                    type: Config.ErrorType[Config.ErrorType.success],
+                    msg: Config.Constants.errorMessage.settingsuccess
+                });
+                }).error((error, status) => {
+                    $scope.alerts.push({
+                        type: Config.ErrorType[Config.ErrorType.danger],
+                        msg: Config.Constants.errorMessage.failure + error + " " + status
+                    });
+                $scope.loadingNode = false;
+            });
+        }
     }
 }

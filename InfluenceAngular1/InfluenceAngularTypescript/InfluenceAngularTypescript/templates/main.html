@@ -20,7 +20,7 @@
         </a>
 
 
-        <span ng-show="settings.edit && node.Status!=3">
+        <span ng-show="settings.EditNode && node.Status!=3">
             <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="edit(this)" ng-hide="editItem === node.Path && editing">
                 <span class="glyphicon glyphicon-edit"></span>
             </a>
@@ -28,19 +28,19 @@
 
 
 
-        <span ng-show="settings.delete && node.Status!=3">
+        <span ng-show="settings.DeleteNode && node.Status!=3">
             <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="removeItem(this)" ng-hide="editItem === node.Path && editing">
                 <span class="glyphicon glyphicon-remove"></span>
             </a>
         </span>
 
-        <span ng-show="settings.add && node.Status!=3">
+        <span ng-show="settings.AddNode && node.Status!=3">
             <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="newSubItem(this)" style="margin-right: 8px;" ng-hide="editItem === node.Path && editing">
                 <span class="glyphicon glyphicon-plus"></span>
             </a>
         </span>
 
-        <span ng-show="settings.exportexcel && node.Status!=3" class="pull-right">
+        <span ng-show="settings.ExportExcel && node.Status!=3" class="pull-right">
             <input type="checkbox" id="{{node.Path}}" ng-click="updateExcelExport(node.Path,node.Name)" />
         </span>
 
@@ -74,7 +74,7 @@
         </a>
 
 
-        <span ng-show="settings.edit && node.Status!=3">
+        <span ng-show="settings.EditNode && node.Status!=3">
             <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="edit(this)" ng-hide="editItem === node.Path && editing">
                 <span class="glyphicon glyphicon-edit"></span>
             </a>
@@ -82,19 +82,19 @@
 
 
 
-        <span ng-show="settings.delete && node.Status!=3">
+        <span ng-show="settings.DeleteNode && node.Status!=3">
             <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="removeItem(this)" ng-hide="editItem === node.Path && editing">
                 <span class="glyphicon glyphicon-remove"></span>
             </a>
         </span>
 
-        <span ng-show="settings.add && node.Status!=3">
+        <span ng-show="settings.AddNode && node.Status!=3">
             <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="newSubItem(this)" style="margin-right: 8px;" ng-hide="editItem === node.Path && editing">
                 <span class="glyphicon glyphicon-plus"></span>
             </a>
         </span>
 
-        <span ng-show="settings.exportexcel && node.Status!=3" class="pull-right">
+        <span ng-show="settings.ExportExcel && node.Status!=3" class="pull-right">
          <input type="checkbox" id="search-{{node.Path}}" ng-click="updateSearchExcelExport(node.Path,node.Name)" />
         </span>
 
@@ -292,7 +292,7 @@
                                     <th>MODULE</th>
                                     <th>COMPLEXITY</th>
                                     <th></th>
-                                    <th><span class="pull-right" ng-show="settings.detailadd"><a class="pull-right btn btn-primary btn-xs" ng-click="addFuncdetails(this)"><span class="glyphicon glyphicon-plus"></span></a></span></th>
+                                    <th><span class="pull-right" ng-show="settings.AddNodeDetail"><a class="pull-right btn btn-primary btn-xs" ng-click="addFuncdetails(this)"><span class="glyphicon glyphicon-plus"></span></a></span></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -302,8 +302,8 @@
                                     <td> <span ng-show="!Funcdetailsediting || editItemFuncdetailsId != $index">{{ Funcdetails.Module }}</span> <input type="text" ng-model="editFuncDetailsValue.ModuleEdit" ng-show="editItemFuncdetailsId === $index && Funcdetailsediting" /></td>
                                     <td> <span ng-show="!Funcdetailsediting || editItemFuncdetailsId != $index">{{ Funcdetails.Complexity }}</span> <input type="text" ng-model="editFuncDetailsValue.ComplexityEdit" ng-show="editItemFuncdetailsId === $index && Funcdetailsediting" /></td>
 
-                                    <td ng-show="!Funcdetailsediting || editItemFuncdetailsId != $index"><a ng-show="settings.detailedit" class="pull-right btn btn-primary btn-xs" ng-click="editFuncdetails(Funcdetails,myDataTable.Functional.indexOf(Funcdetails))"><span class="glyphicon glyphicon-edit"></span></a></td>
-                                    <td ng-show="!Funcdetailsediting || editItemFuncdetailsId != $index"><a ng-show="settings.detaildelete" class="pull-right btn btn-danger btn-xs" ng-click="removeFuncdetails(myDataTable.Functional.indexOf(Funcdetails))"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                    <td ng-show="!Funcdetailsediting || editItemFuncdetailsId != $index"><a ng-show="settings.EditNodeDetail" class="pull-right btn btn-primary btn-xs" ng-click="editFuncdetails(Funcdetails,myDataTable.Functional.indexOf(Funcdetails))"><span class="glyphicon glyphicon-edit"></span></a></td>
+                                    <td ng-show="!Funcdetailsediting || editItemFuncdetailsId != $index"><a ng-show="settings.DeleteNodeDetail" class="pull-right btn btn-danger btn-xs" ng-click="removeFuncdetails(myDataTable.Functional.indexOf(Funcdetails))"><span class="glyphicon glyphicon-remove"></span></a></td>
 
                                     <td ng-hide="!Funcdetailsediting || editItemFuncdetailsId != $index"><a class="pull-right btn btn-primary btn-xs" ng-click="editFuncdetailsOk(Funcdetails,myDataTable.Functional.indexOf(Funcdetails))"><span class="glyphicon glyphicon-ok"></span></a></td>
                                     <td ng-hide="!Funcdetailsediting || editItemFuncdetailsId != $index"><a class="pull-right btn btn-danger btn-xs" ng-click="removeFuncdetailsCancel(Funcdetails,myDataTable.Functional.indexOf(Funcdetails))"><span class="glyphicon glyphicon-remove"></span></a></td>
@@ -317,11 +317,11 @@
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th>DbObject</th>
-                                    <th>DbType</th>
-                                    <th>Description</th>
+                                    <th>TABLE/SP/FIELDS</th>
+                                    <th>TYPE</th>
+                                    <th>DESCRIPTION</th>
                                     <th></th>
-                                    <th><span class="pull-right" ng-show="settings.detailadd"><a class="pull-right btn btn-primary btn-xs" ng-click="addDBdetails(this)"><span class="glyphicon glyphicon-plus"></span></a></span></th>
+                                    <th><span class="pull-right" ng-show="settings.AddNodeDetail"><a class="pull-right btn btn-primary btn-xs" ng-click="addDBdetails(this)"><span class="glyphicon glyphicon-plus"></span></a></span></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -330,8 +330,8 @@
                                     <td> <span ng-show="!DBdetailsediting || editItemDBdetailsId != $index">{{ DBdetails.DbType || '123'}}</span> <input type="text" ng-model="editDBDetailsValue.DbType" ng-show="editItemDBdetailsId === $index && DBdetailsediting" /></td>
                                     <td> <span ng-show="!DBdetailsediting || editItemDBdetailsId != $index">{{ DBdetails.Description }}</span> <input type="text" ng-model="editDBDetailsValue.Description" ng-show="editItemDBdetailsId === $index && DBdetailsediting" /></td>
 
-                                    <td ng-show="!DBdetailsediting || editItemDBdetailsId != $index"><a ng-show="settings.detailedit" class="pull-right btn btn-primary btn-xs" ng-click="editDBdetails(DBdetails,myDataTable.DatabaseDetails.indexOf(DBdetails))"><span class="glyphicon glyphicon-edit"></span></a></td>
-                                    <td ng-show="!DBdetailsediting || editItemDBdetailsId != $index"><a ng-show="settings.detaildelete" class="pull-right btn btn-danger btn-xs" ng-click="removeDBdetails(myDataTable.DatabaseDetails.indexOf(DBdetails))"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                    <td ng-show="!DBdetailsediting || editItemDBdetailsId != $index"><a ng-show="settings.EditNodeDetail" class="pull-right btn btn-primary btn-xs" ng-click="editDBdetails(DBdetails,myDataTable.DatabaseDetails.indexOf(DBdetails))"><span class="glyphicon glyphicon-edit"></span></a></td>
+                                    <td ng-show="!DBdetailsediting || editItemDBdetailsId != $index"><a ng-show="settings.DeleteNodeDetail" class="pull-right btn btn-danger btn-xs" ng-click="removeDBdetails(myDataTable.DatabaseDetails.indexOf(DBdetails))"><span class="glyphicon glyphicon-remove"></span></a></td>
 
                                     <td ng-hide="!DBdetailsediting || editItemDBdetailsId != $index"><a class="pull-right btn btn-primary btn-xs" ng-click="editDBdetailsOk(DBdetails,myDataTable.DatabaseDetails.indexOf(DBdetails))"><span class="glyphicon glyphicon-ok"></span></a></td>
                                     <td ng-hide="!DBdetailsediting || editItemDBdetailsId != $index"><a class="pull-right btn btn-danger btn-xs" ng-click="removeDBdetailsCancel(DBdetails,myDataTable.DatabaseDetails.indexOf(DBdetails))"><span class="glyphicon glyphicon-remove"></span></a></td>
@@ -350,7 +350,7 @@
                                     <th>Module</th>
                                     <th>Complexity</th>
                                     <th></th>
-                                    <th><span class="pull-right" ng-show="settings.detailadd"><a class="pull-right btn btn-primary btn-xs" ng-click="addOtherdetails(this)"><span class="glyphicon glyphicon-plus"></span></a></span></th>
+                                    <th><span class="pull-right" ng-show="settings.AddNodeDetail"><a class="pull-right btn btn-primary btn-xs" ng-click="addOtherdetails(this)"><span class="glyphicon glyphicon-plus"></span></a></span></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -362,8 +362,8 @@
 
 
 
-                                    <td ng-show="!Otherdetailsediting || editItemOtherdetailsId != $index"><a ng-show="settings.detailedit" class="pull-right btn btn-primary btn-xs" ng-click="editOtherdetails(Otherdetails,myDataTable.AdditionalDetails.indexOf(Otherdetails))"><span class="glyphicon glyphicon-edit"></span></a></td>
-                                    <td ng-show="!Otherdetailsediting || editItemOtherdetailsId != $index"><a ng-show="settings.detaildelete" class="pull-right btn btn-danger btn-xs" ng-click="removeOtherdetails(myDataTable.AdditionalDetails.indexOf(Otherdetails))"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                    <td ng-show="!Otherdetailsediting || editItemOtherdetailsId != $index"><a ng-show="settings.EditNodeDetail" class="pull-right btn btn-primary btn-xs" ng-click="editOtherdetails(Otherdetails,myDataTable.AdditionalDetails.indexOf(Otherdetails))"><span class="glyphicon glyphicon-edit"></span></a></td>
+                                    <td ng-show="!Otherdetailsediting || editItemOtherdetailsId != $index"><a ng-show="settings.DeleteNodeDetail" class="pull-right btn btn-danger btn-xs" ng-click="removeOtherdetails(myDataTable.AdditionalDetails.indexOf(Otherdetails))"><span class="glyphicon glyphicon-remove"></span></a></td>
 
                                     <td ng-hide="!Otherdetailsediting || editItemOtherdetailsId != $index"><a class="pull-right btn btn-primary btn-xs" ng-click="editOtherdetailsOk(Otherdetails,myDataTable.AdditionalDetails.indexOf(Otherdetails))"><span class="glyphicon glyphicon-ok"></span></a></td>
                                     <td ng-hide="!Otherdetailsediting || editItemOtherdetailsId != $index"><a class="pull-right btn btn-danger btn-xs" ng-click="removeOtherdetailsCancel(Otherdetails,myDataTable.AdditionalDetails.indexOf(Otherdetails))"><span class="glyphicon glyphicon-remove"></span></a></td>
