@@ -70,23 +70,29 @@ module App {
 
         editok = function (scope: any, $scope: IDiagnosticsScope) {
             var nodeData = scope.$modelValue;
-            if (!$scope.checkDuplicateName($scope.nodeData, scope.editValue)) {
-                $scope.editing = false;
-                if (nodeData.Name == "") {
-                    nodeData.Status = 1;
-                } else {
-                    nodeData.Status = 2;
-                }
-                nodeData.Name = scope.editValue;
-                $scope.editValue = "";
-                $scope.activeMenu = nodeData.Path;
+            if (scope.editValue.trim() == "") {
+                $scope.alerts.push({
+                    type: Config.ErrorType[Config.ErrorType.warning],
+                    msg: Config.Constants.errorMessage.renameNode
+                });
             } else {
-                if (nodeData.Name == "") {
-                    $scope.alerts.push({ type: Config.ErrorType[Config.ErrorType.warning], msg: Config.Constants.errorMessage.renameNode });
-                } else {
-                    $scope.alerts.push({ type: Config.ErrorType[Config.ErrorType.warning], msg: Config.Constants.errorMessage.duplicateNode });
-                }
 
+                if (!$scope.checkDuplicateName($scope.nodeData, scope.editValue)) {
+                    $scope.editing = false;
+                    if (nodeData.Name == "") {
+                        nodeData.Status = 1;
+                    } else {
+                        nodeData.Status = 2;
+                    }
+                    nodeData.Name = scope.editValue;
+                    $scope.editValue = "";
+                    $scope.activeMenu = nodeData.Path;
+                } else {
+                    $scope.alerts.push({
+                        type: Config.ErrorType[Config.ErrorType.warning],
+                        msg: Config.Constants.errorMessage.duplicateNode
+                    });
+                }
             }
         };
 

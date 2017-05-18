@@ -20,7 +20,7 @@ var App;
         var userSettings = {};
         return {
             login: function (dBStore, $scope) {
-                $scope.authenticateResult = authenticateResult;
+                $scope.authenticateResult = new AuthenticateResult;
                 UserName = $scope.logOnModel.Username;
                 dBStore.authenticate($scope.logOnModel, $http).success(function (data) {
                     authenticateSuccess = $scope.authenticateResult.isAuthenticated = true;
@@ -28,7 +28,7 @@ var App;
                     $location.path('/');
                 }).error(function (error, status) {
                     $scope.authenticateResult.isAuthenticated = false;
-                    $scope.authenticateResult.errorMessage = (error == null ? App.Config.Constants.errorMessage.loginfailed : error) + " " + status;
+                    $scope.authenticateResult.errorMessage = ((error == "" || error == null) ? App.Config.Constants.errorMessage.loginfailed : error) + " " + status;
                 });
             },
             isAuthenticated: function () {

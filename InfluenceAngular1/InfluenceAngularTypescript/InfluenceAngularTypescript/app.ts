@@ -26,7 +26,7 @@ module App {
 
         return {
             login: function (dBStore: DBStore, $scope: IDiagnosticsScope) {
-                $scope.authenticateResult = authenticateResult;
+                $scope.authenticateResult = new AuthenticateResult;
                 UserName = $scope.logOnModel.Username;
                 dBStore.authenticate($scope.logOnModel, $http).success((data: UserSetting) => {
                         authenticateSuccess=$scope.authenticateResult.isAuthenticated = true;
@@ -34,7 +34,7 @@ module App {
                         $location.path('/');
                 }).error((error, status) => {
                     $scope.authenticateResult.isAuthenticated = false;
-                    $scope.authenticateResult.errorMessage = (error == null ? Config.Constants.errorMessage.loginfailed : error) + " " + status;
+                    $scope.authenticateResult.errorMessage = ((error == "" || error == null) ? Config.Constants.errorMessage.loginfailed : error) + " " + status;
                 });             
             },
             isAuthenticated: function () {

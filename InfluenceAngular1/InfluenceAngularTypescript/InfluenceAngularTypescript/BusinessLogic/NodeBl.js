@@ -50,24 +50,30 @@ var App;
             };
             this.editok = function (scope, $scope) {
                 var nodeData = scope.$modelValue;
-                if (!$scope.checkDuplicateName($scope.nodeData, scope.editValue)) {
-                    $scope.editing = false;
-                    if (nodeData.Name == "") {
-                        nodeData.Status = 1;
-                    }
-                    else {
-                        nodeData.Status = 2;
-                    }
-                    nodeData.Name = scope.editValue;
-                    $scope.editValue = "";
-                    $scope.activeMenu = nodeData.Path;
+                if (scope.editValue.trim() == "") {
+                    $scope.alerts.push({
+                        type: App.Config.ErrorType[App.Config.ErrorType.warning],
+                        msg: App.Config.Constants.errorMessage.renameNode
+                    });
                 }
                 else {
-                    if (nodeData.Name == "") {
-                        $scope.alerts.push({ type: App.Config.ErrorType[App.Config.ErrorType.warning], msg: App.Config.Constants.errorMessage.renameNode });
+                    if (!$scope.checkDuplicateName($scope.nodeData, scope.editValue)) {
+                        $scope.editing = false;
+                        if (nodeData.Name == "") {
+                            nodeData.Status = 1;
+                        }
+                        else {
+                            nodeData.Status = 2;
+                        }
+                        nodeData.Name = scope.editValue;
+                        $scope.editValue = "";
+                        $scope.activeMenu = nodeData.Path;
                     }
                     else {
-                        $scope.alerts.push({ type: App.Config.ErrorType[App.Config.ErrorType.warning], msg: App.Config.Constants.errorMessage.duplicateNode });
+                        $scope.alerts.push({
+                            type: App.Config.ErrorType[App.Config.ErrorType.warning],
+                            msg: App.Config.Constants.errorMessage.duplicateNode
+                        });
                     }
                 }
             };
