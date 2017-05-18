@@ -6,6 +6,7 @@
         $scope.labels = [];
         $scope.data = [];
         $scope.alerts = [];
+        $scope.loading = true;
         dBStore.initGraph($scope, $http);
         var counts: any = {};
 
@@ -19,6 +20,7 @@
         }
 
         $scope.generateGraph = function () {
+            $scope.loading = true;
             $scope.labels = [];
             $scope.data = [];
             $scope.options = { cutoutPercentage: 75 };
@@ -36,7 +38,7 @@
             } else {
                 $scope.alerts.push({ type: Config.ErrorType[Config.ErrorType.warning], msg: Config.Constants.errorMessage.grapherror });
             }
-
+            $scope.loading = false;
         }
 
       

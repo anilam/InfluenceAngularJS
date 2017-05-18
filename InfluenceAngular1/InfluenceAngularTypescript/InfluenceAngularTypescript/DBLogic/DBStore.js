@@ -84,8 +84,9 @@ var App;
                         type: App.Config.ErrorType[App.Config.ErrorType.success],
                         msg: App.Config.Constants.errorMessage.graphsuccess
                     });
+                    $scope.loading = false;
                 }).error(function (error, status) {
-                    $scope.loadingNode = false;
+                    $scope.loading = false;
                     $scope.alerts.push({
                         type: App.Config.ErrorType[App.Config.ErrorType.danger],
                         msg: App.Config.Constants.errorMessage.loadingfailure + error + " " + status

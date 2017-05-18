@@ -92,8 +92,9 @@
                     type: Config.ErrorType[Config.ErrorType.success],
                     msg: Config.Constants.errorMessage.graphsuccess
                 });
+                $scope.loading = false;
             }).error((error, status) => {
-                $scope.loadingNode = false;
+                $scope.loading = false;
                 $scope.alerts.push({
                     type: Config.ErrorType[Config.ErrorType.danger],
                     msg: Config.Constants.errorMessage.loadingfailure + error + " " + status

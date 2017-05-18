@@ -5,6 +5,7 @@ var App;
         $scope.labels = [];
         $scope.data = [];
         $scope.alerts = [];
+        $scope.loading = true;
         dBStore.initGraph($scope, $http);
         var counts = {};
         $scope.closeAlert = function (index) {
@@ -15,6 +16,7 @@ var App;
             $scope.data = [];
         };
         $scope.generateGraph = function () {
+            $scope.loading = true;
             $scope.labels = [];
             $scope.data = [];
             $scope.options = { cutoutPercentage: 75 };
@@ -30,6 +32,7 @@ var App;
             else {
                 $scope.alerts.push({ type: App.Config.ErrorType[App.Config.ErrorType.warning], msg: App.Config.Constants.errorMessage.grapherror });
             }
+            $scope.loading = false;
         };
         //$scope.labels = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
         //$scope.series = ['Dependency'];
