@@ -23,6 +23,13 @@
                 }
         }
 
+        static get getMenuList(): any {
+            return {
+                severity: "High,Medium,Low",
+                menu: '[{"Menu":"Home","Url":"#!/ "},{"Menu":"Graph","Url":"#!/graph"},{"Menu":"Logout","Url":"#!/login"}]'
+        }
+        }
+
         static get default(): any {
             return {
                 url: 'http://124.124.79.181/Influence/Structure/' + this.runningMode + '/Nodes',

@@ -5,9 +5,7 @@
         $rootScope.menuItems = [];
         $rootScope.authenticated = false;
         LoginService.logout();
-        $rootScope.menuItems.push({ Menu: "Home", Url: "#!/" });
-        $rootScope.menuItems.push({ Menu: "Graph", Url: "#!/graph" });
-        $rootScope.menuItems.push({ Menu: "Logout", Url: "#!/login" });
+        $rootScope.menuItems = JSON.parse(Config.Constants.getMenuList.menu);
         $rootScope.activeMenu = $rootScope.menuItems[0].Menu;
 
         $rootScope.setActiveMenu = function (menuItem:string) {

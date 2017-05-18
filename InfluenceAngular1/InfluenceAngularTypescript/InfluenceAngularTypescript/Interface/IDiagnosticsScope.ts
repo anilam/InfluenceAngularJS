@@ -110,5 +110,6 @@
         funcsearch: string;
         dbsearch: string;
         Othersearch: string;
+        severity: any;
     }
 }

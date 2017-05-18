@@ -29,6 +29,16 @@ var App;
                 enumerable: true,
                 configurable: true
             });
+            Object.defineProperty(Constants, "getMenuList", {
+                get: function () {
+                    return {
+                        severity: "High,Medium,Low",
+                        menu: '[{"Menu":"Home","Url":"#!/ "},{"Menu":"Graph","Url":"#!/graph"},{"Menu":"Logout","Url":"#!/login"}]'
+                    };
+                },
+                enumerable: true,
+                configurable: true
+            });
             Object.defineProperty(Constants, "default", {
                 get: function () {
                     return {

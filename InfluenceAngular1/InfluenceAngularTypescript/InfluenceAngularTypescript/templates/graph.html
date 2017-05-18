@@ -7,14 +7,23 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div class="input-group">
-                <div class="styled-select slate">
-                    <select ng-model="graphmodel" ng-options="item as item.ProductName for item in graphData" ng-change="init()"></select>
-                </div>
-                <button class="btn btn-primary" type="button" ng-click="generateGraph()">
-                    <i class="glyphicon glyphicon-search"> Generate</i>
-                </button>
-            </div>
+            <table>
+                <tr>
+                    <td>
+                        <div class="styled-select slate">
+                            <select ng-model="graphmodel" ng-options="item as item.ProductName for item in graphData"
+                                    ng-change="init()"></select>
+                        </div>
+                    </td>
+                    <td>
+                        <span class="input-group-btn">
+                            <button class="btn btn-info btn-lg" type="button" ng-click="generateGraph()">
+                                <i class=" glyphicon glyphicon-search"> </i>
+                            </button>
+                        </span>
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
     <hr />

@@ -2,7 +2,7 @@
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
-                <img src="../css/images/logo.jpeg" class="img-responsive" alt="Cinque Terre" style="width:400px;">
+                <img src="../css/images/logo.jpeg" class="img-responsive" alt="Cinque Terre" style="width:300px;">
             </div>
             <ul class="nav navbar-nav navbar-right" >
                 <li ng-repeat='item in menuItems' ng-class="{active : activeMenu === item.Menu}" ng-show="(item.Menu !='Logout' && item.Menu !='Graph') || authenticated" ng-click="setActiveMenu(item.Menu)"><a href={{item.Url}}><span ng-class="{'glyphicon glyphicon-home': item.Menu == 'Home','glyphicon glyphicon-signal':item.Menu == 'Graph','glyphicon glyphicon-off':item.Menu == 'Logout'}"></span></a></li>

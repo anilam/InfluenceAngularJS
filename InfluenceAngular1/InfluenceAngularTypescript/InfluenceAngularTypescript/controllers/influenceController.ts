@@ -47,8 +47,11 @@
 
         $scope.OthersortType = 'Description';
         $scope.OthersortReverse = false; 
-        $scope.Othersearch = ''; 
+        $scope.Othersearch = '';
 
+        $scope.severity = [];
+
+        $scope.severity = Config.Constants.getMenuList.severity.split(",");
 
         $scope.searchFuncDetails = '';     // set the default search/filter term
 

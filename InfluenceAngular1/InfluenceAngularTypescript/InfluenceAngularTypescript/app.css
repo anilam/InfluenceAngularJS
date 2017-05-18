@@ -312,6 +312,7 @@ styled-select {
    font-size: 16px;
    height: 34px;
   width: 240px;
+  border-radius: 1px;
 }
 .slate   { background-color: #ddd; }
 .slate select   { color: #000; }
