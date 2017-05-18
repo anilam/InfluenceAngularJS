@@ -20,12 +20,14 @@ module App {
         var authenticateResult = new AuthenticateResult;
         authenticateResult.rolePermissions = [];
         var authenticateSuccess = false;
+        var UserName = '';
 
         var userSettings = {};
 
         return {
             login: function (dBStore: DBStore, $scope: IDiagnosticsScope) {
                 $scope.authenticateResult = authenticateResult;
+                UserName = $scope.logOnModel.Username;
                 dBStore.authenticate($scope.logOnModel, $http).success((data: UserSetting) => {
                         authenticateSuccess=$scope.authenticateResult.isAuthenticated = true;
                         userSettings = data;
@@ -40,6 +42,9 @@ module App {
             },
             userSettingsInfo: function() {
                 return userSettings;
+            },
+            getUserName: function() {
+                return UserName;
             },
             logout:function() {
                 authenticateSuccess = false;

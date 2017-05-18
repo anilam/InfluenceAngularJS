@@ -60,6 +60,8 @@ var App;
             dBStore.excelExport($scope, $http, urllist);
         };
         $scope.init = function () {
+            $scope.exportList = new Array();
+            $scope.filterSearchArray = new Array();
             dBStore.initNode($scope, $http);
         };
         //aside
@@ -102,13 +104,12 @@ var App;
             });
             modalInstance.result.then(function (selectedSettings) {
                 $scope.settings = selectedSettings;
-                if ($scope.settings.ExpandTree) {
-                    $scope.expandAll();
-                }
-                else {
-                    $scope.collapseAll();
-                }
-                dBStore.saveSettings($scope, $http);
+                //if ($scope.settings.ExpandTree) {
+                //    $scope.expandAll();
+                //} else {
+                //    $scope.collapseAll();
+                //}             
+                dBStore.saveSettings($scope, $http, LoginService.getUserName());
                 if (Constants.runningMode !== $scope.settings.DefaultSource) {
                     Constants.runningMode = $scope.settings.DefaultSource;
                     $scope.init();

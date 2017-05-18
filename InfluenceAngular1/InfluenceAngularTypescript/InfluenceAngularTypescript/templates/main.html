@@ -272,7 +272,7 @@
                     <button type="button" class="btn btn-primary pull-right" ng-click="init()">
                         <span class="glyphicon glyphicon-refresh"> </span>
                     </button>
-                    <button type="button" class="btn btn-primary pull-right" ng-hide="loadingNode" ng-click="saveNode()">
+                    <button type="button" class="btn btn-primary pull-right" ng-show="!loadingNode && settings.Role==1"  ng-click="saveNode()">
                         <span class="glyphicon glyphicon-floppy-disk"></span>
                     </button>
                 </uib-tabset>
@@ -285,7 +285,7 @@
             </div>
             <!--<pre class="code">{{ data | json }}</pre>-->
 
-            <button class="btn btn btn-primary pull-right" aria-label="Left Align" ng-hide="loading" ng-click="saveNodeDetails()" ng-show="myDataTable.Functional.length>0" ng-controller="MyCtrl">
+            <button class="btn btn btn-primary pull-right" aria-label="Left Align" ng-show="!loading && settings.Role==1 && myDataTable.Functional.length > 0" ng-click="saveNodeDetails()" ng-controller="MyCtrl">
                 <span class="glyphicon glyphicon-floppy-disk"></span>
             </button>
 

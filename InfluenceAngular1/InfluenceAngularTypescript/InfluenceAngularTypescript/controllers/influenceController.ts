@@ -86,6 +86,8 @@
         }
 
         $scope.init = function () {
+           $scope.exportList = new Array();
+           $scope.filterSearchArray = new Array();
            dBStore.initNode($scope,$http);
         }
 
@@ -136,12 +138,12 @@
           
             modalInstance.result.then(function (selectedSettings: UserSetting) {
                 $scope.settings = selectedSettings;
-                if ($scope.settings.ExpandTree) {
-                    $scope.expandAll();
-                } else {
-                    $scope.collapseAll();
-                }
-                dBStore.saveSettings($scope, $http);        
+                //if ($scope.settings.ExpandTree) {
+                //    $scope.expandAll();
+                //} else {
+                //    $scope.collapseAll();
+                //}             
+                dBStore.saveSettings($scope, $http, LoginService.getUserName());        
                 if (Constants.runningMode !== $scope.settings.DefaultSource) {
                     Constants.runningMode = $scope.settings.DefaultSource;
                         $scope.init();
@@ -151,7 +153,7 @@
             });
         }
 
-        if (Constants.runningMode != null && Constants.runningMode !="") {
+        if (Constants.runningMode != null && Constants.runningMode != "") {         
             $scope.init();
         }
 

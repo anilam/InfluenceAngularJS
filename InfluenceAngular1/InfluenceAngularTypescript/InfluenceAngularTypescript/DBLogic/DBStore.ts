@@ -101,12 +101,12 @@
             });
         }
 
-        saveSettings = function ($scope: IDiagnosticsScope, $http: angular.IHttpService) {
+        saveSettings = function ($scope: IDiagnosticsScope, $http: angular.IHttpService,userName:string) {
             $scope.loadingNode = true;
             $http({
                 method: "PUT",
                 data:$scope.settings,
-                url: Config.Constants.default.settings +'admin'
+                url: Config.Constants.default.settings + userName
             }).success((data: any) => {
                 $scope.loadingNode = false;
                 $scope.alerts.push({

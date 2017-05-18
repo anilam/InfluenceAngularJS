@@ -91,12 +91,12 @@ var App;
                     url: App.Config.Constants.default.authentication
                 });
             };
-            this.saveSettings = function ($scope, $http) {
+            this.saveSettings = function ($scope, $http, userName) {
                 $scope.loadingNode = true;
                 $http({
                     method: "PUT",
                     data: $scope.settings,
-                    url: App.Config.Constants.default.settings + 'admin'
+                    url: App.Config.Constants.default.settings + userName
                 }).success(function (data) {
                     $scope.loadingNode = false;
                     $scope.alerts.push({

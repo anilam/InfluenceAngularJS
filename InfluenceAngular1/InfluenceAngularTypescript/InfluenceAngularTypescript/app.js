@@ -16,10 +16,12 @@ var App;
         var authenticateResult = new AuthenticateResult;
         authenticateResult.rolePermissions = [];
         var authenticateSuccess = false;
+        var UserName = '';
         var userSettings = {};
         return {
             login: function (dBStore, $scope) {
                 $scope.authenticateResult = authenticateResult;
+                UserName = $scope.logOnModel.Username;
                 dBStore.authenticate($scope.logOnModel, $http).success(function (data) {
                     authenticateSuccess = $scope.authenticateResult.isAuthenticated = true;
                     userSettings = data;
@@ -34,6 +36,9 @@ var App;
             },
             userSettingsInfo: function () {
                 return userSettings;
+            },
+            getUserName: function () {
+                return UserName;
             },
             logout: function () {
                 authenticateSuccess = false;
