@@ -2,7 +2,6 @@
     background-color: #e8e8e8;
     border-color: #e8e8e8;
 }
- 
 .navbar-inverse .navbar-brand {
     color: #3c3c3c;
     font-size: 14px;
@@ -18,55 +17,46 @@ body {
     background-color: #fff;
     margin-top: -1px;
 }
- 
 .container-fluid {
   margin-right: auto;
   margin-left: auto;
   max-width: 1600px; /* or 950px */
 }
- 
 .funcdetails.active {
                 color: #333;
                 background: #e8e8e8;
                 border-color: #dce2e8;
         }
- 
 .funcdetails.activeedit {
                 color: #333;
                 background: #e8e8e8;
                 border-color: #dce2e8;
         }
- 
 .table>thead>tr>td.active, .table>tbody>tr>td.active, .table>tfoot>tr>td.active, .table>thead>tr>th.active,
 .table>tbody>tr>th.active, .table>tfoot>tr>th.active, .table>thead>tr.active>td, .table>tbody>tr.active>td,
   .table>tfoot>tr.active>td, .table>thead>tr.active>th, .table>tbody>tr.active>th, .table>tfoot>tr.active>th
   {
     background-color: #3ec3d5;
     color: #333;
-   
+  
 }
- 
 .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
     color: #fff;
     background-color: #3ec3d5;
 }
- 
 .table>thead>tr>th {
     vertical-align: bottom;
     border-bottom: 1px solid #3ec3d5;
     font-weight: 100;
     text-transform: uppercase;
 }
- 
 a {
     color: #3c3c3c;
 }
- 
 .btn {
     margin-right: 8px;
     font-size: 12px;
 }
- 
 .btn-info
 {
 border-radius: 15px;
@@ -75,21 +65,17 @@ padding-right: 20px;
 color: #3c3c3c;
 background-color: #e8e8e8;
 border-color: #dadada;
- 
 }
- 
 .btn-info:hover {
 color: #3ec3d5;
 background-color: #f8faff;
 border-color: #ededed;
 }
- 
 .btn-info:focus, .btn-info:active, .btn-info.active, .open>.dropdown-toggle.btn-info {
 color: #fff;
 background-color: #3ec3d5;
 border-color: #3ec3d5;
 }
- 
 .btn-default {
     color: #fff;
    background-color: #3ec3d5;
@@ -98,41 +84,33 @@ border-color: #3ec3d5;
     padding-left: 20px;
     padding-right: 20px;
 }
- 
 .btn-xs, .btn-group-xs>.btn
 {
- 
     border-radius: 13px;
 }
- 
 .btn-xl, .btn-group-xl>.btn
 {
- 
     border-radius: 17px;
     width: 35px;
     height: 35px;
 }
- 
 .btn-primary {
     color: #fff;
     background-color: #3ec3d5;
     border-color: #3ec3d5;
 }
- 
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
     color: #fff;
     background-color: #3ec3d5;
     border-color: #3ec3d5;
 }
- 
 input, button, select, textarea {
-  
+ 
     border-radius: 12px;
     border: 0;
     padding-left: 20px;
-   
+  
 }
- 
 .btn-search
 {
 border-radius: 15px;
@@ -141,25 +119,21 @@ padding-right: 20px;
 color: #fff;
 background-color: #3ec3d5;
 border-color: #3ec3d5;
- 
 }
- 
 .btn-search:hover, .btn-search:focus, .btn-search:active, .btn-search.active, .open>.dropdown-toggle.btn-search {
     color: #fff;
     background-color: #3ec3d5;
 border-color: #3ec3d5;
 }
- 
 #breadcrumb
 {
     min-height: 10px;
     color: #3ec3d5;
     font-size: 0.9em;
     float: right;
- 
 }
-
-
+ 
+ 
 .angular-ui-tree-handle {
     cursor: pointer;
     background: #f8faff;
@@ -167,26 +141,22 @@ border-color: #3ec3d5;
     color: #7c9eb2;
     padding: 8px 10px;
 }
- 
 .angular-ui-tree-handle:hover {
     color: #3ec3d5;
     background: #f4f6f7;
     border-color: #ededed;
 }
- 
 .angular-ui-tree-handle.active {
     color: #FFF;
     background: #3ec3d5;
     border-color: #dce2e8;
 }
- 
 .angular-ui-tree-handle.activeedit
 {
     color: #3ec3d5;
     background: #3ec3d5;
     border-color: #f0f0f0;
 }
- 
 .angular-ui-tree-placeholder {
     background: #f0f9ff;
     border: 2px dashed #bed2db;
@@ -194,44 +164,36 @@ border-color: #3ec3d5;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
- 
 tr.angular-ui-tree-empty {
     height:100px
 }
- 
 .group-title {
     background-color: #687074 !important;
     color: #FFF !important;
 }
- 
 /* --- Tree --- */
 .tree-node {
     border: 1px solid #e8e8e8;
     background-color: #e8e8e8;
     color: #3c3c3c;
 }
- 
 .nodrop {
     background-color: #f2dede;
 }
- 
 .tree-node-content {
     margin: 3px 15px 0px 0px;
     border-radius: 3px;
-   
+  
 }
- 
 .tree-handle {
     padding: 10px;
     background: #3ec3d5;
     color: #FFF;
     margin-right: 10px;
 }
- 
 .angular-ui-tree-handle:hover
 {
 }
- 
 .angular-ui-tree-placeholder {
     background: #f0f9ff;
     border: 2px dashed #bed2db;
@@ -239,77 +201,70 @@ tr.angular-ui-tree-empty {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
- 
 .input-lg, .form-horizontal .form-group-lg .form-control
 {
-    height: 34px;
+    height: 33px;
     padding: 10px 16px;
     font-size: 13px;
     line-height: 1.33;
     border-radius: 18px;
 }
- 
 .btn-lg, .btn-group-lg>.btn {
     padding: 8.5px 16px;
     font-size: 14px;
     line-height: 1.33px;
     border-radius: 18px;
 }
- 
 .col-sm-12
 {
 padding-top: 8px;
 padding-bottom: 8px;
 }
- 
 .glyphicon-chevron-right:before
 {
-   
+  
     border-color: #3ec3d5;
 }
- 
 .glyphicon-plus:after {
     background-color: #3ec3d5;
 }
  
+.modal-header
+{
+background-color: #3ec3d5;
+color: white;
+}
 .btn-success {
     color: #fff;
     background-color: #3ec3d5;
     border-color: #3ec3d5;
 }
- 
 .btn-success:hover, .btn-success:focus, .btn-success:active, .btn-success.active, .open>.dropdown-toggle.btn-success
 {
- 
     color: #fff;
     background-color: #3ec3d5;
     border-color: #3ec3d5;
 }
- 
 .input-group-btn:last-child>.btn, .input-group-btn:last-child>.btn-group {
-   
+  
     margin-right: 2px;
 }
- 
 .col-sm-12{
     width: 100%;
     float: left;
 }
- 
 .nav-tabs>li>a {
-   
+  
     background-color: #e8e8e8;
 }
-
-
-
-/* Testing */
  
+ 
+ 
+/* Testing */
 html {
     margin: 0 auto;
     max-width: 96%;
 }
- 
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
@@ -327,7 +282,6 @@ body {
   /* Set the fixed height of the footer here */
   height: 20px;
 }
- 
 /*select*/
 styled-select {
    background: url(http://i62.tinypic.com/15xvbd5.png) no-repeat 96% 0;
@@ -335,7 +289,6 @@ styled-select {
    overflow: hidden;
    width: 240px;
 }
- 
 .styled-select select {
    background: transparent;
    border: none;
@@ -343,33 +296,30 @@ styled-select {
    height: 29px;
    padding: 5px; /* If you add too much padding here, the options won't show in IE */
    width: 268px;
-appearance:none;
     -moz-appearance:none; /* Firefox */
     -webkit-appearance:none; /* Safari and Chrome */
 }
- 
 .styled-select.slate {
    background: url(http://i62.tinypic.com/2e3ybe1.jpg) no-repeat right center;
-   height: 34px;
-   width: 240px;
-}
+    height: 34px;
+    width: 240px;
+    border-radius: 12px;
+    background: whitesmoke;
  
+}
 .styled-select.slate select {
    border: 1px solid #ccc;
    font-size: 16px;
    height: 34px;
   width: 240px;
 }
- 
 .slate   { background-color: #ddd; }
 .slate select   { color: #000; }
 /*end select*/
- 
 .btn {
     margin-right: 8px;
     border-radius: 15px;
 }
- 
 .modal-title {
     margin: 0;
     line-height: 1.42857143;
@@ -377,20 +327,47 @@ appearance:none;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 16px;
     font-weight: 600;
+    padding-left: 20px;
+    padding-bottom: 10px;
 }
+ 
+.checkbox
+{
+    padding-left: 15px;
+}
+ 
+.modal-body {
+    position: relative;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+ 
+.input-group {
+    position: relative;
+    display: table;
+    border-collapse: separate;
+    padding-left: 15px;
+    padding-bottom: 10px;
+}
+ 
+.input-group {
+    padding-left: 15px;
+    padding-bottom: 10px;
+}
+ 
  
 .angular-ui-tree-handle.deleted {
     color: #dce2e8;
     background: #d43f3a;
     border-color: #dce2e8;
 }
- 
 .angular-ui-tree-handle.activeedit {
     color: #438eb9;
     background: #428bca;
     border-color: #dce2e8;
 }
- 
 .angular-ui-tree-placeholder {
     background: #f0f9ff;
     border: 2px dashed #bed2db;
@@ -398,55 +375,44 @@ appearance:none;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
- 
 tr.angular-ui-tree-empty {
     height:100px
 }
- 
 .group-title {
     background-color: #687074 !important;
     color: #FFF !important;
 }
- 
 /* --- Tree --- */
- 
 .nodrop {
     background-color: #f2dede;
 }
- 
 .tree-handle {
     padding: 10px;
     background: #428bca;
     color: #FFF;
     margin-right: 10px;
 }
- 
 .angular-ui-tree-handle:hover
 {
 }
- 
 .angular-ui-tree-placeholder {
     background: #f0f9ff;
     border: 2px dashed #bed2db;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
- 
 }
- 
 hr {
     margin-top: 15px;
     margin-bottom: 15px;
     border: 0;
     border-top: 1px solid #eee;
 }
- 
 .navbar-default .navbar-nav>.active>a
 {
     color: #fff;
     background-color: #3ec3d5;
 }
- 
 .navbar-default .navbar-nav>li>a {
     color: #3ec3d5;
 }
