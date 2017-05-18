@@ -23,8 +23,10 @@
         $scope.DBdetailsediting = false;
         $scope.Otherdetailsediting = false;
         $scope.settings = new UserSetting();
+        $scope.settings.Role = '';
         $scope.editOtherDetailsValue = [];
-        $scope.settings = LoginService.userSettingsInfo();
+        $scope.settings = LoginService.userSettingsInfo().Setting;
+        $scope.settings.Role = LoginService.userSettingsInfo().Role;
         Constants.runningMode = $scope.settings.DefaultSource;
 
         $scope.tabselected = 0;
@@ -149,7 +151,7 @@
             });
         }
 
-        if (Constants.runningMode != "") {
+        if (Constants.runningMode != null && Constants.runningMode !="") {
             $scope.init();
         }
 

@@ -10,7 +10,9 @@
           AddNodeDetail:boolean;
 
           Sources:string[];
-          DefaultSource:string;
+          DefaultSource: string;
+
+          Role:string;
     }
 
 class AuthenticateResult {
