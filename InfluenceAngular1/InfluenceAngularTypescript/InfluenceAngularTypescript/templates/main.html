@@ -12,7 +12,7 @@
         }"></span>
                 </a>
   
-            <span ng-show="!editing || editItem != node.Path" ng-bind="node.Name"></span><input type="text" ng-model="editValue" focus-on="{{node.Path}}" ng-show="editItem === node.Path && editing" />
+            <span ng-show="!editing || editItem != node.Path" ng-bind="node.Name"></span><input type="text" maxlength="100" ng-model="editValue" focus-on="{{node.Path}}" ng-show="editItem === node.Path && editing" />
             </div>
             <div class="col-sm-5">
                 <a class="pull-right btn btn-success btn-xs" data-nodrag ng-click="editok(this)" ng-show="editItem === node.Path && editing">
@@ -70,7 +70,7 @@
         }"></span>
                 </a>
 
-                <span ng-show="!editing || editItem != node.Path" ng-bind="node.Name"></span><input type="text" ng-model="editValue" focus-on="{{node.Path}}" ng-show="editItem === node.Path && editing" />
+                <span ng-show="!editing || editItem != node.Path" ng-bind="node.Name"></span><input type="text" maxlength="100" ng-model="editValue" focus-on="{{node.Path}}" ng-show="editItem === node.Path && editing" />
             </div>
             <div class="col-sm-5">
                 <a class="pull-right btn btn-success btn-xs" data-nodrag ng-click="editok(this)" ng-show="editItem === node.Path && editing">
@@ -216,7 +216,7 @@
                                 </button>
                             </td>
                             <td>
-                                <input type="text" style="width: 20em;" ng-model="query" class="search-input form-control input-lg" placeholder="Quick search..." />
+                                <input type="text" maxlength="100" style="width: 20em;" ng-model="query" class="search-input form-control input-lg" placeholder="Quick search..." />
                             </td>
                             <td>
                                 <span class="input-group-btn">
@@ -296,7 +296,7 @@
                         <table class="input-group">
                             <tr>
                                 <td>
-                                    <input type="text" style="width: 30em;" ng-model="funcsearch" class="form-control input-lg" placeholder="Quick search..."/>
+                                    <input type="text" maxlength="100" style="width: 30em;" ng-model="funcsearch" class="form-control input-lg" placeholder="Quick search..."/>
                                 </td>
                                 <td>
                                     <span class="input-group-btn">
@@ -346,10 +346,10 @@
                             </thead>
                             <tbody>
                             <tr class="details" ng-repeat="Funcdetails in myDataTable.Functional |orderBy:funcsortType:funcsortReverse | filter:funcsearch track by $index" ng-click="setFuncdetailsActive(myDataTable.Functional.indexOf(Funcdetails))" ng-class="{active : activeFuncdetailsId === myDataTable.Functional.indexOf(Funcdetails),activeedit : editItemFuncdetailsId === myDataTable.Functional.indexOf(Funcdetails) && Funcdetailsediting}">
-                                <td> <span ng-show="!Funcdetailsediting || editItemFuncdetailsId != myDataTable.Functional.indexOf(Funcdetails)">{{ Funcdetails.Impact }}</span> <textarea focus-on="funcdetails-{{myDataTable.Functional.indexOf(Funcdetails)}}" type="text" ng-model="editFuncDetailsValue.ImpactEdit" ng-show="editItemFuncdetailsId === myDataTable.Functional.indexOf(Funcdetails) && Funcdetailsediting"></textarea></td>
-                                <td> <span ng-show="!Funcdetailsediting || editItemFuncdetailsId != myDataTable.Functional.indexOf(Funcdetails)">{{ Funcdetails.Product }}</span> <input type="text" ng-model="editFuncDetailsValue.ProductEdit" ng-show="editItemFuncdetailsId === myDataTable.Functional.indexOf(Funcdetails) && Funcdetailsediting"/></td>
-                                <td> <span ng-show="!Funcdetailsediting || editItemFuncdetailsId != myDataTable.Functional.indexOf(Funcdetails)">{{ Funcdetails.Module }}</span> <input type="text" ng-model="editFuncDetailsValue.ModuleEdit" ng-show="editItemFuncdetailsId === myDataTable.Functional.indexOf(Funcdetails) && Funcdetailsediting"/></td>
-                                <td> <span ng-show="!Funcdetailsediting || editItemFuncdetailsId != myDataTable.Functional.indexOf(Funcdetails)">{{ Funcdetails.Complexity }}</span> <input type="text" ng-model="editFuncDetailsValue.ComplexityEdit" ng-show="editItemFuncdetailsId === myDataTable.Functional.indexOf(Funcdetails) && Funcdetailsediting"/></td>
+                                <td> <span ng-show="!Funcdetailsediting || editItemFuncdetailsId != myDataTable.Functional.indexOf(Funcdetails)">{{ Funcdetails.Impact }}</span> <textarea maxlength="500" focus-on="funcdetails-{{myDataTable.Functional.indexOf(Funcdetails)}}" type="text" ng-model="editFuncDetailsValue.ImpactEdit" ng-show="editItemFuncdetailsId === myDataTable.Functional.indexOf(Funcdetails) && Funcdetailsediting"></textarea></td>
+                                <td> <span ng-show="!Funcdetailsediting || editItemFuncdetailsId != myDataTable.Functional.indexOf(Funcdetails)">{{ Funcdetails.Product }}</span> <input type="text" maxlength="100" ng-model="editFuncDetailsValue.ProductEdit" ng-show="editItemFuncdetailsId === myDataTable.Functional.indexOf(Funcdetails) && Funcdetailsediting"/></td>
+                                <td> <span ng-show="!Funcdetailsediting || editItemFuncdetailsId != myDataTable.Functional.indexOf(Funcdetails)">{{ Funcdetails.Module }}</span> <input type="text" maxlength="100" ng-model="editFuncDetailsValue.ModuleEdit" ng-show="editItemFuncdetailsId === myDataTable.Functional.indexOf(Funcdetails) && Funcdetailsediting"/></td>
+                                <td> <span ng-show="!Funcdetailsediting || editItemFuncdetailsId != myDataTable.Functional.indexOf(Funcdetails)">{{ Funcdetails.Complexity }}</span> <input type="text" maxlength="100" ng-model="editFuncDetailsValue.ComplexityEdit" ng-show="editItemFuncdetailsId === myDataTable.Functional.indexOf(Funcdetails) && Funcdetailsediting"/></td>
 
                                 <td ng-show="!Funcdetailsediting || editItemFuncdetailsId != myDataTable.Functional.indexOf(Funcdetails)"><a ng-show="settings.EditNodeDetail" class="pull-right btn btn-primary btn-xs" ng-click="editFuncdetails(Funcdetails,myDataTable.Functional.indexOf(Funcdetails))"><span class="glyphicon glyphicon-edit"></span></a></td>
                                 <td ng-show="!Funcdetailsediting || editItemFuncdetailsId != myDataTable.Functional.indexOf(Funcdetails)"><a ng-show="settings.DeleteNodeDetail" class="pull-right btn btn-danger btn-xs" ng-click="removeFuncdetails(myDataTable.Functional.indexOf(Funcdetails))"><span class="glyphicon glyphicon-remove"></span></a></td>
@@ -367,7 +367,7 @@
                         <table class="input-group">
                             <tr>
                                 <td>
-                                    <input type="text" style="width: 30em;" ng-model="dbsearch" class="form-control input-lg" placeholder="Quick search..." />
+                                    <input type="text" maxlength="100" style="width: 30em;" ng-model="dbsearch" class="form-control input-lg" placeholder="Quick search..." />
                                 </td>
                                 <td>
                                     <span class="input-group-btn">
@@ -409,9 +409,9 @@
                             </thead>
                             <tbody>
                                 <tr class="details" ng-repeat="DBdetails in myDataTable.DatabaseDetails |orderBy:dbsortType:dbsortReverse |filter:dbsearch track by $index" ng-click="setDBdetailsActive(myDataTable.DatabaseDetails.indexOf(DBdetails))" ng-class="{active : activeDBdetailsId === myDataTable.DatabaseDetails.indexOf(DBdetails),activeedit : editItemDBdetailsId === myDataTable.DatabaseDetails.indexOf(DBdetails) && DBdetailsediting}">
-                                    <td> <span ng-show="!DBdetailsediting || editItemDBdetailsId != myDataTable.DatabaseDetails.indexOf(DBdetails)">{{ DBdetails.DbObject || '' }}</span> <input focus-on="DBdetails-{{myDataTable.DatabaseDetails.indexOf(DBdetails)}}" type="text" ng-model="editDBDetailsValue.DbObject" ng-show="editItemDBdetailsId === myDataTable.DatabaseDetails.indexOf(DBdetails) && DBdetailsediting" /></td>
-                                    <td> <span ng-show="!DBdetailsediting || editItemDBdetailsId != myDataTable.DatabaseDetails.indexOf(DBdetails)">{{ DBdetails.DbType || ''}}</span> <input type="text" ng-model="editDBDetailsValue.DbType" ng-show="editItemDBdetailsId === myDataTable.DatabaseDetails.indexOf(DBdetails) && DBdetailsediting" /></td>
-                                    <td> <span ng-show="!DBdetailsediting || editItemDBdetailsId != myDataTable.DatabaseDetails.indexOf(DBdetails)">{{ DBdetails.Description }}</span> <textarea type="text" ng-model="editDBDetailsValue.Description" ng-show="editItemDBdetailsId === myDataTable.DatabaseDetails.indexOf(DBdetails) && DBdetailsediting"></textarea></td>
+                                    <td> <span ng-show="!DBdetailsediting || editItemDBdetailsId != myDataTable.DatabaseDetails.indexOf(DBdetails)">{{ DBdetails.DbObject || '' }}</span> <input type="text" maxlength="100" focus-on="DBdetails-{{myDataTable.DatabaseDetails.indexOf(DBdetails)}}" type="text" ng-model="editDBDetailsValue.DbObject" ng-show="editItemDBdetailsId === myDataTable.DatabaseDetails.indexOf(DBdetails) && DBdetailsediting" /></td>
+                                    <td> <span ng-show="!DBdetailsediting || editItemDBdetailsId != myDataTable.DatabaseDetails.indexOf(DBdetails)">{{ DBdetails.DbType || ''}}</span> <input type="text" maxlength="100" ng-model="editDBDetailsValue.DbType" ng-show="editItemDBdetailsId === myDataTable.DatabaseDetails.indexOf(DBdetails) && DBdetailsediting" /></td>
+                                    <td> <span ng-show="!DBdetailsediting || editItemDBdetailsId != myDataTable.DatabaseDetails.indexOf(DBdetails)">{{ DBdetails.Description }}</span> <textarea maxlength="500" type="text" ng-model="editDBDetailsValue.Description" ng-show="editItemDBdetailsId === myDataTable.DatabaseDetails.indexOf(DBdetails) && DBdetailsediting"></textarea></td>
 
                                     <td ng-show="!DBdetailsediting || editItemDBdetailsId != myDataTable.DatabaseDetails.indexOf(DBdetails)"><a ng-show="settings.EditNodeDetail" class="pull-right btn btn-primary btn-xs" ng-click="editDBdetails(DBdetails,myDataTable.DatabaseDetails.indexOf(DBdetails))"><span class="glyphicon glyphicon-edit"></span></a></td>
                                     <td ng-show="!DBdetailsediting || editItemDBdetailsId != myDataTable.DatabaseDetails.indexOf(DBdetails)"><a ng-show="settings.DeleteNodeDetail" class="pull-right btn btn-danger btn-xs" ng-click="removeDBdetails(myDataTable.DatabaseDetails.indexOf(DBdetails))"><span class="glyphicon glyphicon-remove"></span></a></td>
@@ -430,7 +430,7 @@
                     <table class="input-group">
                         <tr>
                             <td>
-                                <input type="text" style="width: 30em;" ng-model="Othersearch" class="form-control input-lg" placeholder="Quick search..." />
+                                <input type="text" maxlength="100" style="width: 30em;" ng-model="Othersearch" class="form-control input-lg" placeholder="Quick search..." />
                             </td>
                             <td>
                                 <span class="input-group-btn">
@@ -479,10 +479,10 @@
                         </thead>
                         <tbody>
                             <tr class="details" ng-repeat="Otherdetails in myDataTable.AdditionalDetails |orderBy:OthersortType:OthersortReverse |filter:Othersearch track by $index" ng-click="setOtherdetailsActive(myDataTable.AdditionalDetails.indexOf(Otherdetails))" ng-class="{active : activeOtherdetailsId === myDataTable.AdditionalDetails.indexOf(Otherdetails),activeedit : editItemOtherdetailsId === myDataTable.AdditionalDetails.indexOf(Otherdetails) && Otherdetailsediting}">
-                                <td> <span ng-show="!Otherdetailsediting || editItemOtherdetailsId != myDataTable.AdditionalDetails.indexOf(Otherdetails)">{{ Otherdetails.Description }}</span> <textarea type="text" focus-on="Otherdetails-{{myDataTable.AdditionalDetails.indexOf(Otherdetails)}}" ng-model="editOtherDetailsValue.DescriptionEdit" ng-show="editItemOtherdetailsId === myDataTable.AdditionalDetails.indexOf(Otherdetails) && Otherdetailsediting"></textarea></td>
-                                <td> <span ng-show="!Otherdetailsediting || editItemOtherdetailsId != myDataTable.AdditionalDetails.indexOf(Otherdetails)">{{ Otherdetails.Type || ''}}</span> <input type="text" ng-model="editOtherDetailsValue.TypeEdit" ng-show="editItemOtherdetailsId === myDataTable.AdditionalDetails.indexOf(Otherdetails) && Otherdetailsediting" /></td>
-                                <td> <span ng-show="!Otherdetailsediting || editItemOtherdetailsId != myDataTable.AdditionalDetails.indexOf(Otherdetails)">{{ Otherdetails.Module || '' }}</span> <input type="text" ng-model="editOtherDetailsValue.ModuleEdit" ng-show="editItemOtherdetailsId === myDataTable.AdditionalDetails.indexOf(Otherdetails) && Otherdetailsediting" /></td>
-                                <td> <span ng-show="!Otherdetailsediting || editItemOtherdetailsId != myDataTable.AdditionalDetails.indexOf(Otherdetails)">{{ Otherdetails.Complexity || '' }}</span> <input type="text" ng-model="editOtherDetailsValue.ComplexityEdit" ng-show="editItemOtherdetailsId === myDataTable.AdditionalDetails.indexOf(Otherdetails) && Otherdetailsediting" /></td>
+                                <td> <span ng-show="!Otherdetailsediting || editItemOtherdetailsId != myDataTable.AdditionalDetails.indexOf(Otherdetails)">{{ Otherdetails.Description }}</span> <textarea maxlength="500" type="text" focus-on="Otherdetails-{{myDataTable.AdditionalDetails.indexOf(Otherdetails)}}" ng-model="editOtherDetailsValue.DescriptionEdit" ng-show="editItemOtherdetailsId === myDataTable.AdditionalDetails.indexOf(Otherdetails) && Otherdetailsediting"></textarea></td>
+                                <td> <span ng-show="!Otherdetailsediting || editItemOtherdetailsId != myDataTable.AdditionalDetails.indexOf(Otherdetails)">{{ Otherdetails.Type || ''}}</span> <input type="text" maxlength="100" ng-model="editOtherDetailsValue.TypeEdit" ng-show="editItemOtherdetailsId === myDataTable.AdditionalDetails.indexOf(Otherdetails) && Otherdetailsediting" /></td>
+                                <td> <span ng-show="!Otherdetailsediting || editItemOtherdetailsId != myDataTable.AdditionalDetails.indexOf(Otherdetails)">{{ Otherdetails.Module || '' }}</span> <input type="text" maxlength="100" ng-model="editOtherDetailsValue.ModuleEdit" ng-show="editItemOtherdetailsId === myDataTable.AdditionalDetails.indexOf(Otherdetails) && Otherdetailsediting" /></td>
+                                <td> <span ng-show="!Otherdetailsediting || editItemOtherdetailsId != myDataTable.AdditionalDetails.indexOf(Otherdetails)">{{ Otherdetails.Complexity || '' }}</span> <input type="text" maxlength="100" ng-model="editOtherDetailsValue.ComplexityEdit" ng-show="editItemOtherdetailsId === myDataTable.AdditionalDetails.indexOf(Otherdetails) && Otherdetailsediting" /></td>
 
 
 
@@ -526,10 +526,10 @@
                             </thead>
                             <tbody>
                             <tr class="funcdetails" ng-repeat="Funcdetails in myDataTable.Functional track by $index" ng-click="setFuncdetailsActive($index)" ng-class="{active : activeFuncdetailsId === $index,activeedit : editItemFuncdetailsId === $index && Funcdetailsediting}">
-                                <td> <span ng-show="!Funcdetailsediting || editItemFuncdetailsId != $index">{{ Funcdetails.Impact }}</span> <input type="text" ng-model="editFuncDetailsValue.ImpactEdit" ng-show="editItemFuncdetailsId === $index && Funcdetailsediting"/></td>
-                                <td> <span ng-show="!Funcdetailsediting || editItemFuncdetailsId != $index">{{ Funcdetails.Product }}</span> <input type="text" ng-model="editFuncDetailsValue.ProductEdit" ng-show="editItemFuncdetailsId === $index && Funcdetailsediting"/></td>
-                                <td> <span ng-show="!Funcdetailsediting || editItemFuncdetailsId != $index">{{ Funcdetails.Module }}</span> <input type="text" ng-model="editFuncDetailsValue.ModuleEdit" ng-show="editItemFuncdetailsId === $index && Funcdetailsediting"/></td>
-                                <td> <span ng-show="!Funcdetailsediting || editItemFuncdetailsId != $index">{{ Funcdetails.Complexity }}</span> <input type="text" ng-model="editFuncDetailsValue.ComplexityEdit" ng-show="editItemFuncdetailsId === $index && Funcdetailsediting"/></td>
+                                <td> <span ng-show="!Funcdetailsediting || editItemFuncdetailsId != $index">{{ Funcdetails.Impact }}</span> <input type="text" maxlength="100" ng-model="editFuncDetailsValue.ImpactEdit" ng-show="editItemFuncdetailsId === $index && Funcdetailsediting"/></td>
+                                <td> <span ng-show="!Funcdetailsediting || editItemFuncdetailsId != $index">{{ Funcdetails.Product }}</span> <input type="text" maxlength="100" ng-model="editFuncDetailsValue.ProductEdit" ng-show="editItemFuncdetailsId === $index && Funcdetailsediting"/></td>
+                                <td> <span ng-show="!Funcdetailsediting || editItemFuncdetailsId != $index">{{ Funcdetails.Module }}</span> <input type="text" maxlength="100" ng-model="editFuncDetailsValue.ModuleEdit" ng-show="editItemFuncdetailsId === $index && Funcdetailsediting"/></td>
+                                <td> <span ng-show="!Funcdetailsediting || editItemFuncdetailsId != $index">{{ Funcdetails.Complexity }}</span> <input type="text" maxlength="100" ng-model="editFuncDetailsValue.ComplexityEdit" ng-show="editItemFuncdetailsId === $index && Funcdetailsediting"/></td>
 
                                 <td ng-show="!Funcdetailsediting || editItemFuncdetailsId != $index"><a class="pull-right btn btn-primary btn-xs" ng-click="editFuncdetails(Funcdetails,myDataTable.Functional.indexOf(Funcdetails))"><span class="glyphicon glyphicon-edit"></span></a></td>
                                 <td ng-show="!Funcdetailsediting || editItemFuncdetailsId != $index"><a class="pull-right btn btn-danger btn-xs" ng-click="removeFuncdetails(myDataTable.Functional.indexOf(Funcdetails))"><span class="glyphicon glyphicon-remove"></span></a></td>

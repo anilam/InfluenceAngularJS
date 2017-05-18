@@ -29,6 +29,7 @@ var App;
         $scope.OthersortType = 'Description';
         $scope.OthersortReverse = false;
         $scope.Othersearch = '';
+        $("input").attr("maxlength", 4);
         $scope.searchFuncDetails = ''; // set the default search/filter term
         var findArrayObject = function (object, name) {
             return $filter('filter')(object, { Path: name }, true)[0];
