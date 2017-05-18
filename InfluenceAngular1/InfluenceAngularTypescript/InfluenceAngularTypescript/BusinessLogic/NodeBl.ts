@@ -17,7 +17,7 @@ module App {
                 }
                 nodeData.Children.push({
                     //  id: nodeData.id * 10 + nodeData.nodes.length,
-                    Name: "EnterDetails",
+                    Name: "",
                     Path: nodeData.Path + "_NewNode" + scope.id,
                     ParentPath: nodeData.Path,
                     Status: 1,
@@ -28,7 +28,7 @@ module App {
                 $scope.editItem = nodeData.Path + "_NewNode" + scope.id;
 
                 //backup
-                $scope.editValue = "EnterDetails";
+                $scope.editValue = "";
 
                 $scope.activeMenu = nodeData.Path + "_NewNode" + scope.id;
 
@@ -62,7 +62,7 @@ module App {
                 focus(nodeData.Path);
 
             } else {
-                $scope.activeMenu = "EnterDetails";
+                $scope.activeMenu = "";
                 $scope.alerts.push({ type: Config.ErrorType[Config.ErrorType.warning], msg: Config.Constants.errorMessage.editing });
             }
 
@@ -72,7 +72,7 @@ module App {
             var nodeData = scope.$modelValue;
             if (!$scope.checkDuplicateName($scope.nodeData, scope.editValue)) {
                 $scope.editing = false;
-                if (nodeData.Name == "EnterDetails") {
+                if (nodeData.Name == "") {
                     nodeData.Status = 1;
                 } else {
                     nodeData.Status = 2;
@@ -81,7 +81,7 @@ module App {
                 $scope.editValue = "";
                 $scope.activeMenu = nodeData.Path;
             } else {
-                if (nodeData.Name == "EnterDetails") {
+                if (nodeData.Name == "") {
                     $scope.alerts.push({ type: Config.ErrorType[Config.ErrorType.warning], msg: Config.Constants.errorMessage.renameNode });
                 } else {
                     $scope.alerts.push({ type: Config.ErrorType[Config.ErrorType.warning], msg: Config.Constants.errorMessage.duplicateNode });
@@ -94,7 +94,7 @@ module App {
             scope.editValue = $scope.editValue;
             $scope.editing = false;
             var nodeData = scope.$modelValue;
-            if (nodeData.Name == "EnterDetails") {
+            if (nodeData.Name == "") {
                 scope.remove();
             }
         };

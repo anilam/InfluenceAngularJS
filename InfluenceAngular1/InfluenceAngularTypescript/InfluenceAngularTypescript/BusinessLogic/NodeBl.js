@@ -12,7 +12,7 @@ var App;
                     }
                     nodeData.Children.push({
                         //  id: nodeData.id * 10 + nodeData.nodes.length,
-                        Name: "EnterDetails",
+                        Name: "",
                         Path: nodeData.Path + "_NewNode" + scope.id,
                         ParentPath: nodeData.Path,
                         Status: 1,
@@ -21,7 +21,7 @@ var App;
                     $scope.editing = true;
                     $scope.editItem = nodeData.Path + "_NewNode" + scope.id;
                     //backup
-                    $scope.editValue = "EnterDetails";
+                    $scope.editValue = "";
                     $scope.activeMenu = nodeData.Path + "_NewNode" + scope.id;
                     focus(nodeData.Path + "_NewNode" + scope.id);
                 }
@@ -44,7 +44,7 @@ var App;
                     focus(nodeData.Path);
                 }
                 else {
-                    $scope.activeMenu = "EnterDetails";
+                    $scope.activeMenu = "";
                     $scope.alerts.push({ type: App.Config.ErrorType[App.Config.ErrorType.warning], msg: App.Config.Constants.errorMessage.editing });
                 }
             };
@@ -52,7 +52,7 @@ var App;
                 var nodeData = scope.$modelValue;
                 if (!$scope.checkDuplicateName($scope.nodeData, scope.editValue)) {
                     $scope.editing = false;
-                    if (nodeData.Name == "EnterDetails") {
+                    if (nodeData.Name == "") {
                         nodeData.Status = 1;
                     }
                     else {
@@ -63,7 +63,7 @@ var App;
                     $scope.activeMenu = nodeData.Path;
                 }
                 else {
-                    if (nodeData.Name == "EnterDetails") {
+                    if (nodeData.Name == "") {
                         $scope.alerts.push({ type: App.Config.ErrorType[App.Config.ErrorType.warning], msg: App.Config.Constants.errorMessage.renameNode });
                     }
                     else {
@@ -75,7 +75,7 @@ var App;
                 scope.editValue = $scope.editValue;
                 $scope.editing = false;
                 var nodeData = scope.$modelValue;
-                if (nodeData.Name == "EnterDetails") {
+                if (nodeData.Name == "") {
                     scope.remove();
                 }
             };
