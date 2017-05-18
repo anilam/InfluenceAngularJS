@@ -6,7 +6,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-4">
             <table>
                 <tr>
                     <td>
@@ -18,12 +18,15 @@
                     <td>
                         <span class="input-group-btn">
                             <button class="btn btn-info btn-lg" type="button" ng-click="generateGraph()">
-                                <i class=" glyphicon glyphicon-search"> </i>
+                                <i class="glyphicon glyphicon-search"> </i>
                             </button>
                         </span>
                     </td>
                 </tr>
             </table>
+        </div>
+        <div class="col-md-8">
+            <div class="col-md-8"><div uib-alert ng-repeat="alert in alerts" ng-class="'alert-' + (alert.type || 'warning')" dismiss-on-timeout="1000" close="closeAlert($index)">{{alert.msg}}</div></div>
         </div>
     </div>
     <hr />

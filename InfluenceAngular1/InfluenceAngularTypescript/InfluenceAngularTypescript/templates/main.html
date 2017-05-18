@@ -15,16 +15,16 @@
             <span ng-show="!editing || editItem != node.Path" ng-bind="node.Name"></span><input type="text" maxlength="100" ng-model="editValue" focus-on="{{node.Path}}" ng-show="editItem === node.Path && editing" />
             </div>
             <div class="col-sm-5">
-                <a class="pull-right btn btn-success btn-xs" data-nodrag ng-click="editok(this)" ng-show="editItem === node.Path && editing">
+                <a class="pull-right btn btn-success btn-xs" data-nodrag ng-click="editok(this)" title="Edit Save" ng-show="editItem === node.Path && editing">
                     <span class="glyphicon glyphicon-ok"></span>
                 </a>
-                <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="editcancel(this)" ng-show="editItem === node.Path && editing">
+                <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="editcancel(this)" title="Edit Cancel" ng-show="editItem === node.Path && editing">
                     <span class="glyphicon glyphicon-remove"></span>
                 </a>
 
 
                 <span ng-show="settings.EditNode && node.Status!=3">
-                    <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="edit(this)" ng-hide="editItem === node.Path && editing">
+                    <a class="pull-right btn btn-primary btn-xs" title="Edit" data-nodrag ng-click="edit(this)" ng-hide="editItem === node.Path && editing">
                         <span class="glyphicon glyphicon-edit"></span>
                     </a>
                 </span>
@@ -32,19 +32,19 @@
 
 
                 <span ng-show="settings.DeleteNode && node.Status!=3">
-                    <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="removeItem(this)" ng-hide="editItem === node.Path && editing">
+                    <a class="pull-right btn btn-danger btn-xs" title="Delete" data-nodrag ng-click="removeItem(this)" ng-hide="editItem === node.Path && editing">
                         <span class="glyphicon glyphicon-remove"></span>
                     </a>
                 </span>
 
                 <span ng-show="settings.AddNode && node.Status!=3">
-                    <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="newSubItem(this)" style="margin-right: 8px;" ng-hide="editItem === node.Path && editing">
+                    <a class="pull-right btn btn-primary btn-xs" title="Add" data-nodrag ng-click="newSubItem(this)" style="margin-right: 8px;" ng-hide="editItem === node.Path && editing">
                         <span class="glyphicon glyphicon-plus"></span>
                     </a>
                 </span>
 
-                <span style="margin-right:8px" ng-show="settings.ExportExcel && node.Status!=3" class="pull-right">
-                    <input type="checkbox" id="{{node.Path}}" ng-click="updateExcelExport(node.Path,node.Name)" />
+                <span style="margin-right:8px" title="Export" ng-show="settings.ExportExcel && node.Status!=3" class="pull-right">
+                    <input type="checkbox" id="{{node.Path}}" ng-hide="editItem === node.Path && editing" ng-click="updateExcelExport(node.Path,node.Name)" />
                 </span>
             </div>
         </div>
@@ -58,6 +58,7 @@
 
 
 <!--Search-->
+<!--nodes_renderer_searach <input type="checkbox" id="search-{{node.Path}}" ng-click="updateSearchExcelExport(node.Path,node.Name)" />-->
 <script type="text/ng-template" id="nodes_renderer_searach.html">
     <div ui-tree-handle class="tree-node tree-node-content" ng-class="{active : activeMenu === node.Path, activeedit : editItem === node.Path && editing,deleted : node.Status==3 }" ng-click="setActive(node)">
         <div class="row">
@@ -73,16 +74,16 @@
                 <span ng-show="!editing || editItem != node.Path" ng-bind="node.Name"></span><input type="text" maxlength="100" ng-model="editValue" focus-on="{{node.Path}}" ng-show="editItem === node.Path && editing" />
             </div>
             <div class="col-sm-5">
-                <a class="pull-right btn btn-success btn-xs" data-nodrag ng-click="editok(this)" ng-show="editItem === node.Path && editing">
+                <a class="pull-right btn btn-success btn-xs" data-nodrag ng-click="editok(this)" title="Edit Save" ng-show="editItem === node.Path && editing">
                     <span class="glyphicon glyphicon-ok"></span>
                 </a>
-                <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="editcancel(this)" ng-show="editItem === node.Path && editing">
+                <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="editcancel(this)" title="Edit Cancel" ng-show="editItem === node.Path && editing">
                     <span class="glyphicon glyphicon-remove"></span>
                 </a>
 
 
                 <span ng-show="settings.EditNode && node.Status!=3">
-                    <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="edit(this)" ng-hide="editItem === node.Path && editing">
+                    <a class="pull-right btn btn-primary btn-xs" title="Edit" data-nodrag ng-click="edit(this)" ng-hide="editItem === node.Path && editing">
                         <span class="glyphicon glyphicon-edit"></span>
                     </a>
                 </span>
@@ -90,19 +91,19 @@
 
 
                 <span ng-show="settings.DeleteNode && node.Status!=3">
-                    <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="removeItem(this)" ng-hide="editItem === node.Path && editing">
+                    <a class="pull-right btn btn-danger btn-xs" title="Delete" data-nodrag ng-click="removeItem(this)" ng-hide="editItem === node.Path && editing">
                         <span class="glyphicon glyphicon-remove"></span>
                     </a>
                 </span>
 
                 <span ng-show="settings.AddNode && node.Status!=3">
-                    <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="newSubItem(this)" style="margin-right: 8px;" ng-hide="editItem === node.Path && editing">
+                    <a class="pull-right btn btn-primary btn-xs" title="Add" data-nodrag ng-click="newSubItem(this)" style="margin-right: 8px;" ng-hide="editItem === node.Path && editing">
                         <span class="glyphicon glyphicon-plus"></span>
                     </a>
                 </span>
 
-                <span style="margin-right:8px" ng-show="settings.ExportExcel && node.Status!=3" class="pull-right">
-                    <input type="checkbox" id="search-{{node.Path}}" ng-click="updateSearchExcelExport(node.Path,node.Name)" />
+                <span style="margin-right:8px" title="Export" ng-show="settings.ExportExcel && node.Status!=3" class="pull-right">
+                    <input type="checkbox" id="search-{{node.Path}}" ng-hide="editItem === node.Path && editing" ng-click="updateSearchExcelExport(node.Path,node.Name)" />
                 </span>
             </div>
         </div>
@@ -211,7 +212,7 @@
                     <table>
                         <tr>
                             <td>
-                                <button type="button" class="btn btn-default btn-lg pull-left" ng-click="openAside('left', true)">
+                                <button title="Settings" type="button" class="btn btn-default btn-lg pull-left" ng-click="openAside('left', true)">
                                     <span class="glyphicon glyphicon-align-justify"></span>
                                 </button>
                             </td>
@@ -220,14 +221,14 @@
                             </td>
                             <td>
                                 <span class="input-group-btn">
-                                    <button class="btn btn-info btn-lg" type="button" ng-click="search(query)">
+                                    <button class="btn btn-info btn-lg" title="Search Node" type="button" ng-click="search(query)">
                                         <i class="glyphicon glyphicon-search"></i>
                                     </button>
                                 </span>
                             </td>
                             <td>
                                 <span class="input-group-btn">
-                                    <button class="btn btn-info btn-lg" type="button" ng-click="searchCancel(query)">
+                                    <button class="btn btn-info btn-lg" title="Clear Search" type="button" ng-click="searchCancel(query)">
                                         <i class="glyphicon glyphicon-remove"></i>
                                     </button>
                                 </span>
@@ -269,11 +270,11 @@
                         <div ng-show="exportList.length > 0"><button class="btn btn-primary" ng-click="exportToExcel()"><span class="glyphicon glyphicon-export"></span> Export</button></div>
                     </uib-tab>
                     <span ng-show="loadingNode" class="glyphicon glyphicon-repeat normal-right-spinner" style="font-size: 2em"></span>
-                    <button type="button" class="btn btn-primary pull-right" ng-click="init()">
+                    <button type="button" title="Refresh Node" class="btn btn-primary pull-right" ng-click="init()">
                         <span class="glyphicon glyphicon-refresh"> </span>
                     </button>
-                    <button type="button" class="btn btn-primary pull-right" ng-show="!loadingNode && settings.Role==1"  ng-click="saveNode()">
-                        <span class="glyphicon glyphicon-floppy-disk"></span>
+                    <button type="button" title="Save Node" class="btn btn-primary pull-right" ng-show="!loadingNode && settings.Role==1"  ng-click="saveNode()">
+                        <span class="glyphicon glyphicon-saved"></span>
                     </button>
                 </uib-tabset>
             </form>
@@ -285,8 +286,8 @@
             </div>
             <!--<pre class="code">{{ data | json }}</pre>-->
 
-            <button class="btn btn btn-primary pull-right" aria-label="Left Align" ng-show="!loading && settings.Role==1 && myDataTable.Functional.length > 0" ng-click="saveNodeDetails()" ng-controller="MyCtrl">
-                <span class="glyphicon glyphicon-floppy-disk"></span>
+            <button title="Save NodeDetails" class="btn btn btn-primary pull-right" aria-label="Left Align" ng-show="!loading && settings.Role==1 && myDataTable.Functional.length > 0" ng-click="saveNodeDetails()" ng-controller="MyCtrl">
+                <span class="glyphicon glyphicon-saved"></span>
             </button>
 
         <uib-tabset active="3">
@@ -341,7 +342,7 @@
                                     </a>
                                 </th>
                                 <th></th>
-                                <th><span class="pull-right" ng-show="settings.AddNodeDetail"><a class="pull-right btn btn-primary btn-xs" ng-click="addFuncdetails(this)"><span class="glyphicon glyphicon-plus"></span></a></span></th>
+                                <th><span class="pull-right" title="Add Functional Details" ng-show="settings.AddNodeDetail && myDataTable.Functional.length>0"><a class="pull-right btn btn-primary btn-xs" ng-click="addFuncdetails(this)"><span class="glyphicon glyphicon-plus"></span></a></span></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -351,11 +352,11 @@
                                 <td> <span ng-show="!Funcdetailsediting || editItemFuncdetailsId != myDataTable.Functional.indexOf(Funcdetails)">{{ Funcdetails.Module }}</span> <input type="text" maxlength="100" ng-model="editFuncDetailsValue.ModuleEdit" ng-show="editItemFuncdetailsId === myDataTable.Functional.indexOf(Funcdetails) && Funcdetailsediting"/></td>
                                 <td> <span ng-show="!Funcdetailsediting || editItemFuncdetailsId != myDataTable.Functional.indexOf(Funcdetails)">{{ Funcdetails.Complexity }}</span><select ng-show="editItemFuncdetailsId === myDataTable.Functional.indexOf(Funcdetails) && Funcdetailsediting" ng-model="editFuncDetailsValue.ComplexityEdit" ng-options="x for x in severity"></select> </td>
 
-                                <td ng-show="!Funcdetailsediting || editItemFuncdetailsId != myDataTable.Functional.indexOf(Funcdetails)"><a ng-show="settings.EditNodeDetail" class="pull-right btn btn-primary btn-xs" ng-click="editFuncdetails(Funcdetails,myDataTable.Functional.indexOf(Funcdetails))"><span class="glyphicon glyphicon-edit"></span></a></td>
-                                <td ng-show="!Funcdetailsediting || editItemFuncdetailsId != myDataTable.Functional.indexOf(Funcdetails)"><a ng-show="settings.DeleteNodeDetail" class="pull-right btn btn-danger btn-xs" ng-click="removeFuncdetails(myDataTable.Functional.indexOf(Funcdetails))"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                <td ng-show="!Funcdetailsediting || editItemFuncdetailsId != myDataTable.Functional.indexOf(Funcdetails)"><a ng-show="settings.EditNodeDetail" class="pull-right btn btn-primary btn-xs" title="Edit" ng-click="editFuncdetails(Funcdetails,myDataTable.Functional.indexOf(Funcdetails))"><span class="glyphicon glyphicon-edit"></span></a></td>
+                                <td ng-show="!Funcdetailsediting || editItemFuncdetailsId != myDataTable.Functional.indexOf(Funcdetails)"><a ng-show="settings.DeleteNodeDetail" class="pull-right btn btn-danger btn-xs" title="Delete" ng-click="removeFuncdetails(myDataTable.Functional.indexOf(Funcdetails))"><span class="glyphicon glyphicon-remove"></span></a></td>
 
-                                <td ng-hide="!Funcdetailsediting || editItemFuncdetailsId != myDataTable.Functional.indexOf(Funcdetails)"><a class="pull-right btn btn-primary btn-xs" ng-click="editFuncdetailsOk(Funcdetails,myDataTable.Functional.indexOf(Funcdetails))"><span class="glyphicon glyphicon-ok"></span></a></td>
-                                <td ng-hide="!Funcdetailsediting || editItemFuncdetailsId != myDataTable.Functional.indexOf(Funcdetails)"><a class="pull-right btn btn-danger btn-xs" ng-click="removeFuncdetailsCancel(Funcdetails,myDataTable.Functional.indexOf(Funcdetails))"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                <td ng-hide="!Funcdetailsediting || editItemFuncdetailsId != myDataTable.Functional.indexOf(Funcdetails)"><a class="pull-right btn btn-primary btn-xs" title="Edit Save" ng-click="editFuncdetailsOk(Funcdetails,myDataTable.Functional.indexOf(Funcdetails))"><span class="glyphicon glyphicon-ok"></span></a></td>
+                                <td ng-hide="!Funcdetailsediting || editItemFuncdetailsId != myDataTable.Functional.indexOf(Funcdetails)"><a class="pull-right btn btn-danger btn-xs" title="Edit Cancel" ng-click="removeFuncdetailsCancel(Funcdetails,myDataTable.Functional.indexOf(Funcdetails))"><span class="glyphicon glyphicon-remove"></span></a></td>
                             </tr>
                             </tbody>
                         </table>
@@ -404,7 +405,7 @@
                                     </a>
                                 </th>
                                 <th></th>
-                                <th><span class="pull-right" ng-show="settings.AddNodeDetail"><a class="pull-right btn btn-primary btn-xs" ng-click="addDBdetails(this)"><span class="glyphicon glyphicon-plus"></span></a></span></th>
+                                <th><span title="Add Database Details" class="pull-right" ng-show="settings.AddNodeDetail && myDataTable.DatabaseDetails.length > 0"><a class="pull-right btn btn-primary btn-xs" ng-click="addDBdetails(this)"><span class="glyphicon glyphicon-plus"></span></a></span></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -413,11 +414,11 @@
                                     <td> <span ng-show="!DBdetailsediting || editItemDBdetailsId != myDataTable.DatabaseDetails.indexOf(DBdetails)">{{ DBdetails.DbType || ''}}</span> <input type="text" maxlength="100" ng-model="editDBDetailsValue.DbType" ng-show="editItemDBdetailsId === myDataTable.DatabaseDetails.indexOf(DBdetails) && DBdetailsediting" /></td>
                                     <td> <span ng-show="!DBdetailsediting || editItemDBdetailsId != myDataTable.DatabaseDetails.indexOf(DBdetails)">{{ DBdetails.Description }}</span> <textarea maxlength="500" type="text" ng-model="editDBDetailsValue.Description" ng-show="editItemDBdetailsId === myDataTable.DatabaseDetails.indexOf(DBdetails) && DBdetailsediting"></textarea></td>
 
-                                    <td ng-show="!DBdetailsediting || editItemDBdetailsId != myDataTable.DatabaseDetails.indexOf(DBdetails)"><a ng-show="settings.EditNodeDetail" class="pull-right btn btn-primary btn-xs" ng-click="editDBdetails(DBdetails,myDataTable.DatabaseDetails.indexOf(DBdetails))"><span class="glyphicon glyphicon-edit"></span></a></td>
-                                    <td ng-show="!DBdetailsediting || editItemDBdetailsId != myDataTable.DatabaseDetails.indexOf(DBdetails)"><a ng-show="settings.DeleteNodeDetail" class="pull-right btn btn-danger btn-xs" ng-click="removeDBdetails(myDataTable.DatabaseDetails.indexOf(DBdetails))"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                    <td ng-show="!DBdetailsediting || editItemDBdetailsId != myDataTable.DatabaseDetails.indexOf(DBdetails)"><a title="Edit" ng-show="settings.EditNodeDetail" class="pull-right btn btn-primary btn-xs" ng-click="editDBdetails(DBdetails,myDataTable.DatabaseDetails.indexOf(DBdetails))"><span class="glyphicon glyphicon-edit"></span></a></td>
+                                    <td ng-show="!DBdetailsediting || editItemDBdetailsId != myDataTable.DatabaseDetails.indexOf(DBdetails)"><a title="Delete" ng-show="settings.DeleteNodeDetail" class="pull-right btn btn-danger btn-xs" ng-click="removeDBdetails(myDataTable.DatabaseDetails.indexOf(DBdetails))"><span class="glyphicon glyphicon-remove"></span></a></td>
 
-                                    <td ng-hide="!DBdetailsediting || editItemDBdetailsId != myDataTable.DatabaseDetails.indexOf(DBdetails)"><a class="pull-right btn btn-primary btn-xs" ng-click="editDBdetailsOk(DBdetails,myDataTable.DatabaseDetails.indexOf(DBdetails))"><span class="glyphicon glyphicon-ok"></span></a></td>
-                                    <td ng-hide="!DBdetailsediting || editItemDBdetailsId != myDataTable.DatabaseDetails.indexOf(DBdetails)"><a class="pull-right btn btn-danger btn-xs" ng-click="removeDBdetailsCancel(DBdetails,myDataTable.DatabaseDetails.indexOf(DBdetails))"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                    <td ng-hide="!DBdetailsediting || editItemDBdetailsId != myDataTable.DatabaseDetails.indexOf(DBdetails)"><a title="Edit Save" class="pull-right btn btn-primary btn-xs" ng-click="editDBdetailsOk(DBdetails,myDataTable.DatabaseDetails.indexOf(DBdetails))"><span class="glyphicon glyphicon-ok"></span></a></td>
+                                    <td ng-hide="!DBdetailsediting || editItemDBdetailsId != myDataTable.DatabaseDetails.indexOf(DBdetails)"><a title="Edit Cancel" class="pull-right btn btn-danger btn-xs" ng-click="removeDBdetailsCancel(DBdetails,myDataTable.DatabaseDetails.indexOf(DBdetails))"><span class="glyphicon glyphicon-remove"></span></a></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -474,7 +475,7 @@
                                 </a>
                             </th>
                             <th></th>
-                            <th><span class="pull-right" ng-show="settings.AddNodeDetail"><a class="pull-right btn btn-primary btn-xs" ng-click="addOtherdetails(this)"><span class="glyphicon glyphicon-plus"></span></a></span></th>
+                            <th><span class="pull-right" title="Add Other Details" ng-show="settings.AddNodeDetail && myDataTable.AdditionalDetails.length>0"><a class="pull-right btn btn-primary btn-xs" ng-click="addOtherdetails(this)"><span class="glyphicon glyphicon-plus"></span></a></span></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -484,11 +485,11 @@
                                 <td> <span ng-show="!Otherdetailsediting || editItemOtherdetailsId != myDataTable.AdditionalDetails.indexOf(Otherdetails)">{{ Otherdetails.Module || '' }}</span> <input type="text" maxlength="100" ng-model="editOtherDetailsValue.ModuleEdit" ng-show="editItemOtherdetailsId === myDataTable.AdditionalDetails.indexOf(Otherdetails) && Otherdetailsediting" /></td>
                                 <td> <span ng-show="!Otherdetailsediting || editItemOtherdetailsId != myDataTable.AdditionalDetails.indexOf(Otherdetails)">{{ Otherdetails.Complexity || '' }}</span> 
                                      <select ng-model="editOtherDetailsValue.ComplexityEdit" ng-show="editItemOtherdetailsId === myDataTable.AdditionalDetails.indexOf(Otherdetails) && Otherdetailsediting" ng-options="x for x in severity"></select>   
-                                <td ng-show="!Otherdetailsediting || editItemOtherdetailsId != myDataTable.AdditionalDetails.indexOf(Otherdetails)"><a ng-show="settings.EditNodeDetail" class="pull-right btn btn-primary btn-xs" ng-click="editOtherdetails(Otherdetails,myDataTable.AdditionalDetails.indexOf(Otherdetails))"><span class="glyphicon glyphicon-edit"></span></a></td>
-                                <td ng-show="!Otherdetailsediting || editItemOtherdetailsId != myDataTable.AdditionalDetails.indexOf(Otherdetails)"><a ng-show="settings.DeleteNodeDetail" class="pull-right btn btn-danger btn-xs" ng-click="removeOtherdetails(myDataTable.AdditionalDetails.indexOf(Otherdetails))"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                <td ng-show="!Otherdetailsediting || editItemOtherdetailsId != myDataTable.AdditionalDetails.indexOf(Otherdetails)"><a title="Edit" ng-show="settings.EditNodeDetail" class="pull-right btn btn-primary btn-xs" ng-click="editOtherdetails(Otherdetails,myDataTable.AdditionalDetails.indexOf(Otherdetails))"><span class="glyphicon glyphicon-edit"></span></a></td>
+                                <td ng-show="!Otherdetailsediting || editItemOtherdetailsId != myDataTable.AdditionalDetails.indexOf(Otherdetails)"><a title="Delete" ng-show="settings.DeleteNodeDetail" class="pull-right btn btn-danger btn-xs" ng-click="removeOtherdetails(myDataTable.AdditionalDetails.indexOf(Otherdetails))"><span class="glyphicon glyphicon-remove"></span></a></td>
 
-                                <td ng-hide="!Otherdetailsediting || editItemOtherdetailsId != myDataTable.AdditionalDetails.indexOf(Otherdetails)"><a class="pull-right btn btn-primary btn-xs" ng-click="editOtherdetailsOk(Otherdetails,myDataTable.AdditionalDetails.indexOf(Otherdetails))"><span class="glyphicon glyphicon-ok"></span></a></td>
-                                <td ng-hide="!Otherdetailsediting || editItemOtherdetailsId != myDataTable.AdditionalDetails.indexOf(Otherdetails)"><a class="pull-right btn btn-danger btn-xs" ng-click="removeOtherdetailsCancel(Otherdetails,myDataTable.AdditionalDetails.indexOf(Otherdetails))"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                <td ng-hide="!Otherdetailsediting || editItemOtherdetailsId != myDataTable.AdditionalDetails.indexOf(Otherdetails)"><a title="Edit Save" class="pull-right btn btn-primary btn-xs" ng-click="editOtherdetailsOk(Otherdetails,myDataTable.AdditionalDetails.indexOf(Otherdetails))"><span class="glyphicon glyphicon-ok"></span></a></td>
+                                <td ng-hide="!Otherdetailsediting || editItemOtherdetailsId != myDataTable.AdditionalDetails.indexOf(Otherdetails)"><a title="Edit Cancel" class="pull-right btn btn-danger btn-xs" ng-click="removeOtherdetailsCancel(Otherdetails,myDataTable.AdditionalDetails.indexOf(Otherdetails))"><span class="glyphicon glyphicon-remove"></span></a></td>
                             </tr>
                         </tbody>
                     </table>

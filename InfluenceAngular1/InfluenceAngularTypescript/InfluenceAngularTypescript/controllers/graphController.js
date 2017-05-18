@@ -4,8 +4,12 @@ var App;
         $scope.graphmodel = {};
         $scope.labels = [];
         $scope.data = [];
+        $scope.alerts = [];
         dBStore.initGraph($scope, $http);
         var counts = {};
+        $scope.closeAlert = function (index) {
+            $scope.alerts.splice(index, 1);
+        };
         $scope.init = function () {
             $scope.labels = [];
             $scope.data = [];
@@ -14,12 +18,17 @@ var App;
             $scope.labels = [];
             $scope.data = [];
             $scope.options = { cutoutPercentage: 75 };
-            $scope.graphmodel.Dependencies.forEach(function (x) {
-                counts[x.ProductName] = (counts[x.ProductName] || 0) + 1;
-            });
-            for (var y in counts) {
-                $scope.data.push(counts[y]);
-                $scope.labels.push(y);
+            if ($scope.graphmodel.Dependencies.length > 0) {
+                $scope.graphmodel.Dependencies.forEach(function (x) {
+                    counts[x.ProductName] = (counts[x.ProductName] || 0) + 1;
+                });
+                for (var y in counts) {
+                    $scope.data.push(counts[y]);
+                    $scope.labels.push(y);
+                }
+            }
+            else {
+                $scope.alerts.push({ type: App.Config.ErrorType[App.Config.ErrorType.warning], msg: App.Config.Constants.errorMessage.grapherror });
             }
         };
         //$scope.labels = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];

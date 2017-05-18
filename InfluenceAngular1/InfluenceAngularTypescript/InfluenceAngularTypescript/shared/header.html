@@ -5,7 +5,7 @@
                 <img src="../css/images/logo.jpeg" class="img-responsive" alt="Cinque Terre" style="width:300px;">
             </div>
             <ul class="nav navbar-nav navbar-right" >
-                <li ng-repeat='item in menuItems' ng-class="{active : activeMenu === item.Menu}" ng-show="(item.Menu !='Logout' && item.Menu !='Graph') || authenticated" ng-click="setActiveMenu(item.Menu)"><a href={{item.Url}}><span ng-class="{'glyphicon glyphicon-home': item.Menu == 'Home','glyphicon glyphicon-signal':item.Menu == 'Graph','glyphicon glyphicon-off':item.Menu == 'Logout'}"></span></a></li>
+                <li ng-repeat='item in menuItems' title="{{item.Menu}}" ng-class="{active : activeMenu === item.Menu}" ng-show="(item.Menu !='Logout' && item.Menu !='Graph') || authenticated" ng-click="setActiveMenu(item.Menu)"><a href={{item.Url}}><span ng-class="{'glyphicon glyphicon-home': item.Menu == 'Home','glyphicon glyphicon-signal':item.Menu == 'Graph','glyphicon glyphicon-off':item.Menu == 'Logout'}"></span></a></li>
                 <!--<li><a href="#">Page 3</a></li>-->
             </ul>
         </div>

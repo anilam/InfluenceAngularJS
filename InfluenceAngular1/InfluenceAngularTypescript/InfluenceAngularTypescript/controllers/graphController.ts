@@ -5,10 +5,14 @@
         $scope.graphmodel = {};
         $scope.labels = [];
         $scope.data = [];
+        $scope.alerts = [];
 
         dBStore.initGraph($scope, $http);
         var counts: any = {};
 
+        $scope.closeAlert = function (index) {
+            $scope.alerts.splice(index, 1);
+        };
 
         $scope.init = function () {
             $scope.labels = [];
@@ -20,13 +24,18 @@
             $scope.data = [];
             $scope.options = { cutoutPercentage: 75 };
 
-            $scope.graphmodel.Dependencies.forEach(function (x:any) {
-                counts[x.ProductName] = (counts[x.ProductName] || 0) + 1;
-            });
+            if ($scope.graphmodel.Dependencies.length > 0) {
 
-            for (var y in counts) {
-                $scope.data.push(counts[y]);
-                $scope.labels.push(y);
+                $scope.graphmodel.Dependencies.forEach(function(x: any) {
+                    counts[x.ProductName] = (counts[x.ProductName] || 0) + 1;
+                });
+
+                for (var y in counts) {
+                    $scope.data.push(counts[y]);
+                    $scope.labels.push(y);
+                }
+            } else {
+                $scope.alerts.push({ type: Config.ErrorType[Config.ErrorType.warning], msg: Config.Constants.errorMessage.grapherror });
             }
 
         }

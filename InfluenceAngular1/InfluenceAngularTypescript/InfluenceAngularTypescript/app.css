@@ -360,8 +360,8 @@ styled-select {
  
  
 .angular-ui-tree-handle.deleted {
-    color: #dce2e8;
-    background: #d43f3a;
+    color: black;
+    background: yellow;
     border-color: #dce2e8;
 }
 .angular-ui-tree-handle.activeedit {

@@ -23,7 +23,8 @@ var App;
                         renameNode: "Please rename the newly added node",
                         duplicateNode: "Node name already exist, please rename",
                         downloadSuccess: "Downloaded Successfully",
-                        loginfailed: "Unauthorized access"
+                        loginfailed: "Unauthorized access",
+                        grapherror: "Data not found"
                     };
                 },
                 enumerable: true,
