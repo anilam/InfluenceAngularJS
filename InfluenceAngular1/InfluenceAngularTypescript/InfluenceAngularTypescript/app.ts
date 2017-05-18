@@ -31,10 +31,12 @@ module App {
                 dBStore.authenticate($scope.logOnModel, $http).success((data: UserSetting) => {
                         authenticateSuccess=$scope.authenticateResult.isAuthenticated = true;
                         userSettings = data;
+                        $scope.loading = false;
                         $location.path('/');
                 }).error((error, status) => {
                     $scope.authenticateResult.isAuthenticated = false;
                     $scope.authenticateResult.errorMessage = ((error == "" || error == null) ? Config.Constants.errorMessage.loginfailed : error) + " " + status;
+                    $scope.loading = false;
                 });             
             },
             isAuthenticated: function () {

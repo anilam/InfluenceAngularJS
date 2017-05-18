@@ -80,8 +80,16 @@ var App;
                     url: App.Config.Constants.default.graphURL
                 }).success(function (data) {
                     $scope.graphData = data;
+                    $scope.alerts.push({
+                        type: App.Config.ErrorType[App.Config.ErrorType.success],
+                        msg: App.Config.Constants.errorMessage.graphsuccess
+                    });
                 }).error(function (error, status) {
                     $scope.loadingNode = false;
+                    $scope.alerts.push({
+                        type: App.Config.ErrorType[App.Config.ErrorType.danger],
+                        msg: App.Config.Constants.errorMessage.loadingfailure + error + " " + status
+                    });
                 });
             };
             this.authenticate = function (logonmodel, $http) {

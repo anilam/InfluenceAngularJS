@@ -88,8 +88,16 @@
                 url: Config.Constants.default.graphURL
             }).success((data:any) => {
                 $scope.graphData = data;
+                $scope.alerts.push({
+                    type: Config.ErrorType[Config.ErrorType.success],
+                    msg: Config.Constants.errorMessage.graphsuccess
+                });
             }).error((error, status) => {
                 $scope.loadingNode = false;
+                $scope.alerts.push({
+                    type: Config.ErrorType[Config.ErrorType.danger],
+                    msg: Config.Constants.errorMessage.loadingfailure + error + " " + status
+                });
             });
         }
 

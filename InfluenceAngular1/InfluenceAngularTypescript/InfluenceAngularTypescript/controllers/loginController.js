@@ -3,6 +3,7 @@ var App;
     function loginController($scope, $rootScope, LoginService, $location, dBStore) {
         $rootScope.menuItems = [];
         $rootScope.authenticated = false;
+        $scope.loading = false;
         LoginService.logout();
         $rootScope.menuItems = JSON.parse(App.Config.Constants.getMenuList.menu);
         $rootScope.activeMenu = $rootScope.menuItems[0].Menu;
@@ -14,6 +15,7 @@ var App;
         $scope.logOnModel.Username = '';
         $scope.logOnModel.Password = '';
         $scope.formSubmit = function () {
+            $scope.loading = true;
             LoginService.login(dBStore, $scope);
         };
     }

@@ -25,10 +25,12 @@ var App;
                 dBStore.authenticate($scope.logOnModel, $http).success(function (data) {
                     authenticateSuccess = $scope.authenticateResult.isAuthenticated = true;
                     userSettings = data;
+                    $scope.loading = false;
                     $location.path('/');
                 }).error(function (error, status) {
                     $scope.authenticateResult.isAuthenticated = false;
                     $scope.authenticateResult.errorMessage = ((error == "" || error == null) ? App.Config.Constants.errorMessage.loginfailed : error) + " " + status;
+                    $scope.loading = false;
                 });
             },
             isAuthenticated: function () {

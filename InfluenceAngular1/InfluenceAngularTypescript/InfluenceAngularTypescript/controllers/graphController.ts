@@ -6,7 +6,6 @@
         $scope.labels = [];
         $scope.data = [];
         $scope.alerts = [];
-
         dBStore.initGraph($scope, $http);
         var counts: any = {};
 
