@@ -28,6 +28,7 @@
     <Content Include="controllers\nodeCtrl.spec.js" />
     <Content Include="controllers\nodesCtrl.js" />
     <Content Include="controllers\treeCtrl.js" />
+    <Content Include="css\angular-aside.css" />
     <Content Include="css\angular-ui-tree.css" />
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\images\logo.jpeg" />
