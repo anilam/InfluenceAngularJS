@@ -239,7 +239,16 @@
             </div>
             <hr />
         </div>
-        <div class="col-md-8"><div uib-alert ng-repeat="alert in alerts" ng-class="'alert-' + (alert.type || 'warning')" dismiss-on-timeout="5000" close="closeAlert($index)">{{alert.msg}}</div></div>
+       
+        <div class="col-md-8">
+            <table class="table" style="margin-bottom: 0px;">
+                <tr>
+                    <td style="padding-left: 0px; padding-right: 8px; padding-bottom: 0px; padding-top: 0px;border: none" ng-repeat="alert in alerts">
+                        <div uib-alert ng-class="'alert-' + (alert.type || 'warning')" dismiss-on-timeout="5000" close="closeAlert($index)">{{alert.msg}}</div>
+                    </td>
+                </tr>
+            </table>            
+        </div>
     </div>
     <div class="row">
         <div class="col-sm-4">

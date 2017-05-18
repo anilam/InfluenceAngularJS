@@ -91,6 +91,8 @@
         $scope.init = function () {
            $scope.exportList = new Array();
            $scope.filterSearchArray = new Array();
+           $scope.editing = false;
+           $scope.editOtherDetailsValue = [];
            dBStore.initNode($scope,$http);
         }
 
