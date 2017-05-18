@@ -31,7 +31,12 @@ var App;
             };
             this.removeItem = function (scope, $scope) {
                 var nodeData = scope.$modelValue;
-                nodeData.Status = 3;
+                if (!angular.isUndefined(nodeData.ParentPath)) {
+                    scope.remove();
+                }
+                else {
+                    nodeData.Status = 3;
+                }
             };
             this.edit = function (scope, $scope, focus) {
                 if (!$scope.editing) {
@@ -59,7 +64,7 @@ var App;
                 else {
                     if (!$scope.checkDuplicateName($scope.nodeData, scope.editValue)) {
                         $scope.editing = false;
-                        if (nodeData.Name == "") {
+                        if (nodeData.Name == "" || !angular.isUndefined(nodeData.ParentPath)) {
                             nodeData.Status = 1;
                         }
                         else {

@@ -44,7 +44,11 @@ module App {
 
         removeItem = function (scope: any, $scope: IDiagnosticsScope) {
             var nodeData = scope.$modelValue;
-            nodeData.Status = 3;
+            if (!angular.isUndefined(nodeData.ParentPath)) {
+                scope.remove();
+            } else {             
+                nodeData.Status = 3;
+            }    
         };
 
         edit = function (scope: any, $scope: IDiagnosticsScope,focus:any) {
@@ -79,11 +83,12 @@ module App {
 
                 if (!$scope.checkDuplicateName($scope.nodeData, scope.editValue)) {
                     $scope.editing = false;
-                    if (nodeData.Name == "") {
-                        nodeData.Status = 1;
-                    } else {
-                        nodeData.Status = 2;
-                    }
+                        if (nodeData.Name == "" || !angular.isUndefined(nodeData.ParentPath)) {
+                            nodeData.Status = 1;
+                        } else {
+                            nodeData.Status = 2;
+                        }
+                   
                     nodeData.Name = scope.editValue;
                     $scope.editValue = "";
                     $scope.activeMenu = nodeData.Path;

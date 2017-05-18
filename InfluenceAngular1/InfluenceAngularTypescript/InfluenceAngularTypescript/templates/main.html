@@ -37,13 +37,13 @@
                     </a>
                 </span>
 
-                <span ng-show="settings.AddNode && node.Status!=3">
+                <span ng-show="settings.AddNode && node.Status!=3 && !node.ParentPath">
                     <a class="pull-right btn btn-primary btn-xs" title="Add" data-nodrag ng-click="newSubItem(this)" style="margin-right: 8px;" ng-hide="editItem === node.Path && editing">
                         <span class="glyphicon glyphicon-plus"></span>
                     </a>
                 </span>
 
-                <span style="margin-right:8px" title="Export" ng-show="settings.ExportExcel && node.Status!=3" class="pull-right">
+                <span style="margin-right:8px" title="Export" ng-show="settings.ExportExcel && node.Status!=3 && !node.ParentPath" class="pull-right">
                     <input type="checkbox" id="{{node.Path}}" ng-hide="editItem === node.Path && editing" ng-click="updateExcelExport(node.Path,node.Name)" />
                 </span>
             </div>
@@ -96,13 +96,13 @@
                     </a>
                 </span>
 
-                <span ng-show="settings.AddNode && node.Status!=3">
+                <span ng-show="settings.AddNode && node.Status!=3  && !node.ParentPath">
                     <a class="pull-right btn btn-primary btn-xs" title="Add" data-nodrag ng-click="newSubItem(this)" style="margin-right: 8px;" ng-hide="editItem === node.Path && editing">
                         <span class="glyphicon glyphicon-plus"></span>
                     </a>
                 </span>
 
-                <span style="margin-right:8px" title="Export" ng-show="settings.ExportExcel && node.Status!=3" class="pull-right">
+                <span style="margin-right:8px" title="Export" ng-show="settings.ExportExcel && node.Status!=3 && !node.ParentPath" class="pull-right">
                     <input type="checkbox" id="search-{{node.Path}}" ng-hide="editItem === node.Path && editing" ng-click="updateSearchExcelExport(node.Path,node.Name)" />
                 </span>
             </div>

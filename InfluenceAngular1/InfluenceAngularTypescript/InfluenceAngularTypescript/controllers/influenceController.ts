@@ -59,7 +59,9 @@
             return $filter('filter')(object, { Path: name }, true)[0];
         }
 
-        $scope.updateExcelExport = function (path: string, name: string) {        
+        $scope.updateExcelExport = function (path: string, name: string) {
+            if (document.getElementById("search-" + path) != null && document.getElementById(path)!=null)
+            document.getElementById("search-" + path).checked = document.getElementById(path).checked;
             var foundItem = findArrayObject($scope.exportList, path.replace("search-", ""));
             if (document.getElementById(path) != null && document.getElementById(path).checked) {
                 if (!foundItem) {
@@ -76,6 +78,8 @@
         }
 
         $scope.updateSearchExcelExport = function (path: string, name: string) {
+            if (document.getElementById("search-" + path) != null && document.getElementById(path) != null)
+            document.getElementById(path).checked = document.getElementById("search-" + path).checked;
             $scope.updateExcelExport("search-" + path, name);
         }
 
@@ -89,6 +93,7 @@
         }
 
         $scope.init = function () {
+           $scope.tabselected = 0;
            $scope.exportList = new Array();
            $scope.filterSearchArray = new Array();
            $scope.editing = false;
