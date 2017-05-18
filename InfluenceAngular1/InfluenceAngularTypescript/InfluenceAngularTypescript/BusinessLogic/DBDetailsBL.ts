@@ -51,7 +51,8 @@ module App {
             $scope.myDataTable.DatabaseDetails.splice(index, 1);
         }
 
-        addDBdetails = function (scope: any, $scope: IDiagnosticsScope, focus:any) {
+        addDBdetails = function (scope: any, $scope: IDiagnosticsScope, focus: any) {
+            scope.dbsearch = ''; 
             if (!$scope.myDataTable.DatabaseDetails) {
                 $scope.myDataTable.DatabaseDetails = [];
             }

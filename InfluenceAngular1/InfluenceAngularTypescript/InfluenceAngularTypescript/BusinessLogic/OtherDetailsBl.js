@@ -48,6 +48,7 @@ var App;
                 $scope.myDataTable.AdditionalDetails.splice(index, 1);
             };
             this.addOtherdetails = function (scope, $scope, focus) {
+                scope.Othersearch = '';
                 if (!$scope.myDataTable.AdditionalDetails) {
                     $scope.myDataTable.AdditionalDetails = [];
                 }

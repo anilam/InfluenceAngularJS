@@ -55,7 +55,8 @@ module App {
             $scope.myDataTable.AdditionalDetails.splice(index, 1);
         }
 
-        addOtherdetails = function (scope: any, $scope: IDiagnosticsScope,focus:any) {
+        addOtherdetails = function (scope: any, $scope: IDiagnosticsScope, focus: any) {
+            scope.Othersearch = '';
             if (!$scope.myDataTable.AdditionalDetails) {
                 $scope.myDataTable.AdditionalDetails = [];
             }

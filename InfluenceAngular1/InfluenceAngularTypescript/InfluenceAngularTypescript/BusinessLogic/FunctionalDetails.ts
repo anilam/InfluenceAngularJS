@@ -63,6 +63,7 @@
             if (!$scope.myDataTable.Functional) {
                 $scope.myDataTable.Functional = [];
             }
+            scope.funcsearch = ''; 
 
             if ($scope.Funcdetailsediting != true) {
                 $scope.myDataTable.Functional.unshift({

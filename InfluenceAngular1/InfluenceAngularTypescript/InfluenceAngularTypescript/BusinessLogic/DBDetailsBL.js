@@ -43,6 +43,7 @@ var App;
                 $scope.myDataTable.DatabaseDetails.splice(index, 1);
             };
             this.addDBdetails = function (scope, $scope, focus) {
+                scope.dbsearch = '';
                 if (!$scope.myDataTable.DatabaseDetails) {
                     $scope.myDataTable.DatabaseDetails = [];
                 }
