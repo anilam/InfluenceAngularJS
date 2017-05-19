@@ -69,6 +69,7 @@
     <Content Include="icon\ms-icon-70x70.png" />
     <Content Include="index.html" />
     <Content Include="Influence.jpeg" />
+    <Content Include="logo.jpeg" />
     <Content Include="note.txt" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-mocks.js" />
