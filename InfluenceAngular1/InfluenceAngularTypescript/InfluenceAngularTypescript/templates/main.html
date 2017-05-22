@@ -170,7 +170,7 @@
                             </td>
                             <td>
                                 <span class="input-group-btn">
-                                    <button class="btn btn-info btn-lg" title="Search Node" type="button" ng-click="search(query)">
+                                    <button class="btn btn-info btn-lg" title="Search Node" type="submit" ng-click="search(query)">
                                         <i class="glyphicon glyphicon-search"></i>
                                     </button>
                                 </span>
@@ -186,14 +186,14 @@
                     </table>
                 </div>
             </div>
-            <hr />
         </div>
        
         <div class="col-md-8">
             <table class="table" style="margin-bottom: 0px;">
                 <tr>
                     <td style="padding-left: 0px; padding-right: 8px; padding-bottom: 0px; padding-top: 0px;border: none" ng-repeat="alert in alerts">
-                        <div uib-alert ng-class="'alert-' + (alert.type || 'warning')" dismiss-on-timeout="5000" close="closeAlert($index)">{{alert.msg}}</div>
+                        <div style="padding: 8px;padding-right: 29px;margin-bottom: 7px;"uib-alert ng-class="'alert-' + (alert.type || 'warning')"  dismiss-on-timeout="5000" close="closeAlert($index)">{{alert.msg}}</div>
+                        <!--dismiss-on-timeout="5000"-->
                     </td>
                 </tr>
             </table>            
@@ -204,7 +204,7 @@
             <form name="outerForm" class="tab-form-demo">
                 <uib-tabset active="tabselected">
                     <uib-tab index="0" heading="List">
-                        <div ui-tree style="overflow: scroll;" class="wrapper" data-drag-enabled="false" id="tree-root">
+                        <div ui-tree style="overflow-y: scroll;" class="wrapper" data-drag-enabled="false" id="tree-root">
                             <ol ui-tree-nodes ng-model="nodeData" style="height: 600px;">
                                 <li ng-repeat="node in nodeData track by $index" ui-tree-node ng-include="'nodes_renderer.html'" data-scroll-container=".wrapper"></li>
                             </ol>
@@ -251,7 +251,7 @@
         <uib-tabset active="3">
                 <uib-tab index="3" heading="Functional">
                     <div class="table-responsive" id="FunctionalTable" ng-hide="loading">
-                        <br />
+                        <!--<br />
                         <table class="input-group">
                             <tr>
                                 <td>
@@ -266,8 +266,8 @@
                                 </td>
                             </tr>
                         </table>
-                        <hr />
-                        <table class="table">
+                        <hr />-->
+                        <table class="table" style="cursor: pointer;">
                             <thead>
                             <tr>
                                 <th>
@@ -321,9 +321,8 @@
                     </div>
                 </uib-tab>
                 <uib-tab index="4" heading="Database">
-                    <div class="table-responsive" id="DatabaseTable" ng-hide="loading">
-                        <br />
-                        <table class="input-group">
+                    <div class="table-responsive" id="DatabaseTable" style="cursor: pointer;" ng-hide="loading">
+                        <!--<table class="input-group">
                             <tr>
                                 <td>
                                     <input type="text" maxlength="100" style="width: 30em;" ng-model="dbsearch" class="form-control input-lg" placeholder="Quick search..." />
@@ -336,8 +335,7 @@
                                     </span>
                                 </td>
                             </tr>
-                        </table>
-                        <hr />
+                        </table>-->
                         <table class="table">
                             <thead>
                             <tr>
@@ -384,9 +382,9 @@
                 </uib-tab>
             <uib-tab index="5" heading="Other Details">
                 
-                <div class="table-responsive" id="OthersTable" ng-hide="loading">
-                    <br />
-                    <table class="input-group">
+                <div class="table-responsive" id="OthersTable" style="cursor: pointer;" ng-hide="loading">
+             
+                    <!--<table class="input-group">
                         <tr>
                             <td>
                                 <input type="text" maxlength="100" style="width: 30em;" ng-model="Othersearch" class="form-control input-lg" placeholder="Quick search..." />
@@ -399,8 +397,8 @@
                                 </span>
                             </td>
                         </tr>
-                    </table>
-                    <hr />
+                    </table>-->
+
                     <table class="table">
                         <thead>
                         <tr>

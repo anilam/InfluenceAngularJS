@@ -10,7 +10,7 @@ var App;
         $rootScope.setActiveMenu = function (menuItem) {
             $rootScope.activeMenu = menuItem;
         };
-        $rootScope.title = "Nextgen Influence Login";
+        $rootScope.title = "NextGen Influence Login";
         $scope.logOnModel = new LogOnModel();
         $scope.logOnModel.Username = '';
         $scope.logOnModel.Password = '';

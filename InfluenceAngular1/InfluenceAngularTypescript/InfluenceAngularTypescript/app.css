@@ -196,7 +196,7 @@ border-color: #3ec3d5;
     background: #f8faff;
     border: 1px solid #dae2ea;
     color: #7c9eb2;
-    padding: 8px 10px;
+    padding: 5px 10px;
 }
 .angular-ui-tree-handle:hover {
     color: #3ec3d5;
@@ -238,7 +238,7 @@ tr.angular-ui-tree-empty {
     background-color: #f2dede;
 }
 .tree-node-content {
-    margin: 3px 15px 0px 0px;
+    margin: 2px 15px 0px 0px;
     border-radius: 3px;
   
 }
