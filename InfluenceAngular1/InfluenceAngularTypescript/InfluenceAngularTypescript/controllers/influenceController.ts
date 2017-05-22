@@ -13,7 +13,8 @@
         dBStore: DBStore,
         LoginService: any,
         $rootScope:any,
-        $aside: any) {
+        $aside: any,
+        $timeout: angular.ITimeoutService) {
 
         $rootScope.authenticated = LoginService.isAuthenticated();
 
@@ -98,7 +99,7 @@
            $scope.filterSearchArray = new Array();
            $scope.editing = false;
            $scope.editOtherDetailsValue = [];
-           dBStore.initNode($scope,$http);
+           dBStore.initNode($scope, $http, $timeout);
         }
 
         //aside
@@ -358,7 +359,7 @@
             $scope.expandAll();
         } else {
             $scope.collapseAll();
-        }
+        }       
     }
 
 

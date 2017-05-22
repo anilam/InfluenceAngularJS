@@ -8,7 +8,7 @@
                     <span class="glyphicon"
                           ng-class="{
           'glyphicon-chevron-right': collapsed,
-          'glyphicon-chevron-down': !collapsed
+          'glyphicon-chevron-down': !collapsed 
         }"></span>
                 </a>
   
@@ -158,7 +158,8 @@
         <div class="col-md-4">
             <div id="custom-search-input">
                 <div class="input-group col-md-12">
-                    <table>
+                    <form ng-submit="search(query)">
+                      <table>
                         <tr>
                             <td>
                                 <button title="Settings" type="button" class="btn btn-default btn-lg pull-left" ng-click="openAside('left', true)">
@@ -183,7 +184,8 @@
                                 </span>
                             </td>
                         </tr>
-                    </table>
+                      </table>
+                   </form>
                 </div>
             </div>
         </div>

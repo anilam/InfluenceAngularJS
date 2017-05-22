@@ -57,7 +57,7 @@
             });
         }
 
-        initNode = function ($scope: IDiagnosticsScope, $http: angular.IHttpService) {
+        initNode = function ($scope: IDiagnosticsScope, $http: angular.IHttpService, $timeout: angular.ITimeoutService) {
             $scope.loadingNode = true;
             $scope.nodeData = [];
             ////aside
@@ -72,7 +72,14 @@
                         type: Config.ErrorType[Config.ErrorType.success],
                         msg: Config.Constants.errorMessage.nodesuccess
                     });
+                    //Expand Node
+                    $timeout(function () {
+                        var rootScope = getRootNodesScope();
+                        //  rootScope.collapseAll();
+                        expandNode('Nextgen');
+                    }, 2);
                     $scope.loadingNode = false;
+
                 }).error((error, status) => {
                     $scope.loadingNode = false;
                     $scope.alerts.push({
@@ -130,5 +137,42 @@
                 $scope.loadingNode = false;
             });
         }
+
     }
+
+    //Expand Node Functionality
+    function getRootNodesScope() {
+        return angular.element(document.getElementById("tree-root")).scope().$nodesScope.childNodes()[0];
+    }
+
+    function expandNode(nodeName: string) {
+
+        // We need to get the whole path to the node to open all the nodes on the path
+        var parentScopes = getScopePath(nodeName);
+
+        for (var i = 0; i < parentScopes.length; i++) {
+            parentScopes[i].expand();
+        }
+
+    }
+
+    function getScopePath(nodeName: string) {
+        return getScopePathIter(nodeName, getRootNodesScope(), []);
+    }
+
+    function getScopePathIter(nodeName: string, scope: any, parentScopeList: any): any {
+
+        if (!scope) return null;
+
+        var newParentScopeList = parentScopeList.slice();
+        newParentScopeList.push(scope);
+
+        if (scope.$modelValue && scope.$modelValue.Name === nodeName) return newParentScopeList;
+
+        var foundScopesPath = null;
+        var childNodes = scope.childNodes();
+
+      //  for (var i = 0; foundScopesPath === null && i < childNodes.length; i++) {
+           return  foundScopesPath = getScopePathIter(nodeName, childNodes[0], newParentScopeList);
+        }
 }

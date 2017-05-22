@@ -1,7 +1,7 @@
 var App;
 (function (App) {
     var Constants = App.Config.Constants;
-    function influenceController($scope, $http, $log, $filter, functionalDetailsBl, otherDetailsBl, dBDetailsBL, nodeBl, focus, dBStore, LoginService, $rootScope, $aside) {
+    function influenceController($scope, $http, $log, $filter, functionalDetailsBl, otherDetailsBl, dBDetailsBL, nodeBl, focus, dBStore, LoginService, $rootScope, $aside, $timeout) {
         $rootScope.authenticated = LoginService.isAuthenticated();
         $scope.nodeData = [];
         $scope.editing = false;
@@ -71,7 +71,7 @@ var App;
             $scope.filterSearchArray = new Array();
             $scope.editing = false;
             $scope.editOtherDetailsValue = [];
-            dBStore.initNode($scope, $http);
+            dBStore.initNode($scope, $http, $timeout);
         };
         //aside
         $scope.asideState = {
