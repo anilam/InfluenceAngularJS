@@ -2,6 +2,12 @@ var App;
 (function (App) {
     var NodeBl = (function () {
         function NodeBl() {
+            //            var nodeData = scope.$modelValue;
+            //nodeData.nodes.push({
+            //    id: nodeData.id * 10 + nodeData.nodes.length,
+            //    title: nodeData.title + '.' + (nodeData.nodes.length + 1),
+            //    nodes: []
+            //});
             this.newSubItem = function (scope, $scope, focus) {
                 $scope.id = $scope.id + 1;
                 if ($scope.editing != true) {

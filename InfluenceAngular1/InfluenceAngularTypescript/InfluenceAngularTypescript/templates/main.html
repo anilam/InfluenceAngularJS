@@ -48,7 +48,7 @@
     </div>
 
     <ol ui-tree-nodes="" ng-model="node.Children" ng-class="{hidden: collapsed}">
-        <li ng-repeat="node in node.Children track by $index" ui-tree-node ng-include="'nodes_renderer.html'">
+        <li ng-repeat="node in node.Children" ui-tree-node ng-include="'nodes_renderer.html'">
         </li>
     </ol>
 </script>
@@ -104,7 +104,7 @@
     </div>
 
     <ol ui-tree-nodes="" ng-model="node.Children" ng-class="{hidden: collapsed}">
-        <li ng-repeat="node in node.Children track by $index" ui-tree-node ng-include="'nodes_renderer_searach.html'">
+        <li ng-repeat="node in node.Children" ui-tree-node ng-include="'nodes_renderer_searach.html'">
         </li>
     </ol>
 </script>
