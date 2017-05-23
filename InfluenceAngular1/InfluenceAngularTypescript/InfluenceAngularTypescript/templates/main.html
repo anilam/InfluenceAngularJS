@@ -1,5 +1,4 @@
-﻿
-   <!-- Nested node template -->
+﻿<!-- Nested node template -->
 <script type="text/ng-template" id="nodes_renderer.html">
     <div ui-tree-handle class="tree-node tree-node-content" ng-class="{active : activeMenu === node.Path, activeedit : editItem === node.Path && editing,deleted : node.Status==3 }" ng-click="setActive(node)">
         <div class="row">
@@ -8,37 +7,35 @@
                     <span class="glyphicon"
                           ng-class="{
           'glyphicon-chevron-right': collapsed,
-          'glyphicon-chevron-down': !collapsed 
+          'glyphicon-chevron-down': !collapsed
         }"></span>
                 </a>
-  
-            <span ng-show="!editing || editItem != node.Path" ng-bind="node.Name"></span><input type="text" maxlength="100" ng-model="editValue" focus-on="{{node.Path}}" ng-show="editItem === node.Path && editing" />
+
+                <span ng-show="!editing || editItem != node.Path" ng-bind="node.Name"></span><input type="text" maxlength="100" ng-model="editValue" focus-on="{{node.Path}}" ng-show="editItem === node.Path && editing" />
             </div>
             <div class="col-sm-5">
-                <a class="pull-right btn btn-success btn-xs" data-nodrag ng-click="editok(this)" title="Edit Save" ng-show="editItem === node.Path && editing">
+                <a class="pull-right btn btn-success btn-xs" style="color:#00a22e; background-color:#e8e8e8; border:none;" data-nodrag ng-click="editok(this)" title="Edit Save" ng-show="editItem === node.Path && editing">
                     <span class="glyphicon glyphicon-ok"></span>
                 </a>
-                <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="editcancel(this)" title="Edit Cancel" ng-show="editItem === node.Path && editing">
+                <a class="pull-right btn btn-danger-edit btn-xs" data-nodrag ng-click="editcancel(this)" title="Edit Cancel" ng-show="editItem === node.Path && editing">
                     <span class="glyphicon glyphicon-remove"></span>
                 </a>
 
-
                 <span ng-show="settings.EditNode && node.Status!=3">
-                    <a class="pull-right btn btn-primary btn-xs" title="Edit" data-nodrag ng-click="edit(this)" ng-hide="editItem === node.Path && editing">
+                    <a class="pull-right btn btn-tabs btn-xs" title="Edit" data-nodrag ng-click="edit(this)" ng-hide="editItem === node.Path && editing">
                         <span class="glyphicon glyphicon-edit"></span>
                     </a>
                 </span>
 
 
-
                 <span ng-show="settings.DeleteNode && node.Status!=3">
-                    <a class="pull-right btn btn-danger btn-xs" title="Delete" data-nodrag ng-click="removeItem(this)" ng-hide="editItem === node.Path && editing">
+                    <a class="pull-right btn btn-danger-tabs btn-xs" title="Delete" data-nodrag ng-click="removeItem(this)" ng-hide="editItem === node.Path && editing">
                         <span class="glyphicon glyphicon-remove"></span>
                     </a>
                 </span>
 
                 <span ng-show="settings.AddNode && node.Status!=3 && !node.ParentPath">
-                    <a class="pull-right btn btn-primary btn-xs" title="Add" data-nodrag ng-click="newSubItem(this)" style="margin-right: 8px;" ng-hide="editItem === node.Path && editing">
+                    <a class="pull-right btn btn-tabs btn-xs" title="Add" data-nodrag ng-click="newSubItem(this)" style="margin-right: 8px;" ng-hide="editItem === node.Path && editing">
                         <span class="glyphicon glyphicon-plus"></span>
                     </a>
                 </span>
@@ -49,13 +46,12 @@
             </div>
         </div>
     </div>
-    
+
     <ol ui-tree-nodes="" ng-model="node.Children" ng-class="{hidden: collapsed}">
         <li ng-repeat="node in node.Children track by $index" ui-tree-node ng-include="'nodes_renderer.html'">
         </li>
     </ol>
 </script>
-
 
 <!--Search-->
 <!--nodes_renderer_searach <input type="checkbox" id="search-{{node.Path}}" ng-click="updateSearchExcelExport(node.Path,node.Name)" />-->
@@ -74,30 +70,28 @@
                 <span ng-show="!editing || editItem != node.Path" ng-bind="node.Name"></span><input type="text" maxlength="100" ng-model="editValue" focus-on="{{node.Path}}" ng-show="editItem === node.Path && editing" />
             </div>
             <div class="col-sm-5">
-                <a class="pull-right btn btn-success btn-xs" data-nodrag ng-click="editok(this)" title="Edit Save" ng-show="editItem === node.Path && editing">
+                <a class="pull-right btn btn-success btn-xs" style="color:#00a22e; background-color:#e8e8e8; border:none;" data-nodrag ng-click="editok(this)" title="Edit Save" ng-show="editItem === node.Path && editing">
                     <span class="glyphicon glyphicon-ok"></span>
                 </a>
-                <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="editcancel(this)" title="Edit Cancel" ng-show="editItem === node.Path && editing">
+                <a class="pull-right btn btn-danger-edit btn-xs" data-nodrag ng-click="editcancel(this)" title="Edit Cancel" ng-show="editItem === node.Path && editing">
                     <span class="glyphicon glyphicon-remove"></span>
                 </a>
 
-
                 <span ng-show="settings.EditNode && node.Status!=3">
-                    <a class="pull-right btn btn-primary btn-xs" title="Edit" data-nodrag ng-click="edit(this)" ng-hide="editItem === node.Path && editing">
+                    <a class="pull-right btn btn-tabs btn-xs" title="Edit" data-nodrag ng-click="edit(this)" ng-hide="editItem === node.Path && editing">
                         <span class="glyphicon glyphicon-edit"></span>
                     </a>
                 </span>
 
 
-
                 <span ng-show="settings.DeleteNode && node.Status!=3">
-                    <a class="pull-right btn btn-danger btn-xs" title="Delete" data-nodrag ng-click="removeItem(this)" ng-hide="editItem === node.Path && editing">
+                    <a class="pull-right btn btn-danger-tabs btn-xs" title="Delete" data-nodrag ng-click="removeItem(this)" ng-hide="editItem === node.Path && editing">
                         <span class="glyphicon glyphicon-remove"></span>
                     </a>
                 </span>
 
-                <span ng-show="settings.AddNode && node.Status!=3  && !node.ParentPath">
-                    <a class="pull-right btn btn-primary btn-xs" title="Add" data-nodrag ng-click="newSubItem(this)" style="margin-right: 8px;" ng-hide="editItem === node.Path && editing">
+                <span ng-show="settings.AddNode && node.Status!=3 && !node.ParentPath">
+                    <a class="pull-right btn btn-tabs btn-xs" title="Add" data-nodrag ng-click="newSubItem(this)" style="margin-right: 8px;" ng-hide="editItem === node.Path && editing">
                         <span class="glyphicon glyphicon-plus"></span>
                     </a>
                 </span>
@@ -123,12 +117,10 @@
     }
 
 
-
     .details.active {
         color: #438eb9;
         background: gainsboro;
         border-color: #dce2e8;
-        
     }
 
     .details.activeedit {
@@ -147,10 +139,7 @@
         display: inline-block;
         position: relative;
     }
-
-    
 </style>
-
 
 <div class="container-fluid" ng-cloak>
 
@@ -159,46 +148,46 @@
             <div id="custom-search-input">
                 <div class="input-group col-md-12">
                     <form ng-submit="search(query)">
-                      <table>
-                        <tr>
-                            <td>
-                                <button title="Settings" type="button" class="btn btn-default btn-lg pull-left" ng-click="openAside('left', true)">
-                                    <span class="glyphicon glyphicon-align-justify"></span>
-                                </button>
-                            </td>
-                            <td>
-                                <input type="text" maxlength="100" style="width: 20em;" ng-model="query" class="search-input form-control input-lg" placeholder="Quick search..." />
-                            </td>
-                            <td>
-                                <span class="input-group-btn">
-                                    <button class="btn btn-info btn-lg" title="Search Node" type="submit" ng-click="search(query)">
-                                        <i class="glyphicon glyphicon-search"></i>
+                        <table>
+                            <tr>
+                                <td>
+                                    <button title="Settings" type="button" class="btn btn-default btn-lg pull-left" ng-click="openAside('left', true)">
+                                        <span class="glyphicon glyphicon-align-justify"></span>
                                     </button>
-                                </span>
-                            </td>
-                            <td>
-                                <span class="input-group-btn">
-                                    <button class="btn btn-info btn-lg" title="Clear Search" type="button" ng-click="searchCancel(query)">
-                                        <i class="glyphicon glyphicon-remove"></i>
-                                    </button>
-                                </span>
-                            </td>
-                        </tr>
-                      </table>
-                   </form>
+                                </td>
+                                <td>
+                                    <input type="text" maxlength="100" style="width: 17em;" ng-model="query" class="search-input form-control input-lg" placeholder="Quick search..." />
+                                </td>
+                                <td>
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-info btn-lg" title="Search Node" type="submit" ng-click="search(query)">
+                                            <i class="glyphicon glyphicon-search"></i>
+                                        </button>
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-info btn-lg" title="Clear Search" type="button" ng-click="searchCancel(query)">
+                                            <i class="glyphicon glyphicon-remove"></i>
+                                        </button>
+                                    </span>
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
                 </div>
             </div>
         </div>
-       
+
         <div class="col-md-8">
             <table class="table" style="margin-bottom: 0px;">
                 <tr>
                     <td style="padding-left: 0px; padding-right: 8px; padding-bottom: 0px; padding-top: 0px;border: none" ng-repeat="alert in alerts">
-                        <div style="padding: 8px;padding-right: 29px;margin-bottom: 7px;"uib-alert ng-class="'alert-' + (alert.type || 'warning')"  dismiss-on-timeout="5000" close="closeAlert($index)">{{alert.msg}}</div>
+                        <div style="padding: 8px;padding-right: 29px;margin-bottom: 7px;" uib-alert ng-class="'alert-' + (alert.type || 'warning')" dismiss-on-timeout="5000" close="closeAlert($index)">{{alert.msg}}</div>
                         <!--dismiss-on-timeout="5000"-->
                     </td>
                 </tr>
-            </table>            
+            </table>
         </div>
     </div>
     <div class="row">
@@ -233,7 +222,7 @@
                     <button type="button" title="Refresh Node" class="btn btn-primary pull-right" ng-click="init()">
                         <span class="glyphicon glyphicon-refresh"> </span>
                     </button>
-                    <button type="button" title="Save Node" class="btn btn-primary pull-right" ng-show="!loadingNode && settings.Role==1"  ng-click="saveNode()">
+                    <button type="button" title="Save Node" class="btn btn-primary pull-right" ng-show="!loadingNode && settings.Role==1" ng-click="saveNode()">
                         <span class="glyphicon glyphicon-saved"></span>
                     </button>
                 </uib-tabset>
@@ -250,7 +239,7 @@
                 <span class="glyphicon glyphicon-saved"></span>
             </button>
 
-        <uib-tabset active="3">
+            <uib-tabset active="3">
                 <uib-tab index="3" heading="Functional">
                     <div class="table-responsive" id="FunctionalTable" ng-hide="loading">
                         <!--<br />
@@ -271,53 +260,53 @@
                         <hr />-->
                         <table class="table" style="cursor: pointer;">
                             <thead>
-                            <tr>
-                                <th>
-                                    <a href="" ng-click="funcsortType = 'Impact'; funcsortReverse = !funcsortReverse">
-                                        IMPACT AREA
-                                        <span ng-show="funcsortType == 'Impact' && !funcsortReverse" class="glyphicon glyphicon-arrow-down"></span>
-                                        <span ng-show="funcsortType == 'Impact' && funcsortReverse" class="glyphicon glyphicon-arrow-up"></span>
-                                    </a>
-                                </th>
-                                <th>
-                                    <a href="" ng-click="funcsortType = 'Product'; funcsortReverse = !funcsortReverse">
-                                        PRODUCT
-                                        <span ng-show="funcsortType == 'Product' && !funcsortReverse" class="glyphicon glyphicon-arrow-down"></span>
-                                        <span ng-show="funcsortType == 'Product' && funcsortReverse" class="glyphicon glyphicon-arrow-up"></span>
-                                    </a>
-                                </th>
-                                <th>
-                                    <a href="" ng-click="funcsortType = 'Module'; funcsortReverse = !funcsortReverse">
-                                        MODULE
-                                        <span ng-show="funcsortType == 'Module' && !funcsortReverse" class="glyphicon glyphicon-arrow-down"></span>
-                                        <span ng-show="funcsortType == 'Module' && funcsortReverse" class="glyphicon glyphicon-arrow-up"></span>
-                                    </a>
+                                <tr>
+                                    <th>
+                                        <a href="" ng-click="funcsortType = 'Impact'; funcsortReverse = !funcsortReverse">
+                                            IMPACT AREA
+                                            <span ng-show="funcsortType == 'Impact' && !funcsortReverse" class="glyphicon glyphicon-arrow-down"></span>
+                                            <span ng-show="funcsortType == 'Impact' && funcsortReverse" class="glyphicon glyphicon-arrow-up"></span>
+                                        </a>
+                                    </th>
+                                    <th>
+                                        <a href="" ng-click="funcsortType = 'Product'; funcsortReverse = !funcsortReverse">
+                                            PRODUCT
+                                            <span ng-show="funcsortType == 'Product' && !funcsortReverse" class="glyphicon glyphicon-arrow-down"></span>
+                                            <span ng-show="funcsortType == 'Product' && funcsortReverse" class="glyphicon glyphicon-arrow-up"></span>
+                                        </a>
+                                    </th>
+                                    <th>
+                                        <a href="" ng-click="funcsortType = 'Module'; funcsortReverse = !funcsortReverse">
+                                            MODULE
+                                            <span ng-show="funcsortType == 'Module' && !funcsortReverse" class="glyphicon glyphicon-arrow-down"></span>
+                                            <span ng-show="funcsortType == 'Module' && funcsortReverse" class="glyphicon glyphicon-arrow-up"></span>
+                                        </a>
 
-                                </th>
-                                <th>
-                                    <a href="" ng-click="funcsortType = 'Complexity'; funcsortReverse = !funcsortReverse">
-                                        COMPLEXITY
-                                        <span ng-show="funcsortType == 'Complexity' && !funcsortReverse" class="glyphicon glyphicon-arrow-down"></span>
-                                        <span ng-show="funcsortType == 'Complexity' && funcsortReverse" class="glyphicon glyphicon-arrow-up"></span>
-                                    </a>
-                                </th>
-                                <th></th>
-                                <th><span class="pull-right" title="Add Functional Details" ng-show="settings.AddNodeDetail && !addNodeDetailsDisable"><a class="pull-right btn btn-primary btn-xs" ng-click="addFuncdetails(this)"><span class="glyphicon glyphicon-plus"></span></a></span></th>
-                            </tr>
+                                    </th>
+                                    <th>
+                                        <a href="" ng-click="funcsortType = 'Complexity'; funcsortReverse = !funcsortReverse">
+                                            COMPLEXITY
+                                            <span ng-show="funcsortType == 'Complexity' && !funcsortReverse" class="glyphicon glyphicon-arrow-down"></span>
+                                            <span ng-show="funcsortType == 'Complexity' && funcsortReverse" class="glyphicon glyphicon-arrow-up"></span>
+                                        </a>
+                                    </th>
+                                    <th></th>
+                                    <th><span class="pull-right" title="Add Functional Details" ng-show="settings.AddNodeDetail && !addNodeDetailsDisable"><a class="pull-right btn btn-primary btn-xs" ng-click="addFuncdetails(this)"><span class="glyphicon glyphicon-plus"></span></a></span></th>
+                                </tr>
                             </thead>
                             <tbody>
-                            <tr class="details" ng-repeat="Funcdetails in myDataTable.Functional |orderBy:funcsortType:funcsortReverse | filter:funcsearch track by $index" ng-click="setFuncdetailsActive(myDataTable.Functional.indexOf(Funcdetails))" ng-class="{active : activeFuncdetailsId === myDataTable.Functional.indexOf(Funcdetails),activeedit : editItemFuncdetailsId === myDataTable.Functional.indexOf(Funcdetails) && Funcdetailsediting}">
-                                <td> <span ng-show="!Funcdetailsediting || editItemFuncdetailsId != myDataTable.Functional.indexOf(Funcdetails)">{{ Funcdetails.Impact }}</span> <textarea maxlength="500" focus-on="funcdetails-{{myDataTable.Functional.indexOf(Funcdetails)}}" type="text" ng-model="editFuncDetailsValue.ImpactEdit" ng-show="editItemFuncdetailsId === myDataTable.Functional.indexOf(Funcdetails) && Funcdetailsediting"></textarea></td>
-                                <td> <span ng-show="!Funcdetailsediting || editItemFuncdetailsId != myDataTable.Functional.indexOf(Funcdetails)">{{ Funcdetails.Product }}</span> <input type="text" maxlength="100" ng-model="editFuncDetailsValue.ProductEdit" ng-show="editItemFuncdetailsId === myDataTable.Functional.indexOf(Funcdetails) && Funcdetailsediting"/></td>
-                                <td> <span ng-show="!Funcdetailsediting || editItemFuncdetailsId != myDataTable.Functional.indexOf(Funcdetails)">{{ Funcdetails.Module }}</span> <input type="text" maxlength="100" ng-model="editFuncDetailsValue.ModuleEdit" ng-show="editItemFuncdetailsId === myDataTable.Functional.indexOf(Funcdetails) && Funcdetailsediting"/></td>
-                                <td> <span ng-show="!Funcdetailsediting || editItemFuncdetailsId != myDataTable.Functional.indexOf(Funcdetails)">{{ Funcdetails.Complexity }}</span><select ng-show="editItemFuncdetailsId === myDataTable.Functional.indexOf(Funcdetails) && Funcdetailsediting" ng-model="editFuncDetailsValue.ComplexityEdit" ng-options="x for x in severity"></select> </td>
+                                <tr class="details" ng-repeat="Funcdetails in myDataTable.Functional |orderBy:funcsortType:funcsortReverse | filter:funcsearch track by $index" ng-click="setFuncdetailsActive(myDataTable.Functional.indexOf(Funcdetails))" ng-class="{active : activeFuncdetailsId === myDataTable.Functional.indexOf(Funcdetails),activeedit : editItemFuncdetailsId === myDataTable.Functional.indexOf(Funcdetails) && Funcdetailsediting}">
+                                    <td> <span ng-show="!Funcdetailsediting || editItemFuncdetailsId != myDataTable.Functional.indexOf(Funcdetails)">{{ Funcdetails.Impact }}</span> <textarea maxlength="500" focus-on="funcdetails-{{myDataTable.Functional.indexOf(Funcdetails)}}" type="text" ng-model="editFuncDetailsValue.ImpactEdit" ng-show="editItemFuncdetailsId === myDataTable.Functional.indexOf(Funcdetails) && Funcdetailsediting"></textarea></td>
+                                    <td> <span ng-show="!Funcdetailsediting || editItemFuncdetailsId != myDataTable.Functional.indexOf(Funcdetails)">{{ Funcdetails.Product }}</span> <input type="text" maxlength="100" ng-model="editFuncDetailsValue.ProductEdit" ng-show="editItemFuncdetailsId === myDataTable.Functional.indexOf(Funcdetails) && Funcdetailsediting" /></td>
+                                    <td> <span ng-show="!Funcdetailsediting || editItemFuncdetailsId != myDataTable.Functional.indexOf(Funcdetails)">{{ Funcdetails.Module }}</span> <input type="text" maxlength="100" ng-model="editFuncDetailsValue.ModuleEdit" ng-show="editItemFuncdetailsId === myDataTable.Functional.indexOf(Funcdetails) && Funcdetailsediting" /></td>
+                                    <td> <span ng-show="!Funcdetailsediting || editItemFuncdetailsId != myDataTable.Functional.indexOf(Funcdetails)">{{ Funcdetails.Complexity }}</span><select ng-show="editItemFuncdetailsId === myDataTable.Functional.indexOf(Funcdetails) && Funcdetailsediting" ng-model="editFuncDetailsValue.ComplexityEdit" ng-options="x for x in severity"></select> </td>
 
-                                <td style="width: 3em" ng-show="!Funcdetailsediting || editItemFuncdetailsId != myDataTable.Functional.indexOf(Funcdetails)"><a ng-show="settings.EditNodeDetail" class="pull-right btn btn-primary btn-xs" title="Edit" ng-click="editFuncdetails(Funcdetails,myDataTable.Functional.indexOf(Funcdetails))"><span class="glyphicon glyphicon-edit"></span></a></td>
-                                <td style="width: 3em" ng-show="!Funcdetailsediting || editItemFuncdetailsId != myDataTable.Functional.indexOf(Funcdetails)"><a ng-show="settings.DeleteNodeDetail" class="pull-right btn btn-danger btn-xs" title="Delete" ng-click="removeFuncdetails(myDataTable.Functional.indexOf(Funcdetails))"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                    <td style="width: 3em" ng-show="!Funcdetailsediting || editItemFuncdetailsId != myDataTable.Functional.indexOf(Funcdetails)"><a ng-show="settings.EditNodeDetail" class="pull-right btn btn-tabs btn-xs" title="Edit" ng-click="editFuncdetails(Funcdetails,myDataTable.Functional.indexOf(Funcdetails))"><span class="glyphicon glyphicon-edit"></span></a></td>
+                                    <td style="width: 3em" ng-show="!Funcdetailsediting || editItemFuncdetailsId != myDataTable.Functional.indexOf(Funcdetails)"><a ng-show="settings.DeleteNodeDetail" class="pull-right btn btn-danger-tabs btn-xs" title="Delete" ng-click="removeFuncdetails(myDataTable.Functional.indexOf(Funcdetails))"><span class="glyphicon glyphicon-remove"></span></a></td>
 
-                                <td style="width: 3em" ng-hide="!Funcdetailsediting || editItemFuncdetailsId != myDataTable.Functional.indexOf(Funcdetails)"><a class="pull-right btn btn-primary btn-xs" title="Edit Save" ng-click="editFuncdetailsOk(Funcdetails,myDataTable.Functional.indexOf(Funcdetails))"><span class="glyphicon glyphicon-ok"></span></a></td>
-                                <td style="width: 3em" ng-hide="!Funcdetailsediting || editItemFuncdetailsId != myDataTable.Functional.indexOf(Funcdetails)"><a class="pull-right btn btn-danger btn-xs" title="Edit Cancel" ng-click="removeFuncdetailsCancel(Funcdetails,myDataTable.Functional.indexOf(Funcdetails))"><span class="glyphicon glyphicon-remove"></span></a></td>
-                            </tr>
+                                    <td style="width: 3em" ng-hide="!Funcdetailsediting || editItemFuncdetailsId != myDataTable.Functional.indexOf(Funcdetails)"><a style="color:#00a22e; background-color:#e8e8e8; border:none;" class="pull-right btn btn-tabs btn-xs" title="Edit Save" ng-click="editFuncdetailsOk(Funcdetails,myDataTable.Functional.indexOf(Funcdetails))"><span class="glyphicon glyphicon-ok"></span></a></td>
+                                    <td style="width: 3em" ng-hide="!Funcdetailsediting || editItemFuncdetailsId != myDataTable.Functional.indexOf(Funcdetails)"><a class="pull-right btn btn-danger-edit btn-xs" title="Edit Cancel" ng-click="removeFuncdetailsCancel(Funcdetails,myDataTable.Functional.indexOf(Funcdetails))"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -340,31 +329,31 @@
                         </table>-->
                         <table class="table">
                             <thead>
-                            <tr>
-                                <th>
-                                    <a href="" ng-click="dbsortType = 'DbObject'; dbsortReverse = !dbsortReverse">
-                                        TABLE/SP/FIELDS
-                                        <span ng-show="dbsortType == 'DbObject' && !dbsortReverse" class="glyphicon glyphicon-arrow-down"></span>
-                                        <span ng-show="dbsortType == 'DbObject' && dbsortReverse" class="glyphicon glyphicon-arrow-up"></span>
-                                    </a>
-                                </th>
-                                <th>
-                                    <a href="" ng-click="dbsortType = 'DbType'; dbsortReverse = !dbsortReverse">
-                                        TYPE
-                                        <span ng-show="dbsortType == 'DbType' && !dbsortReverse" class="glyphicon glyphicon-arrow-down"></span>
-                                        <span ng-show="dbsortType == 'DbType' && dbsortReverse" class="glyphicon glyphicon-arrow-up"></span>
-                                    </a>
-                                </th>
-                                <th>
-                                    <a href="" ng-click="dbsortType = 'Description'; dbsortReverse = !dbsortReverse">
-                                        DESCRIPTION
-                                        <span ng-show="dbsortType == 'Description' && !dbsortReverse" class="glyphicon glyphicon-arrow-down"></span>
-                                        <span ng-show="dbsortType == 'Description' && dbsortReverse" class="glyphicon glyphicon-arrow-up"></span>
-                                    </a>
-                                </th>
-                                <th></th>
-                                <th><span title="Add Database Details" class="pull-right" ng-show="settings.AddNodeDetail && !addNodeDetailsDisable"><a class="pull-right btn btn-primary btn-xs" ng-click="addDBdetails(this)"><span class="glyphicon glyphicon-plus"></span></a></span></th>
-                            </tr>
+                                <tr>
+                                    <th>
+                                        <a href="" ng-click="dbsortType = 'DbObject'; dbsortReverse = !dbsortReverse">
+                                            TABLE/SP/FIELDS
+                                            <span ng-show="dbsortType == 'DbObject' && !dbsortReverse" class="glyphicon glyphicon-arrow-down"></span>
+                                            <span ng-show="dbsortType == 'DbObject' && dbsortReverse" class="glyphicon glyphicon-arrow-up"></span>
+                                        </a>
+                                    </th>
+                                    <th>
+                                        <a href="" ng-click="dbsortType = 'DbType'; dbsortReverse = !dbsortReverse">
+                                            TYPE
+                                            <span ng-show="dbsortType == 'DbType' && !dbsortReverse" class="glyphicon glyphicon-arrow-down"></span>
+                                            <span ng-show="dbsortType == 'DbType' && dbsortReverse" class="glyphicon glyphicon-arrow-up"></span>
+                                        </a>
+                                    </th>
+                                    <th>
+                                        <a href="" ng-click="dbsortType = 'Description'; dbsortReverse = !dbsortReverse">
+                                            DESCRIPTION
+                                            <span ng-show="dbsortType == 'Description' && !dbsortReverse" class="glyphicon glyphicon-arrow-down"></span>
+                                            <span ng-show="dbsortType == 'Description' && dbsortReverse" class="glyphicon glyphicon-arrow-up"></span>
+                                        </a>
+                                    </th>
+                                    <th></th>
+                                    <th><span title="Add Database Details" class="pull-right" ng-show="settings.AddNodeDetail && !addNodeDetailsDisable"><a class="pull-right btn btn-primary btn-xs" ng-click="addDBdetails(this)"><span class="glyphicon glyphicon-plus"></span></a></span></th>
+                                </tr>
                             </thead>
                             <tbody>
                                 <tr class="details" ng-repeat="DBdetails in myDataTable.DatabaseDetails |orderBy:dbsortType:dbsortReverse |filter:dbsearch track by $index" ng-click="setDBdetailsActive(myDataTable.DatabaseDetails.indexOf(DBdetails))" ng-class="{active : activeDBdetailsId === myDataTable.DatabaseDetails.indexOf(DBdetails),activeedit : editItemDBdetailsId === myDataTable.DatabaseDetails.indexOf(DBdetails) && DBdetailsediting}">
@@ -372,89 +361,89 @@
                                     <td> <span ng-show="!DBdetailsediting || editItemDBdetailsId != myDataTable.DatabaseDetails.indexOf(DBdetails)">{{ DBdetails.DbType || ''}}</span> <input type="text" maxlength="100" ng-model="editDBDetailsValue.DbType" ng-show="editItemDBdetailsId === myDataTable.DatabaseDetails.indexOf(DBdetails) && DBdetailsediting" /></td>
                                     <td> <span ng-show="!DBdetailsediting || editItemDBdetailsId != myDataTable.DatabaseDetails.indexOf(DBdetails)">{{ DBdetails.Description }}</span> <textarea maxlength="500" type="text" ng-model="editDBDetailsValue.Description" ng-show="editItemDBdetailsId === myDataTable.DatabaseDetails.indexOf(DBdetails) && DBdetailsediting"></textarea></td>
 
-                                    <td style="width: 3em" ng-show="!DBdetailsediting || editItemDBdetailsId != myDataTable.DatabaseDetails.indexOf(DBdetails)"><a title="Edit" ng-show="settings.EditNodeDetail" class="pull-right btn btn-primary btn-xs" ng-click="editDBdetails(DBdetails,myDataTable.DatabaseDetails.indexOf(DBdetails))"><span class="glyphicon glyphicon-edit"></span></a></td>
-                                    <td style="width: 3em" ng-show="!DBdetailsediting || editItemDBdetailsId != myDataTable.DatabaseDetails.indexOf(DBdetails)"><a title="Delete" ng-show="settings.DeleteNodeDetail" class="pull-right btn btn-danger btn-xs" ng-click="removeDBdetails(myDataTable.DatabaseDetails.indexOf(DBdetails))"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                    <td style="width: 3em" ng-show="!DBdetailsediting || editItemDBdetailsId != myDataTable.DatabaseDetails.indexOf(DBdetails)"><a title="Edit" ng-show="settings.EditNodeDetail" class="pull-right btn btn-tabs btn-xs" ng-click="editDBdetails(DBdetails,myDataTable.DatabaseDetails.indexOf(DBdetails))"><span class="glyphicon glyphicon-edit"></span></a></td>
+                                    <td style="width: 3em" ng-show="!DBdetailsediting || editItemDBdetailsId != myDataTable.DatabaseDetails.indexOf(DBdetails)"><a title="Delete" ng-show="settings.DeleteNodeDetail" pull-right btn btn-danger-tabs ng-click="removeDBdetails(myDataTable.DatabaseDetails.indexOf(DBdetails))"><span class="glyphicon glyphicon-remove"></span></a></td>
 
-                                    <td style="width: 3em" ng-hide="!DBdetailsediting || editItemDBdetailsId != myDataTable.DatabaseDetails.indexOf(DBdetails)"><a title="Edit Save" class="pull-right btn btn-primary btn-xs" ng-click="editDBdetailsOk(DBdetails,myDataTable.DatabaseDetails.indexOf(DBdetails))"><span class="glyphicon glyphicon-ok"></span></a></td>
-                                    <td style="width: 3em" ng-hide="!DBdetailsediting || editItemDBdetailsId != myDataTable.DatabaseDetails.indexOf(DBdetails)"><a title="Edit Cancel" class="pull-right btn btn-danger btn-xs" ng-click="removeDBdetailsCancel(DBdetails,myDataTable.DatabaseDetails.indexOf(DBdetails))"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                    <td style="width: 3em" ng-hide="!DBdetailsediting || editItemDBdetailsId != myDataTable.DatabaseDetails.indexOf(DBdetails)"><a title="Edit Save" style="color:#00a22e; background-color:#e8e8e8; border:none;" class="pull-right btn btn-tabs btn-xs" ng-click="editDBdetailsOk(DBdetails,myDataTable.DatabaseDetails.indexOf(DBdetails))"><span class="glyphicon glyphicon-ok"></span></a></td>
+                                    <td style="width: 3em" ng-hide="!DBdetailsediting || editItemDBdetailsId != myDataTable.DatabaseDetails.indexOf(DBdetails)"><a title="Edit Cancel" class="pull-right btn btn-danger-edit btn-xs" ng-click="removeDBdetailsCancel(DBdetails,myDataTable.DatabaseDetails.indexOf(DBdetails))"><span class="glyphicon glyphicon-remove"></span></a></td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </uib-tab>
-            <uib-tab index="5" heading="Other Details">
-                
-                <div class="table-responsive" id="OthersTable" style="cursor: pointer;" ng-hide="loading">
-             
-                    <!--<table class="input-group">
-                        <tr>
-                            <td>
-                                <input type="text" maxlength="100" style="width: 30em;" ng-model="Othersearch" class="form-control input-lg" placeholder="Quick search..." />
-                            </td>
-                            <td>
-                                <span class="input-group-btn">
-                                    <button class="btn btn-info btn-lg" type="button">
-                                        <i class="glyphicon glyphicon-search"></i>
-                                    </button>
-                                </span>
-                            </td>
-                        </tr>
-                    </table>-->
+                <uib-tab index="5" heading="Other Details">
 
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th>
-                                <a href="" ng-click="OthersortType = 'Description'; OthersortReverse = !OthersortReverse">
-                                    Description
-                                    <span ng-show="OthersortType == 'Description' && !OthersortReverse" class="glyphicon glyphicon-arrow-down"></span>
-                                    <span ng-show="OthersortType == 'Description' && OthersortReverse" class="glyphicon glyphicon-arrow-up"></span>
-                                </a>
-                            </th>
-                            <th>
-                                <a href="" ng-click="OthersortType = 'Type'; OthersortReverse = !OthersortReverse">
-                                    Type
-                                    <span ng-show="OthersortType == 'Type' && !OthersortReverse" class="glyphicon glyphicon-arrow-down"></span>
-                                    <span ng-show="OthersortType == 'Type' && OthersortReverse" class="glyphicon glyphicon-arrow-up"></span>
-                                </a>
-                            </th>
-                            <th>
-                                <a href="" ng-click="OthersortType = 'Module'; OthersortReverse = !OthersortReverse">
-                                    Module
-                                    <span ng-show="OthersortType == 'Module' && !OthersortReverse" class="glyphicon glyphicon-arrow-down"></span>
-                                    <span ng-show="OthersortType == 'Module' && OthersortReverse" class="glyphicon glyphicon-arrow-up"></span>
-                                </a>
-                            </th>
-                            <th>
-                                <a href="" ng-click="OthersortType = 'Complexity'; OthersortReverse = !OthersortReverse">
-                                    Complexity
-                                    <span ng-show="OthersortType == 'Complexity' && !OthersortReverse" class="glyphicon glyphicon-arrow-down"></span>
-                                    <span ng-show="OthersortType == 'Complexity' && OthersortReverse" class="glyphicon glyphicon-arrow-up"></span>
-                                </a>
-                            </th>
-                            <th></th>
-                            <th><span class="pull-right" title="Add Other Details" ng-show="settings.AddNodeDetail && !addNodeDetailsDisable"><a class="pull-right btn btn-primary btn-xs" ng-click="addOtherdetails(this)"><span class="glyphicon glyphicon-plus"></span></a></span></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="details" ng-repeat="Otherdetails in myDataTable.AdditionalDetails |orderBy:OthersortType:OthersortReverse |filter:Othersearch track by $index" ng-click="setOtherdetailsActive(myDataTable.AdditionalDetails.indexOf(Otherdetails))" ng-class="{active : activeOtherdetailsId === myDataTable.AdditionalDetails.indexOf(Otherdetails),activeedit : editItemOtherdetailsId === myDataTable.AdditionalDetails.indexOf(Otherdetails) && Otherdetailsediting}">
-                                <td> <span ng-show="!Otherdetailsediting || editItemOtherdetailsId != myDataTable.AdditionalDetails.indexOf(Otherdetails)">{{ Otherdetails.Description }}</span> <textarea maxlength="500" type="text" focus-on="Otherdetails-{{myDataTable.AdditionalDetails.indexOf(Otherdetails)}}" ng-model="editOtherDetailsValue.DescriptionEdit" ng-show="editItemOtherdetailsId === myDataTable.AdditionalDetails.indexOf(Otherdetails) && Otherdetailsediting"></textarea></td>
-                                <td> <span ng-show="!Otherdetailsediting || editItemOtherdetailsId != myDataTable.AdditionalDetails.indexOf(Otherdetails)">{{ Otherdetails.Type || ''}}</span> <input type="text" maxlength="100" ng-model="editOtherDetailsValue.TypeEdit" ng-show="editItemOtherdetailsId === myDataTable.AdditionalDetails.indexOf(Otherdetails) && Otherdetailsediting" /></td>
-                                <td> <span ng-show="!Otherdetailsediting || editItemOtherdetailsId != myDataTable.AdditionalDetails.indexOf(Otherdetails)">{{ Otherdetails.Module || '' }}</span> <input type="text" maxlength="100" ng-model="editOtherDetailsValue.ModuleEdit" ng-show="editItemOtherdetailsId === myDataTable.AdditionalDetails.indexOf(Otherdetails) && Otherdetailsediting" /></td>
-                                <td> <span ng-show="!Otherdetailsediting || editItemOtherdetailsId != myDataTable.AdditionalDetails.indexOf(Otherdetails)">{{ Otherdetails.Complexity || '' }}</span> 
-                                     <select ng-model="editOtherDetailsValue.ComplexityEdit" ng-show="editItemOtherdetailsId === myDataTable.AdditionalDetails.indexOf(Otherdetails) && Otherdetailsediting" ng-options="x for x in severity"></select>   
-                                <td style="width: 3em" ng-show="!Otherdetailsediting || editItemOtherdetailsId != myDataTable.AdditionalDetails.indexOf(Otherdetails)"><a title="Edit" ng-show="settings.EditNodeDetail" class="pull-right btn btn-primary btn-xs" ng-click="editOtherdetails(Otherdetails,myDataTable.AdditionalDetails.indexOf(Otherdetails))"><span class="glyphicon glyphicon-edit"></span></a></td>
-                                <td style="width: 3em" ng-show="!Otherdetailsediting || editItemOtherdetailsId != myDataTable.AdditionalDetails.indexOf(Otherdetails)"><a title="Delete" ng-show="settings.DeleteNodeDetail" class="pull-right btn btn-danger btn-xs" ng-click="removeOtherdetails(myDataTable.AdditionalDetails.indexOf(Otherdetails))"><span class="glyphicon glyphicon-remove"></span></a></td>
+                    <div class="table-responsive" id="OthersTable" style="cursor: pointer;" ng-hide="loading">
 
-                                <td style="width: 3em" ng-hide="!Otherdetailsediting || editItemOtherdetailsId != myDataTable.AdditionalDetails.indexOf(Otherdetails)"><a title="Edit Save" class="pull-right btn btn-primary btn-xs" ng-click="editOtherdetailsOk(Otherdetails,myDataTable.AdditionalDetails.indexOf(Otherdetails))"><span class="glyphicon glyphicon-ok"></span></a></td>
-                                <td style="width: 3em" ng-hide="!Otherdetailsediting || editItemOtherdetailsId != myDataTable.AdditionalDetails.indexOf(Otherdetails)"><a title="Edit Cancel" class="pull-right btn btn-danger btn-xs" ng-click="removeOtherdetailsCancel(Otherdetails,myDataTable.AdditionalDetails.indexOf(Otherdetails))"><span class="glyphicon glyphicon-remove"></span></a></td>
+                        <!--<table class="input-group">
+                            <tr>
+                                <td>
+                                    <input type="text" maxlength="100" style="width: 30em;" ng-model="Othersearch" class="form-control input-lg" placeholder="Quick search..." />
+                                </td>
+                                <td>
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-info btn-lg" type="button">
+                                            <i class="glyphicon glyphicon-search"></i>
+                                        </button>
+                                    </span>
+                                </td>
                             </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </uib-tab>
-            </uib-tabset>
+                        </table>-->
 
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <a href="" ng-click="OthersortType = 'Description'; OthersortReverse = !OthersortReverse">
+                                            Description
+                                            <span ng-show="OthersortType == 'Description' && !OthersortReverse" class="glyphicon glyphicon-arrow-down"></span>
+                                            <span ng-show="OthersortType == 'Description' && OthersortReverse" class="glyphicon glyphicon-arrow-up"></span>
+                                        </a>
+                                    </th>
+                                    <th>
+                                        <a href="" ng-click="OthersortType = 'Type'; OthersortReverse = !OthersortReverse">
+                                            Type
+                                            <span ng-show="OthersortType == 'Type' && !OthersortReverse" class="glyphicon glyphicon-arrow-down"></span>
+                                            <span ng-show="OthersortType == 'Type' && OthersortReverse" class="glyphicon glyphicon-arrow-up"></span>
+                                        </a>
+                                    </th>
+                                    <th>
+                                        <a href="" ng-click="OthersortType = 'Module'; OthersortReverse = !OthersortReverse">
+                                            Module
+                                            <span ng-show="OthersortType == 'Module' && !OthersortReverse" class="glyphicon glyphicon-arrow-down"></span>
+                                            <span ng-show="OthersortType == 'Module' && OthersortReverse" class="glyphicon glyphicon-arrow-up"></span>
+                                        </a>
+                                    </th>
+                                    <th>
+                                        <a href="" ng-click="OthersortType = 'Complexity'; OthersortReverse = !OthersortReverse">
+                                            Complexity
+                                            <span ng-show="OthersortType == 'Complexity' && !OthersortReverse" class="glyphicon glyphicon-arrow-down"></span>
+                                            <span ng-show="OthersortType == 'Complexity' && OthersortReverse" class="glyphicon glyphicon-arrow-up"></span>
+                                        </a>
+                                    </th>
+                                    <th></th>
+                                    <th><span class="pull-right" title="Add Other Details" ng-show="settings.AddNodeDetail && !addNodeDetailsDisable"><a class="pull-right btn btn-primary btn-xs" ng-click="addOtherdetails(this)"><span class="glyphicon glyphicon-plus"></span></a></span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="details" ng-repeat="Otherdetails in myDataTable.AdditionalDetails |orderBy:OthersortType:OthersortReverse |filter:Othersearch track by $index" ng-click="setOtherdetailsActive(myDataTable.AdditionalDetails.indexOf(Otherdetails))" ng-class="{active : activeOtherdetailsId === myDataTable.AdditionalDetails.indexOf(Otherdetails),activeedit : editItemOtherdetailsId === myDataTable.AdditionalDetails.indexOf(Otherdetails) && Otherdetailsediting}">
+                                    <td> <span ng-show="!Otherdetailsediting || editItemOtherdetailsId != myDataTable.AdditionalDetails.indexOf(Otherdetails)">{{ Otherdetails.Description }}</span> <textarea maxlength="500" type="text" focus-on="Otherdetails-{{myDataTable.AdditionalDetails.indexOf(Otherdetails)}}" ng-model="editOtherDetailsValue.DescriptionEdit" ng-show="editItemOtherdetailsId === myDataTable.AdditionalDetails.indexOf(Otherdetails) && Otherdetailsediting"></textarea></td>
+                                    <td> <span ng-show="!Otherdetailsediting || editItemOtherdetailsId != myDataTable.AdditionalDetails.indexOf(Otherdetails)">{{ Otherdetails.Type || ''}}</span> <input type="text" maxlength="100" ng-model="editOtherDetailsValue.TypeEdit" ng-show="editItemOtherdetailsId === myDataTable.AdditionalDetails.indexOf(Otherdetails) && Otherdetailsediting" /></td>
+                                    <td> <span ng-show="!Otherdetailsediting || editItemOtherdetailsId != myDataTable.AdditionalDetails.indexOf(Otherdetails)">{{ Otherdetails.Module || '' }}</span> <input type="text" maxlength="100" ng-model="editOtherDetailsValue.ModuleEdit" ng-show="editItemOtherdetailsId === myDataTable.AdditionalDetails.indexOf(Otherdetails) && Otherdetailsediting" /></td>
+                                    <td>
+                                        <span ng-show="!Otherdetailsediting || editItemOtherdetailsId != myDataTable.AdditionalDetails.indexOf(Otherdetails)">{{ Otherdetails.Complexity || '' }}</span>
+                                        <select ng-model="editOtherDetailsValue.ComplexityEdit" ng-show="editItemOtherdetailsId === myDataTable.AdditionalDetails.indexOf(Otherdetails) && Otherdetailsediting" ng-options="x for x in severity"></select>
+                                    <td style="width: 3em" ng-show="!Otherdetailsediting || editItemOtherdetailsId != myDataTable.AdditionalDetails.indexOf(Otherdetails)"><a title="Edit" ng-show="settings.EditNodeDetail" class="pull-right btn btn-tabs btn-xs" ng-click="editOtherdetails(Otherdetails,myDataTable.AdditionalDetails.indexOf(Otherdetails))"><span class="glyphicon glyphicon-edit"></span></a></td>
+                                    <td style="width: 3em" ng-show="!Otherdetailsediting || editItemOtherdetailsId != myDataTable.AdditionalDetails.indexOf(Otherdetails)"><a title="Delete" ng-show="settings.DeleteNodeDetail" class="pull-right btn btn-danger-tabs" ng-click="removeOtherdetails(myDataTable.AdditionalDetails.indexOf(Otherdetails))"><span class="glyphicon glyphicon-remove"></span></a></td>
+
+                                    <td style="width: 3em" ng-hide="!Otherdetailsediting || editItemOtherdetailsId != myDataTable.AdditionalDetails.indexOf(Otherdetails)"><a title="Edit Save" style="color:#00a22e; background-color:#e8e8e8; border:none;" class="pull-right btn btn-tabs btn-xs" ng-click="editOtherdetailsOk(Otherdetails,myDataTable.AdditionalDetails.indexOf(Otherdetails))"><span class="glyphicon glyphicon-ok"></span></a></td>
+                                    <td style="width: 3em" ng-hide="!Otherdetailsediting || editItemOtherdetailsId != myDataTable.AdditionalDetails.indexOf(Otherdetails)"><a title="Edit Cancel" class="pull-right btn btn-danger-edit btn-xs" ng-click="removeOtherdetailsCancel(Otherdetails,myDataTable.AdditionalDetails.indexOf(Otherdetails))"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </uib-tab>
+            </uib-tabset>
 
 
             <span ng-show="loading" class="glyphicon glyphicon-repeat normal-right-spinner" style="font-size: 2em"></span>
@@ -539,6 +528,5 @@
             </div>-->
         </div>
     </div>
-
 
 </div>

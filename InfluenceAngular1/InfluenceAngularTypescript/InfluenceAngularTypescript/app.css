@@ -2,55 +2,54 @@
         -webkit-animation: glyphicon-spin-r 2s infinite linear;
         animation: glyphicon-spin-r 2s infinite linear;
     }
-
+ 
     @-webkit-keyframes glyphicon-spin-r {
         0% {
             -webkit-transform: rotate(0deg);
             transform: rotate(0deg);
         }
-
+ 
         100% {
             -webkit-transform: rotate(359deg);
             transform: rotate(359deg);
         }
     }
-
+ 
     @keyframes glyphicon-spin-r {
         0% {
             -webkit-transform: rotate(0deg);
             transform: rotate(0deg);
         }
-
+ 
         100% {
             -webkit-transform: rotate(359deg);
             transform: rotate(359deg);
         }
     }
-
+ 
     @-webkit-keyframes glyphicon-spin-l {
         0% {
             -webkit-transform: rotate(359deg);
             transform: rotate(359deg);
         }
-
+ 
         100% {
             -webkit-transform: rotate(0deg);
             transform: rotate(0deg);
         }
     }
-
+ 
     @keyframes glyphicon-spin-l {
-        0% {
+       0% {
             -webkit-transform: rotate(359deg);
             transform: rotate(359deg);
         }
-
+ 
         100% {
             -webkit-transform: rotate(0deg);
             transform: rotate(0deg);
         }
     }
-
 
 
 
@@ -95,7 +94,7 @@ body {
   {
     background-color: #3ec3d5;
     color: #333;
-  
+ 
 }
 .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
     color: #fff;
@@ -106,9 +105,16 @@ body {
     border-bottom: 1px solid #3ec3d5;
     font-weight: 100;
     text-transform: uppercase;
+    font-size: 15px;
 }
 a {
     color: #3c3c3c;
+}
+ 
+a:hover, a:focus
+{
+    text-decoration: none;
+    color: #3ec3d5;
 }
 .btn {
     margin-right: 8px;
@@ -156,18 +162,74 @@ border-color: #3ec3d5;
     background-color: #3ec3d5;
     border-color: #3ec3d5;
 }
+
+
+.btn-danger {
+    color: #fff;
+    background-color: #c9302c;
+    border:none;
+}
+ 
+.btn-danger:hover {
+    color: #fff;
+    background-color: #3ec3d5;
+    border-color: #3ec3d5;
+}
+
+
+
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
     color: #fff;
     background-color: #3ec3d5;
     border-color: #3ec3d5;
 }
-input, button, select, textarea {
  
-    border-radius: 12px;
+.btn-tabs
+{
+color: #676767;
+    background-color: none;
+    border: none;
+}
+input, button, select, textarea {
+    border-radius: 1px;
     border: 0;
     padding-left: 20px;
+ 
+}
+ 
+.btn-danger-tabs {
+    color: #c9302c;
+    background-color:none;
+    border:none;
   
 }
+ 
+.btn-danger-tabs:hover{
+    color: #fff;
+    background-color: #3ec3d5;
+    border-color: #3ec3d5;
+}
+ 
+.btn-danger-edit {
+    color: #c9302c;
+    background-color: #e8e8e8;
+    border: #e8e8e8;
+  
+}
+ 
+.btn-danger-edit:hover{
+    color: #da4e4a;
+    background-color: #e8e8e8;
+    border:none;
+}
+
+
+.btn-tabs:hover{
+    color: #fff;
+    background-color: #3ec3d5;
+    border-color: #3ec3d5;
+}
+ 
 .btn-search
 {
 border-radius: 15px;
@@ -190,7 +252,6 @@ border-color: #3ec3d5;
     float: right;
 }
  
- 
 .angular-ui-tree-handle {
     cursor: pointer;
     background: #f8faff;
@@ -201,12 +262,12 @@ border-color: #3ec3d5;
 .angular-ui-tree-handle:hover {
     color: #3ec3d5;
     background: #f4f6f7;
-    border-color: #ededed;
+    border-color: #dadada;
 }
 .angular-ui-tree-handle.active {
     color: #FFF;
     background: #3ec3d5;
-    border-color: #dce2e8;
+    border-color: #3ec3d5;
 }
 .angular-ui-tree-handle.activeedit
 {
@@ -229,8 +290,9 @@ tr.angular-ui-tree-empty {
     color: #FFF !important;
 }
 /* --- Tree --- */
+ 
 .tree-node {
-    border: 1px solid #e8e8e8;
+    border: 1px solid #c2c2c2;
     background-color: #e8e8e8;
     color: #3c3c3c;
 }
@@ -239,8 +301,8 @@ tr.angular-ui-tree-empty {
 }
 .tree-node-content {
     margin: 2px 15px 0px 0px;
-    border-radius: 3px;
-  
+    border-radius: 1px;
+ 
 }
 .tree-handle {
     padding: 10px;
@@ -260,7 +322,7 @@ tr.angular-ui-tree-empty {
 }
 .input-lg, .form-horizontal .form-group-lg .form-control
 {
-    height: 33px;
+    height: 30px;
     padding: 10px 16px;
     font-size: 13px;
     line-height: 1.33;
@@ -279,13 +341,12 @@ padding-bottom: 8px;
 }
 .glyphicon-chevron-right:before
 {
-  
+ 
     border-color: #3ec3d5;
 }
 .glyphicon-plus:after {
     background-color: #3ec3d5;
 }
- 
 .modal-header
 {
 background-color: #3ec3d5;
@@ -303,7 +364,7 @@ color: white;
     border-color: #3ec3d5;
 }
 .input-group-btn:last-child>.btn, .input-group-btn:last-child>.btn-group {
-  
+ 
     margin-right: 2px;
 }
 .col-sm-12{
@@ -311,10 +372,11 @@ color: white;
     float: left;
 }
 .nav-tabs>li>a {
-  
-    background-color: #e8e8e8;
-}
  
+    background-color: #888888;
+    color: white;
+    border: none;
+}
  
  
 /* Testing */
@@ -362,7 +424,6 @@ styled-select {
     width: 240px;
     border-radius: 12px;
     background: whitesmoke;
- 
 }
 .styled-select.slate select {
    border: 1px solid #ccc;
@@ -388,12 +449,10 @@ styled-select {
     padding-left: 20px;
     padding-bottom: 10px;
 }
- 
 .checkbox
 {
     padding-left: 15px;
 }
- 
 .modal-body {
     position: relative;
     padding-top: 10px;
@@ -401,7 +460,6 @@ styled-select {
     padding-left: 0px;
     padding-right: 0px;
 }
- 
 .input-group {
     position: relative;
     display: table;
@@ -409,12 +467,10 @@ styled-select {
     padding-left: 15px;
     padding-bottom: 10px;
 }
- 
 .input-group {
     padding-left: 15px;
     padding-bottom: 10px;
 }
- 
  
 .angular-ui-tree-handle.deleted {
     color: black;
@@ -474,3 +530,17 @@ hr {
 .navbar-default .navbar-nav>li>a {
     color: #3ec3d5;
 }
+.glyphicon
+{font-size: 11px;}
+ 
+.nav-tabs>li>a:hover {
+    background-color: #a5a4a4;
+    color: white;
+    border: none;
+}
+ 
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus
+{
+    border:none;
+}
+ 
