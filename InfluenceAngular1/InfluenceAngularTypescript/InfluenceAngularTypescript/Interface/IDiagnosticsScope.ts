@@ -15,6 +15,7 @@
         myDataTable: NodeDetail;
         setActive: (menuItem: any) => void;
         activeMenu: string;
+        addNodeDetailsDisable: boolean;
         edit: (scope: any) => void;
         editing: boolean;
         editItem: string;

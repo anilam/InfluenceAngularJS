@@ -308,7 +308,9 @@
             if (menuItem.ParentPath != null) {
                 $scope.myDataTable = new NodeDetail();
                 $scope.activeMenu = menuItem.Path;
+                $scope.addNodeDetailsDisable = true;
             } else {
+                $scope.addNodeDetailsDisable = false;
                 $scope.loading = true;
                 nodeBl.setActive(menuItem, $scope, $http, $log);
             }       
