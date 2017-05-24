@@ -399,7 +399,7 @@ body {
   bottom: 0;
   width: 100%;
   /* Set the fixed height of the footer here */
-  height: 20px;
+  height: auto;
 }
 /*select*/
 styled-select {
